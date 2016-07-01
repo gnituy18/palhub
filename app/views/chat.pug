@@ -1,0 +1,12 @@
+extends ./layouts/master.pug
+
+block content
+  div
+    button#button-pair Chat with someone
+    button#button-leave Leave
+  div
+    video#video-self(autoplay)
+  div
+    video#video-pal(autoplay)
+  script(src='js/adapter.js')
+  script(src='js/bundle.js')
