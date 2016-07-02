@@ -4,7 +4,8 @@
   "description": "A chat application",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build && npm run watch & npm run redis",
+    "start": "node server.js",
+    "develop": "npm run build && npm run watch & npm run redis",
     "watch": "npm run watch-server & npm run watch-js",
     "watch-server": "nodemon server.js",
     "watch-js": "watchify app/assets/js/main.js -o public/js/bundle.js",
