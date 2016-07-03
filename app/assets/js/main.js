@@ -101,10 +101,10 @@
     if (!e.candidate) {
       return null
     } else
-      rtc.emit('pass candidate', {
-        socket: pair,
-        candidate: e.candidate
-      })
+    rtc.emit('pass candidate', {
+      socket: pair,
+      candidate: e.candidate
+    })
   }
 
   function addStream(e) {
