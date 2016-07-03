@@ -1,0 +1,29 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+header {
+  height: 100%;
+  background: {
+    image: url("/img/header-bg.jpg");
+    size: cover;
+    position: center;
+  };
+
+  .container {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+
+    h1 {
+      text-align: center;
+      font-size: 500% ;
+    }
+  }
+
+  .title {
+    margin: 0;
+    color: white;
+  }
+}
