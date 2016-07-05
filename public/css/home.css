@@ -1,3 +1,19 @@
+.btn {
+  display: inline-block;
+  border-style: solid;
+  border-width: medium;
+  border-color: white;
+  border-radius: 25px;
+  padding: 0 10px;
+  font-size: 3em;
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  font-family: 'Galada', cursive; }
+  .btn:hover {
+    color: #33A5E6;
+    background-color: white; }
+
 html, body {
   height: 100%;
   margin: 0; }
@@ -42,19 +58,3 @@ html, body {
 .content-block {
   padding: 100px 0;
   text-align: center; }
-
-.btn {
-  display: inline-block;
-  border-style: solid;
-  border-width: medium;
-  border-color: white;
-  border-radius: 25px;
-  padding: 0 10px;
-  font-size: 3em;
-  color: white;
-  background-color: transparent;
-  text-decoration: none;
-  font-family: 'Galada', cursive; }
-  .btn:hover {
-    color: #33A5E6;
-    background-color: white; }
