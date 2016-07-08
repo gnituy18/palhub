@@ -1,0 +1,18 @@
+.cont {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cont-center {
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-align: center;
+  position: relative;
+  top: 50%;
+}
+
+.cont-section {
+  padding: 100px 0;
+  text-align: center;
+}

@@ -4,7 +4,8 @@
   "description": "A chat application",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build && npm run watch & npm run redis",
+    "start": "node server.js",
+    "develop": "npm run build && npm run watch & npm run redis",
     "watch": "npm run watch-server & npm run watch-js",
     "watch-server": "nodemon server.js",
     "watch-js": "watchify app/assets/js/main.js -o public/js/bundle.js",
@@ -22,7 +23,7 @@
     "koa-bodyparser": "^2.2.0",
     "koa-json": "^1.1.3",
     "koa-logger": "^1.3.0",
-    "koa-onerror": "^1.3.1",
+    "koa-onerror": "^2.0.0",
     "koa-router": "^5.4.0",
     "koa-session": "^3.3.1",
     "koa-static": "^2.0.0",
@@ -33,6 +34,10 @@
     "webrtc-adapter": "^1.4.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-sass": "^2.3.2",
+    "node-normalize-scss": "^1.3.2"
   }
 }

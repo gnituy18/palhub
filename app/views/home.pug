@@ -1,0 +1,12 @@
+extends ./layouts/master.pug
+
+block styles
+  link(rel='stylesheet' href='css/home.css')
+
+block content
+  header.bg-image
+    div.cont-center
+      h1.intro-title PalHub
+      hr.intro-separator
+      p.intro-annotation Find a pal and make new friends.
+      a.btn(href = '/widgets') Start now!
