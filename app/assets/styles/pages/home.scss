@@ -1,24 +1,20 @@
-@import "../components/_buttons.scss";
+@import "normalize";
+@import "../base/_variables";
+@import "../base/_mixins";
+@import "../base/_font-faces";
+@import "../base/_typography";
+@import "../components/_buttons";
+@import "../components/_containers";
 
-html, body {
+@include full-screen;
+
+@include bg-image("/img/header-bg.jpg");
+
+header {
   height: 100%;
-  margin: 0;
 }
 
-.container {
-  margin: auto;
-  height: 100%;
-  width: 1000px;
-}
-
-.header {
-  height: 100%;
-  background-image: url("/img/header-bg.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
-.header-separator {
+.intro-separator {
   margin: 15px auto;
   max-width: 100px;
   border-top: 3px solid white;
@@ -28,27 +24,13 @@ html, body {
   height: 0;
 }
 
-.header-annotation {
-  color: white;
-  font-size: 200%;
+.intro-annotation {
+  font-size: 2em;
+  color: $intro-font-color;
 }
 
-.header-content {
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  text-align: center;
-  position: relative;
-  top: 50%;
-}
-
-.header-title {
-  font-size: 500%;
+.intro-title {
+  font-size: 5em;
   margin: 0;
-  color: white;
-}
-
-.content-block {
-  padding: 100px 0;
-  text-align: center;
+  color: $intro-font-color;
 }

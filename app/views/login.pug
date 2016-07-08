@@ -1,7 +1,11 @@
 extends ./layouts/master.pug
 
+block styles
+  link(rel='stylesheet' href='css/login.css')
+
 block content
-  form(method='post')
-    p Name:
-    input#name(type='text' name='name')
-    input#go(type='submit' value='go')
+  header.cont-center
+    h1 You need to input your name first.
+    form(method='post')
+      input#name.form-text(type='text' name='name')
+      input#submit.display-none(type='submit' value='SUBMIT') 
