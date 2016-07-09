@@ -420,6 +420,18 @@ p {
   font-family: "Inconsolata", sans-serif;
 }
 
+.font-l {
+  font-size: 5em;
+}
+
+.font-xl {
+  font-size: 10em;
+}
+
+.display-none {
+  display: none;
+}
+
 .btn {
   display: inline-block;
   border-style: solid;
@@ -439,6 +451,10 @@ p {
   background-color: white;
 }
 
+.btn-circle {
+  border-radius: 50%;
+}
+
 .cont {
   margin-left: auto;
   margin-right: auto;
@@ -456,6 +472,22 @@ p {
 .cont-section {
   padding: 100px 0;
   text-align: center;
+}
+
+.form-text {
+  margin: 6px;
+  border-style: solid;
+  border-color: gray;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.form-submit {
+  margin: 6px;
+  border-style: solid;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: transparent;
 }
 
 html, body {

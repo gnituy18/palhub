@@ -420,6 +420,18 @@ p {
   font-family: "Inconsolata", sans-serif;
 }
 
+.font-l {
+  font-size: 5em;
+}
+
+.font-xl {
+  font-size: 10em;
+}
+
+.display-none {
+  display: none;
+}
+
 .btn {
   display: inline-block;
   border-style: solid;
@@ -437,6 +449,10 @@ p {
 .btn:hover {
   color: #33A5E6;
   background-color: white;
+}
+
+.btn-circle {
+  border-radius: 50%;
 }
 
 .cont {

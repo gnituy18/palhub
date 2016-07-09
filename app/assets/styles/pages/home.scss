@@ -1,11 +1,4 @@
-@import "normalize";
-@import "../base/_variables";
-@import "../base/_mixins";
-@import "../base/_font-faces";
-@import "../base/_typography";
-@import "../components/_buttons";
-@import "../components/_containers";
-
+@import "../main";
 @include full-screen;
 
 @include bg-image("/img/header-bg.jpg");
