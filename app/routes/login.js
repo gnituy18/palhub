@@ -7,7 +7,7 @@ var router = require('koa-router')()
   router.post('/', function*(next) {
     console.log(this.request.body.name)
     this.session.name = this.request.body.name
-    this.redirect('widgets')
+    this.redirect('chat')
   })
 
 module.exports = router

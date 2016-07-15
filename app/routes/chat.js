@@ -1,7 +1,9 @@
 var router = require('koa-router')()
 
-  router.get('/', function*(next) {
-    yield this.render('chat')
-  })
+router.get('/', function*(next) {
+  if (!this.session.name)
+    this.redirect('/login')
+  yield this.render('chat')
+})
 
 module.exports = router
