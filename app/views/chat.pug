@@ -1,14 +1,15 @@
 extends ./layouts/master.pug
 block styles
-  link(rel='stylesheet' href='chat.css')
+  link(rel='stylesheet' href='/css/chat.css')
 
 block content
-  div
-    button#button-pair Chat with someone
-    button#button-leave Leave
+  div.cont-section.cont-dark-gray
+    div
+      video#video-pal(autoplay)
   div
     video#video-self(autoplay)
   div
-    video#video-pal(autoplay)
+    button#button-pair.btn Chat with someone
+    button#button-leave.btn Leave
   script(src='js/adapter.js')
   script(src='js/chat.js')

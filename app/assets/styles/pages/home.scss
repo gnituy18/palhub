@@ -18,7 +18,7 @@ header {
 }
 
 .intro-annotation {
-  font-size: 2em;
+  font-size: 1.7em;
   color: $intro-font-color;
 }
 
@@ -26,4 +26,8 @@ header {
   font-size: 5em;
   margin: 0;
   color: $intro-font-color;
+}
+.intro-title-blue {
+  margin: 0;
+  color: $intro-font-color-blue;
 }

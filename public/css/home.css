@@ -417,7 +417,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-  font-family: "Inconsolata", sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .font-l {
@@ -435,20 +435,22 @@ p {
 .btn {
   display: inline-block;
   border-style: solid;
-  border-width: medium;
+  border-width: 2px;
   border-color: white;
-  border-radius: 25px;
-  padding: 0 10px;
-  font-size: 3em;
+  border-radius: 10px;
+  padding: 5px  25px;
   color: white;
   background-color: transparent;
   text-decoration: none;
-  font-family: 'Galada', cursive;
+  font-family: "Open Sans", sans-serif;
+  font-size: 2em;
+  cursor: pointer;
+  transition: all .3s;
 }
 
 .btn:hover {
-  color: #33A5E6;
-  background-color: white;
+  color: #6C8BC8;
+  border-color: #6C8BC8;
 }
 
 .btn-circle {
@@ -472,6 +474,10 @@ p {
 .cont-section {
   padding: 100px 0;
   text-align: center;
+}
+
+.cont-dark-gray {
+  background-color: #4C4C4C;
 }
 
 .form-text {
@@ -515,7 +521,7 @@ header {
 }
 
 .intro-annotation {
-  font-size: 2em;
+  font-size: 1.7em;
   color: white;
 }
 
@@ -523,4 +529,9 @@ header {
   font-size: 5em;
   margin: 0;
   color: white;
+}
+
+.intro-title-blue {
+  margin: 0;
+  color: #6C8BC8;
 }
