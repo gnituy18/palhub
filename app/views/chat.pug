@@ -3,13 +3,11 @@ block styles
   link(rel='stylesheet' href='/css/chat.css')
 
 block content
-  div.cont-section.cont-dark-gray
-    div
-      video#video-pal(autoplay)
-  div
-    video#video-self(autoplay)
-  div
-    button#button-pair.btn Chat with someone
-    button#button-leave.btn Leave
-  script(src='js/adapter.js')
-  script(src='js/chat.js')
+  div.cont-center.thin.cont
+    div.avatar.cont
+    div.cont-section
+    div#control.cont.text-align-center
+    audio#audio-pal(autoplay)
+    audio#audio-self(autoplay muted="muted")
+    script(src='js/adapter.js')
+    script(src='js/chat.js')

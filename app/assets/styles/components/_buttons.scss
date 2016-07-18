@@ -2,10 +2,10 @@
   display: inline-block;
   border-style: solid;
   border-width: 2px;
-  border-color: white;
+  border-color: $blue;
   border-radius: 10px;
   padding: 5px  25px;
-  color: white;
+  color: $blue;
   background-color: transparent;
   text-decoration: none;
   font-family: $font-family-base;
@@ -14,8 +14,8 @@
   transition: all .3s;
 
   &:hover {
-    color: #6C8BC8;
-    border-color: #6C8BC8;
+    color: $dark-blue;
+    border-color: $dark-blue;
   }
 }
 

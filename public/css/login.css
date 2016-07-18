@@ -432,14 +432,18 @@ p {
   display: none;
 }
 
+.text-align-center {
+  text-align: center;
+}
+
 .btn {
   display: inline-block;
   border-style: solid;
   border-width: 2px;
-  border-color: white;
+  border-color: #6C8BC8;
   border-radius: 10px;
   padding: 5px  25px;
-  color: white;
+  color: #6C8BC8;
   background-color: transparent;
   text-decoration: none;
   font-family: "Open Sans", sans-serif;
@@ -449,8 +453,8 @@ p {
 }
 
 .btn:hover {
-  color: #6C8BC8;
-  border-color: #6C8BC8;
+  color: #4163A4;
+  border-color: #4163A4;
 }
 
 .btn-circle {

@@ -2,3 +2,13 @@
 
 @include full-screen;
 
+.thin {
+  width: 1000px;
+}
+
+.avatar {
+  width: 300px;
+  height: 300px;
+
+  @include bg-image("/img/boy-avatar.png");
+}

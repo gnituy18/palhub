@@ -1,7 +1,10 @@
 @import "../main";
+
 @include full-screen;
 
-@include bg-image("/img/header-bg.jpg");
+.bg-image {
+  @include bg-image("/img/header-bg.jpg");
+}
 
 header {
   height: 100%;
@@ -27,6 +30,7 @@ header {
   margin: 0;
   color: $intro-font-color;
 }
+
 .intro-title-blue {
   margin: 0;
   color: $intro-font-color-blue;
