@@ -1,6 +1,5 @@
 {
   "name": "palhub",
-  "version": "1.0.0",
   "description": "A chat application",
   "main": "server.js",
   "scripts": {
