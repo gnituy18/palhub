@@ -1,4 +1,5 @@
 var redis = require('redis')
-var client = redis.createClient()
+var promise = require('bluebird')
+promise.promisifyAll(redis)
 
-module.exports = client
+module.exports = redis.createClient()

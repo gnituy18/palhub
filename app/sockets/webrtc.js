@@ -1,29 +1,18 @@
 var client = require('../redis')
+var guard = require('../guards/user')
+
 module.exports = function(io) {
 
   var rtc = io.of('/webrtc')
-  var hold
   rtc.on('connection', function(socket) {
 
-    console.log(socket.id + ' had connected')
-
     socket.on('pair', function(info) {
-
-
-      client.get('hold', function(err, reply) {
-        console.log('1. reply: ' + reply)
-        if (!reply)
-          client.set('hold', socket.id, function() {
-            console.log('2. hold is ' + socket.id)
-          })
-        else if (socket.id != reply) {
-          rtc.to(reply).emit('pair', socket.id)
-          client.del('hold', function() {
-            console.log('2. hold is empty')
-          })
+      guard.pair(socket.id).then(function(hold) {
+        if (hold) {
+          rtc.to(hold).emit('pair', socket.id)
+          console.log(hold)
         }
       })
-
     })
 
     socket.on('pass candidate', function(info) {
