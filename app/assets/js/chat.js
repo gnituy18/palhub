@@ -1,54 +1,88 @@
 (function() {
 
   var rtc = require('socket.io-client')('/webrtc')
-  var videoSelf = document.getElementById('video-self')
-  var videoPal = document.getElementById('video-pal')
-  var buttonPair = document.getElementById('button-pair')
-  var buttonLeave = document.getElementById('button-leave')
+  var audioSelf = document.getElementById('audio-self')
+  var audioPal = document.getElementById('audio-pal')
+  var buttonPair = document.createElement('button')
+  var buttonLeave = document.createElement('button')
+  var control = document.getElementById('control')
+
   var pc
   var constraints = {
-    audio: false,
-    video: true
+    audio: true,
+    video: false
   }
   var localStream
   var pair
+  var info
 
   function init() {
-    //Setup components
-    buttonPair.onclick = connectPeer
-    buttonLeave.onclick = leavePeer
+    info = {
+      name: document.getElementById('name').innerHTML,
+      gender: document.getElementById('gender').innerHTML,
+      intro: document.getElementById('intro').innerHTML
+    }
 
-    //Local stream
+    console.log(info)
+      //Local stream
     navigator.mediaDevices.getUserMedia(constraints)
       .then(setupLocalStream)
+      .then(() => {
+        buttonPair.id = 'button-pair'
+        buttonPair.className = 'btn'
+        buttonPair.innerHTML = 'Chat'
+        buttonPair.onclick = function() {
+          disableButton(buttonPair)
+          setupPc()
+          connectPeer()
+        }
+        buttonLeave.id = 'button-leave'
+        buttonLeave.className = 'btn'
+        buttonLeave.innerHTML = 'Leave'
+        buttonLeave.onclick = function() {
+          disablePeer()
+          disableButton(buttonLeave)
+          enableButton(buttonPair)
+          removeUserInfo()
+        }
+        rtc.on('pair', offering)
+        rtc.on('get offer', answering)
+        rtc.on('get answer', finishing)
+        rtc.on('get candidate', setCandidate)
+        rtc.on('get user info', getUserInfo)
+      })
+      .then(() => {
+        enableButton(buttonPair)
+        console.log('Done init.')
+      })
       .catch(err => {
         console.log(err)
       })
-    rtc.on('pair', offering)
-    rtc.on('get offer', answering)
-    rtc.on('get answer', finishing)
-    rtc.on('get candidate', setCandidate)
-    console.log('setuped')
   }
 
   //Setup components
+  function disableButton(btn) {
+    btn.remove()
+  }
+
+  function enableButton(btn) {
+    control.appendChild(btn)
+  }
+
   function connectPeer() {
-    setupPc()
     rtc.emit('pair')
   }
 
-  function leavePeer() {
+  function disablePeer() {
     pc.close()
-    pc = null
     pair = null
-    setupPc()
     console.log('leave')
   }
 
   //Local stream
   function setupLocalStream(stream) {
     localStream = stream
-    videoSelf.src = window.URL.createObjectURL(stream)
+    audioSelf.src = window.URL.createObjectURL(stream)
   }
 
   // RTC
@@ -108,18 +142,35 @@
   }
 
   function addStream(e) {
-    videoPal.src = window.URL.createObjectURL(e.stream)
+    audioPal.src = window.URL.createObjectURL(e.stream)
   }
 
   function handleStateChange(event) {
     switch (pc.iceConnectionState) {
       case 'disconnected':
-        leavePeer()
-        console.log(pc.iceConnectionState)
+        buttonLeave.click()
         break
-      default:
-        console.log(pc.iceConnectionState)
+      case 'connected':
+        enableButton(buttonLeave)
+        transferUserInfo()
+        break
     }
+    console.log(pc.iceConnectionState)
+  }
+
+  function transferUserInfo() {
+    rtc.emit('pass user info', {
+      socket: pair,
+      info: info
+    })
+  }
+
+  function getUserInfo(info) {
+    document.getElementById('pal').innerHTML = info.name
+  }
+
+  function removeUserInfo() {
+    document.getElementById('pal').innerHTML = null
   }
 
   window.onload = function() {

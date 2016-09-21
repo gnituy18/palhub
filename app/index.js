@@ -7,6 +7,7 @@ var path = require('path')
 var session = require('koa-session')
 var bodyParser = require('koa-bodyparser')
 var router = require('./routes')
+require('koa-validate')(app)
 
 app.use(views(__dirname + '/views', {
   extension: 'pug'

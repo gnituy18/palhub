@@ -1,14 +1,10 @@
-@import "normalize";
-@import "../base/_variables";
-@import "../base/_mixins";
-@import "../base/_font-faces";
-@import "../base/_typography";
-@import "../components/_buttons";
-@import "../components/_containers";
+@import "../main";
 
 @include full-screen;
 
-@include bg-image("/img/header-bg.jpg");
+.bg-image {
+  @include bg-image("/img/header-bg.jpg");
+}
 
 header {
   height: 100%;
@@ -25,7 +21,7 @@ header {
 }
 
 .intro-annotation {
-  font-size: 2em;
+  font-size: 1.7em;
   color: $intro-font-color;
 }
 
@@ -33,4 +29,9 @@ header {
   font-size: 5em;
   margin: 0;
   color: $intro-font-color;
+}
+
+.intro-title-blue {
+  margin: 0;
+  color: $intro-font-color-blue;
 }

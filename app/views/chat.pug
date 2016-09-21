@@ -1,12 +1,17 @@
 extends ./layouts/master.pug
+block styles
+  link(rel='stylesheet' href='/css/chat.css')
 
 block content
-  div
-    button#button-pair Chat with someone
-    button#button-leave Leave
-  div
-    video#video-self(autoplay)
-  div
-    video#video-pal(autoplay)
-  script(src='js/adapter.js')
-  script(src='js/chat.js')
+  div.cont-center.thin.cont
+    div#name= user.name
+    div#intro= user.intro
+    div#gender= user.gender
+    div#pal
+    div.avatar.cont
+    div.cont-section
+    div#control.cont.text-align-center
+    audio#audio-pal(autoplay)
+    audio#audio-self(autoplay muted="muted")
+    script(src='js/adapter.js')
+    script(src='js/chat.js')

@@ -1,12 +1,4 @@
-@import "normalize";
-@import "../base/_variables";
-@import "../base/_mixins";
-@import "../base/_font-faces";
-@import "../base/_typography";
-@import "../components/_buttons";
-@import "../components/_containers";
-@import "../components/_forms";
-
+@import "../main";
 
 @include full-screen;
 

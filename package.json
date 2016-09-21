@@ -1,6 +1,5 @@
 {
   "name": "palhub",
-  "version": "1.0.0",
   "description": "A chat application",
   "main": "server.js",
   "scripts": {
@@ -27,6 +26,7 @@
     "koa-router": "^5.4.0",
     "koa-session": "^3.3.1",
     "koa-static": "^2.0.0",
+    "koa-validate": "^1.0.7",
     "koa-views": "^4.1.0",
     "pug": "^2.0.0-beta3",
     "redis": "^2.6.2",

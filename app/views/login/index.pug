@@ -1,0 +1,27 @@
+extends ./../layouts/master.pug
+
+block styles
+  link(rel='stylesheet' href='css/login.css')
+
+block content
+  if errors
+    each error in errors
+      each key, value in error
+        p= key + ' ' + value
+  header.cont-center
+    h1 Please fill in the information below.
+    form(method='post')
+      input(type='radio' name='gender' value='male' checked=user.gender == 'male' ? 'checked' : undefined) 
+      | Male
+      input(type='radio' name='gender' value='female' checked=user.gender == 'female' ? 'checked' : undefined) 
+      | Female
+      input(type='radio' name='gender' value='alien' checked=user.gender == 'alien' ? 'checked' : undefined) 
+      | Alien
+      br
+      span Your name
+      input#name.form-text(type='text' name='name' value=user.name)
+      br
+      span Introduction
+      textarea#intro(name='intro')
+        | #{user.intro}
+      input#submit.display-none(type='submit' value='SUBMIT') 
