@@ -2,7 +2,11 @@ var router = require('koa-router')()
 
 router.get('login', '/', function*(next) {
   yield this.render('login', {
-    user: this.session.user
+    user: this.session.user || {
+      name: '',
+      gender: 'male',
+      intro: '安安'
+    }
   })
 })
 

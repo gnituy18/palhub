@@ -43,6 +43,11 @@ module.exports = function(io) {
       console.log(socket.id + ' disconnect')
 
     })
+
+    socket.on('pass user info', function(data) {
+      socket.to(data.socket).emit('get user info', data.info)
+      console.log(data)
+    })
   })
 
 }
