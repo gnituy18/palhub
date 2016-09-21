@@ -135,11 +135,12 @@
   function passCandidate(e) {
     if (!e.candidate) {
       return null
-    } else
+    } else {
       rtc.emit('pass candidate', {
         socket: pair,
         candidate: e.candidate
       })
+    }
   }
 
   function addStream(e) {
