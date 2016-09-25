@@ -6,6 +6,8 @@
   var buttonPair = document.createElement('button')
   var buttonLeave = document.createElement('button')
   var control = document.getElementById('control')
+  var $ = require('jquery')
+
 
   var pc
   var constraints = {
@@ -50,6 +52,19 @@
         rtc.on('get answer', finishing)
         rtc.on('get candidate', setCandidate)
         rtc.on('get user info', getUserInfo)
+      })
+      .then(() => {
+        $.ajax({
+          url: 'chat/status'
+        }).done(function(data) {
+          console.log(data)
+          if (data) {
+            window.onbeforeunload = function() {
+              $.ajax('chat/leave')
+            }
+          } 
+          
+        })
       })
       .then(() => {
         enableButton(buttonPair)
@@ -177,4 +192,6 @@
   window.onload = function() {
     init()
   }
+
+
 })()
