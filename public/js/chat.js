@@ -27,7 +27,8 @@
     }
 
     console.log(info)
-      //Local stream
+
+    //Local stream
     navigator.mediaDevices.getUserMedia(constraints)
       .then(setupLocalStream)
       .then(() => {
@@ -43,6 +44,7 @@
         buttonLeave.className = 'btn'
         buttonLeave.innerHTML = 'Leave'
         buttonLeave.onclick = function() {
+          breakConnection()
           disablePeer()
           disableButton(buttonLeave)
           enableButton(buttonPair)
@@ -53,18 +55,12 @@
         rtc.on('get answer', finishing)
         rtc.on('get candidate', setCandidate)
         rtc.on('get user info', getUserInfo)
-      })
-      .then(() => {
-        $.ajax({
-          url: 'chat/status'
-        }).done(function(data) {
-          console.log(data)
-          if (data) {
-            window.onbeforeunload = function() {
-              $.ajax('chat/leave')
-            }
-          } 
-          
+        rtc.on('break connection', function() {
+          disablePeer()
+          disableButton(buttonLeave)
+          enableButton(buttonPair)
+          removeUserInfo()
+          console.log('break')
         })
       })
       .then(() => {
@@ -188,6 +184,12 @@
 
   function removeUserInfo() {
     document.getElementById('pal').innerHTML = null
+  }
+
+  function breakConnection() {
+    rtc.emit('break connection', {
+      socket: pair
+    })
   }
 
   window.onload = function() {

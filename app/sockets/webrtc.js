@@ -44,6 +44,11 @@ module.exports = function(io) {
 
     })
 
+    socket.on('break connection', function(info) {
+      console.log('break ' + info.socket)
+      rtc.to(info.socket).emit('break connection')
+    })
+
     socket.on('pass user info', function(data) {
       socket.to(data.socket).emit('get user info', data.info)
       console.log(data)
