@@ -8,7 +8,6 @@
   var control = document.getElementById('control')
   var $ = require('jquery')
 
-
   var pc
   var constraints = {
     audio: true,
@@ -17,6 +16,7 @@
   var localStream
   var pair
   var info
+  var token
 
   function init() {
     info = {
@@ -66,9 +66,19 @@
         enableButton(buttonPair)
         console.log('Done init.')
       })
+      .then(checkMultiTabs)
       .catch(err => {
         console.log(err)
       })
+  }
+
+  //Check multi-tabs
+  function checkMultiTabs() {
+    console.log('token', token)
+    if (!token) {
+      console.log('send gettab')
+      localStorage.setItem('getTab', Date.now())
+    }
   }
 
   //Setup components
@@ -195,5 +205,31 @@
     init()
   }
 
+  window.onbeforeunload = function() {
+    localStorage.clear()
+  }
+
+  window.addEventListener('storage', function(event) {
+    console.log('storage event: ')
+    switch (event.key) {
+      case 'getTab':
+        if (token == null) {
+          console.log('getTab event')
+          localStorage.setItem('tab', 'first')
+          localStorage.removeItem('tab')
+        }
+        break
+      case 'tab':
+        console.log('tab event')
+        if (token == null) {
+          disableButton(buttonLeave)
+          disableButton(buttonPair)
+          removeUserInfo()
+          token = 'after'
+        }
+        console.log(token)
+        break
+    }
+  })
 
 })()
