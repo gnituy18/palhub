@@ -1,7 +1,18 @@
 var app = require('./app')
 var socket = require('./app/sockets')
-var http = require('http');
-var server = http.createServer(app.callback())
+var https = require('https')
+var http = require('http')
+var fs = require('fs')
+var options = {
+  key: fs.readFileSync('palhub-key.pem'),
+  cert: fs.readFileSync('palhub-cert.pem')
+}
 
-socket.listen(server)
-server.listen(3000)
+var serverHttp = http.createServer(app.callback())
+var serverHttps = https.createServer(options, app.callback())
+
+socket.listen(serverHttp)
+socket.listen(serverHttps)
+
+serverHttp.listen(3000)
+serverHttps.listen(3001)

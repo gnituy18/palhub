@@ -6,6 +6,7 @@
   var buttonPair = document.createElement('button')
   var buttonLeave = document.createElement('button')
   var control = document.getElementById('control')
+  var $ = require('jquery')
 
   var pc
   var constraints = {
@@ -15,6 +16,7 @@
   var localStream
   var pair
   var info
+  var token
 
   function init() {
     info = {
@@ -24,7 +26,8 @@
     }
 
     console.log(info)
-      //Local stream
+
+    //Local stream
     navigator.mediaDevices.getUserMedia(constraints)
       .then(setupLocalStream)
       .then(() => {
@@ -40,6 +43,7 @@
         buttonLeave.className = 'btn'
         buttonLeave.innerHTML = 'Leave'
         buttonLeave.onclick = function() {
+          breakConnection()
           disablePeer()
           disableButton(buttonLeave)
           enableButton(buttonPair)
@@ -50,14 +54,31 @@
         rtc.on('get answer', finishing)
         rtc.on('get candidate', setCandidate)
         rtc.on('get user info', getUserInfo)
+        rtc.on('break connection', function() {
+          disablePeer()
+          disableButton(buttonLeave)
+          enableButton(buttonPair)
+          removeUserInfo()
+          console.log('break')
+        })
       })
       .then(() => {
         enableButton(buttonPair)
         console.log('Done init.')
       })
+      .then(checkMultiTabs)
       .catch(err => {
         console.log(err)
       })
+  }
+
+  //Check multi-tabs
+  function checkMultiTabs() {
+    console.log('token', token)
+    if (!token) {
+      console.log('send gettab')
+      localStorage.setItem('getTab', Date.now())
+    }
   }
 
   //Setup components
@@ -134,11 +155,12 @@
   function passCandidate(e) {
     if (!e.candidate) {
       return null
-    } else
+    } else {
       rtc.emit('pass candidate', {
         socket: pair,
         candidate: e.candidate
       })
+    }
   }
 
   function addStream(e) {
@@ -173,7 +195,41 @@
     document.getElementById('pal').innerHTML = null
   }
 
+  function breakConnection() {
+    rtc.emit('break connection', {
+      socket: pair
+    })
+  }
+
   window.onload = function() {
     init()
   }
+
+  window.onbeforeunload = function() {
+    localStorage.clear()
+  }
+
+  window.addEventListener('storage', function(event) {
+    console.log('storage event: ')
+    switch (event.key) {
+      case 'getTab':
+        if (token == null) {
+          console.log('getTab event')
+          localStorage.setItem('tab', 'first')
+          localStorage.removeItem('tab')
+        }
+        break
+      case 'tab':
+        console.log('tab event')
+        if (token == null) {
+          disableButton(buttonLeave)
+          disableButton(buttonPair)
+          removeUserInfo()
+          token = 'after'
+        }
+        console.log(token)
+        break
+    }
+  })
+
 })()
