@@ -2,16 +2,21 @@
   display: inline-block;
   border-style: solid;
   border-width: 2px;
-  border-color: $blue;
+  border-color: $black;
   border-radius: 10px;
   padding: 5px  25px;
-  color: $blue;
+  color: $black;
   background-color: transparent;
   text-decoration: none;
   font-family: $font-family-base;
   font-size: 2em;
   cursor: pointer;
   transition: all .3s;
+}
+
+.btn-blue {
+  color: $blue;
+  border-color: $blue;
 
   &:hover {
     color: $dark-blue;
@@ -19,6 +24,3 @@
   }
 }
 
-.btn-circle {
-  border-radius: 50%;
-}
