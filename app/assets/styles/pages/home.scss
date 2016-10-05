@@ -1,19 +1,13 @@
 @import "../main";
 
-@include full-screen;
-
-.bg-image {
-  @include bg-image("/img/header-bg.jpg");
-}
-
 body {
-  background-color: #FFFCE3;
+  background-color: $theme-color-2;
 }
 
 .gray-line {
   border-width: 0 5px;
   border-style: solid;
-  border-color: $gray;
+  border-color: $theme-color-4;
 }
 
 .intro-separator {
@@ -27,8 +21,8 @@ body {
 }
 
 .intro-annotation {
-  font-size: 1.7em;
-  color: $white;
+  font-size: 1.5em;
+  color: $theme-color-3;
 }
 
 .intro-title {
@@ -36,28 +30,7 @@ body {
   font-size: 2.5em;
   padding: 36px 20px;
   margin: 0;
-  color: $black;
-}
-
-.btn-go {
-  display: inline-block;
-  border-style: solid;
-  border-width: 5px;
-  border-color: $gray;
-  border-radius: 10px;
-  padding: 5px  25px;
-  color: $black;
-  background-color: transparent;
-  text-decoration: none;
-  font-family: $font-family-base;
-  font-size: 2.5em;
-  cursor: pointer;
-  transition: all .3s;
-
-  &:hover {
-    background-color: $blue;
-    color: $white;
-  }
+  color: $theme-color-5;
 }
 
 .boy-icon {

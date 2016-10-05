@@ -1,13 +1,17 @@
-//Headings
-$heading-font-family: "Oswald", sans-serif;
+//Font family
+$font-family-base: "Noto Sans TC", "Open Sans", sans-serif;
 
-$font-family_base: "Open Sans", sans-serif;
-
-//colors
+//Colors
+$blue1: #3C64BF;
+$blue2: #2B426D;
+$yellow: #FFFCE3;
 $white: #FFFFFF;
-$blue-gray: #353966;
-$black: #2E2E2E;
 $gray: #AFB8C1;
-$brown: #C39452;
-$blue: #3c64bf;
-$dark-blue: #4163A4;
+
+
+//Theme color
+$theme-color-1: $blue1;
+$theme-color-2: $yellow;
+$theme-color-3: $white;
+$theme-color-4: $gray;
+$theme-color-5: $blue2;

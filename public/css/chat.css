@@ -4,10 +4,8 @@
  * 2. Correct the line height in all browsers.
  * 3. Prevent adjustments of font size after orientation changes in IE and iOS.
  */
-@import "https://fonts.googleapis.com/css?family=Inconsolata";
-@import "https://fonts.googleapis.com/css?family=Lobster";
-@import "https://fonts.googleapis.com/css?family=Open+Sans";
-@import "https://fonts.googleapis.com/css?family=Oswald";
+@import "http://fonts.googleapis.com/earlyaccess/notosanstc.css";
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,400";
 html {
   font-family: sans-serif;
   /* 1 */
@@ -412,12 +410,16 @@ textarea {
   /* 2 */
 }
 
+body {
+  font-family: "Noto Sans TC", "Open Sans", sans-serif;
+}
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Oswald", sans-serif;
+  font-family: "Noto Sans TC", "Open Sans", sans-serif;
 }
 
 p {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Noto Sans TC", "Open Sans", sans-serif;
 }
 
 .font-l {
@@ -426,10 +428,6 @@ p {
 
 .font-xl {
   font-size: 10em;
-}
-
-.font-white {
-  color: #FFFFFF;
 }
 
 .display-none {
@@ -443,27 +441,22 @@ p {
 .btn {
   display: inline-block;
   border-style: solid;
-  border-width: 2px;
-  border-color: #2E2E2E;
+  border-width: 5px;
+  border-color: #3C64BF;
   border-radius: 10px;
   padding: 5px  25px;
-  color: #2E2E2E;
-  background-color: transparent;
+  color: #FFFFFF;
+  background-color: #3C64BF;
   text-decoration: none;
-  font-family: "Open Sans", sans-serif;
-  font-size: 2em;
+  font-family: "Noto Sans TC", "Open Sans", sans-serif;
+  font-size: 2.5em;
   cursor: pointer;
   transition: all .3s;
 }
 
-.btn-blue {
-  color: #3c64bf;
-  border-color: #3c64bf;
-}
-
-.btn-blue:hover {
-  color: #4163A4;
-  border-color: #4163A4;
+.btn:hover {
+  color: #3C64BF;
+  background-color: #FFFFFF;
 }
 
 .cont {
@@ -502,24 +495,16 @@ p {
   padding-bottom: 50px;
 }
 
-.cont-black {
-  background-color: #2E2E2E;
+.cont-yellow {
+  background-color: #FFFCE3;
 }
 
 .cont-blue {
-  background-color: #3c64bf;
+  background-color: #3C64BF;
 }
 
 .cont-gray {
-  background-color: #afb8c1;
-}
-
-.cont-blue-gray {
-  background-color: #353966;
-}
-
-.cont-yellow-gray {
-  background-color: #47462d;
+  background-color: #AFB8C1;
 }
 
 .cont-white {
