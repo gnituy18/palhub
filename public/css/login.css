@@ -4,7 +4,7 @@
  * 2. Correct the line height in all browsers.
  * 3. Prevent adjustments of font size after orientation changes in IE and iOS.
  */
-@import "http://fonts.googleapis.com/earlyaccess/notosanstc.css";
+@import "https://fonts.googleapis.com/earlyaccess/notosanstc.css";
 @import "https://fonts.googleapis.com/css?family=Open+Sans:300,400";
 html {
   font-family: sans-serif;
@@ -418,8 +418,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Noto Sans TC", "Open Sans", sans-serif;
 }
 
+h1 {
+  font-size: 2em;
+}
+
 p {
   font-family: "Noto Sans TC", "Open Sans", sans-serif;
+  font-size: 1.5em;
 }
 
 .font-l {
@@ -512,11 +517,14 @@ p {
 }
 
 .form-text {
-  margin: 6px;
+  display: inline-block;
+  margin: 6px 15px;
   border-style: solid;
-  border-color: gray;
-  padding: 10px;
+  border-color: #AFB8C1;
   border-radius: 5px;
+  border-width: 5px;
+  padding: 10px;
+  min-width: 500px;
 }
 
 .form-submit {
@@ -529,4 +537,34 @@ p {
 
 html, body {
   height: 100%;
+}
+
+.avatar-picker {
+  vertical-align: top;
+  display: inline-block;
+  padding: 10px 40px;
+}
+
+.avatar-boy {
+  background-image: url("/img/boy3.png");
+  background-size: cover;
+  background-position: center;
+  width: 150px;
+  height: 150px;
+}
+
+.avatar-girl {
+  background-image: url("/img/girl2.png");
+  background-size: cover;
+  background-position: center;
+  width: 150px;
+  height: 150px;
+}
+
+.avatar-alien {
+  background-image: url("/img/alien.png");
+  background-size: cover;
+  background-position: center;
+  width: 150px;
+  height: 150px;
 }

@@ -1,9 +1,12 @@
 .form-text {
-  margin: 6px;
+  display: inline-block;
+  margin: 6px 15px;
   border-style: solid;
-  border-color: gray;
-  padding: 10px;
+  border-color: $gray;
   border-radius: 5px;
+  border-width: 5px;
+  padding: 10px;
+  min-width: 500px;
 }
 
 .form-submit {
