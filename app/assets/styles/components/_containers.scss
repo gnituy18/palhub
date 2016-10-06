@@ -8,6 +8,16 @@
   max-width: 64em;
 }
 
+.alert {
+  background-color: $red2;
+  border-radius: 10px;
+  padding: 5px  25px;
+  display: inline-block;
+  border-style: solid;
+  border-width: 5px;
+  border-color: $red1;
+}
+
 .wide {
   max-width: 72em;
 }

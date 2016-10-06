@@ -5,16 +5,16 @@ router.get('login', '/', function*(next) {
     user: this.session.user || {
       name: '',
       gender: 'male',
-      intro: '安安'
+      intro: ''
     }
   })
 })
 
 router.post('/', function*(next) {
 
-  this.checkBody('name').len(1, 5)
-  this.checkBody('gender').in(['male', 'female', 'alien'])
-  this.checkBody('intro').optional().empty().len(1, 100)
+  this.checkBody('name').len(1, 20, '你的暱稱必須介於1到20個字')
+  this.checkBody('gender').in(['male', 'female', 'alien'], '你是誰？')
+  this.checkBody('intro').optional().empty().len(1, 300, '你的介紹太長了')
 
   this.session.user = generateUser(this.request.body)
 

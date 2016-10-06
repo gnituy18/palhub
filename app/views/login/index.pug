@@ -5,11 +5,11 @@ block styles
 
 block content
   section.cont.center
-    div.cont
-      if errors
+    if errors
+      div.alert
         each error in errors
-          each key, value in error
-            p= key + ' ' + value
+          each value, key in error
+            p= value
     h1 聊天之前介紹一下你自己吧！
     div.cont
       form(method='post')
@@ -32,4 +32,4 @@ block content
           span(style='vertical-align:top;font-size:1.5em') 簡介
           textarea.form-text#intro(name='intro' style='min-height:100px;')
             | #{user.intro}
-        input.btn#submit(type='submit' value='SUBMIT') 
+        input.btn#submit(type='submit' value='確認') 
