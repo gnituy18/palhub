@@ -3,14 +3,18 @@ block styles
   link(rel='stylesheet' href='/css/chat.css')
 
 block content
-  div.cont-center.thin.cont
+  div.display-none
     div#name= user.name
     div#intro= user.intro
     div#gender= user.gender
-    div#pal
-    div.avatar.cont
-    div.cont-section
-    div#control.cont.text-align-center
+  div#room.section
+    div.cont.h-center
+      h1 歡迎來到 PalHub 聊天室
+    div#pal.cont.bg-yellow
+      div#pal-avatar.pal-avatar
+      div#pal-info.pal-info
+  div.section
+    div#control.h-center
     audio#audio-pal(autoplay)
     audio#audio-self(autoplay muted="muted")
     script(src='js/adapter.js')

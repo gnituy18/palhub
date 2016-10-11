@@ -1,14 +1,31 @@
 @import "../main";
-
 @include full-screen;
 
-.thin {
-  width: 1000px;
+.user-avatar {
+    background-color: $blue1;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
 }
 
-.avatar {
-  width: 300px;
-  height: 300px;
+.pal-avatar {
+    @include bg-image('/img/na.png');
+    vertical-align: top;
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+    margin: 20px;
+    font-size: 5em;
+}
 
-  @include bg-image("/img/boy-avatar.png");
+.pal-info {
+    vertical-align: top;
+    display:inline-block;
+    width:600px;
+    height: 300px;
+}
+
+.bg-yellow {
+  background-color: $theme-color-2;
+  border-radius: 5px;
 }
