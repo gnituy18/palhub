@@ -26,10 +26,10 @@ block content
           p 外星人
           input(type='radio' name='gender' value='alien' checked=user.gender == 'alien' ? 'checked' : undefined) 
         div.cont
-          span(style='font-size:1.5em;') 暱稱
+          span(style='font-size:1.5rem;') 暱稱
           input#name.form-text(type='text' name='name' value=user.name)
         div.cont
-          span(style='vertical-align:top;font-size:1.5em') 簡介
+          span(style='vertical-align:top;font-size:1.5rem') 簡介
           textarea.form-text#intro(name='intro' style='min-height:100px;')
             | #{user.intro}
         input.btn#submit(type='submit' value='確認') 

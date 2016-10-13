@@ -1,185 +1,82 @@
 @import "../main";
 
-body {
-  background-color: $theme-color-2;
+.intro {
+  margin: 0;
+  padding: 1rem 0;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
-.gray-line {
-  border-width: 0 5px;
-  border-style: solid;
-  border-color: $theme-color-4;
-}
-
-.intro-separator {
-  margin: 15px auto;
-  max-width: 100px;
-  border-top: 3px solid white;
-  border-bottom: 0;
-  border-left: 0;
-  border-right: 0;
-  height: 0;
-}
-
-.intro-annotation {
-  font-size: 1.5em;
+footer {
+  font-size: $font-size-small;
   color: $theme-color-3;
 }
 
-.intro-title {
-  display: inline-block;
-  font-size: 2.5em;
-  padding: 36px 20px;
-  margin: 0;
-  color: $theme-color-5;
-}
-
-.boy-icon {
-  @include bg-image("/img/boy.png");
-
-  width: 150px;
-  height: 150px;
-  display: inline-block;
-}
-
-.boy-icon2 {
-  @include bg-image("/img/boy2.png");
-
-  width: 150px;
-  height: 150px;
-  display: inline-block;
-}
-
-.girl-icon {
-  @include bg-image("/img/girl.png");
-
-  width: 150px;
-  height: 150px;
-  display: inline-block;
-}
-
-.bubble-right {
-  text-align: center;
-  margin: 15px 20px;
+.explanation-element {
   vertical-align: top;
   display: inline-block;
-  position: relative;
-  width: 650px;
-  height: 120px;
-  padding: 0px;
-  background: #FFFFE0;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  border: #afb8c1 solid 4px;
-
-  &:after {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 15px 0 15px 15px;
-    border-color: transparent #FFFFD4;
-    display: block;
-    width: 0;
-    z-index: 1;
-    right: -15px;
-    top: 45px;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 18px 0 18px 18px;
-    border-color: transparent #afb8c1;
-    display: block;
-    width: 0;
-    z-index: 0;
-    right: -22px;
-    top: 42px;
-  }
+  padding: 0.5rem;
 }
 
-.bubble-left {
-  text-align: center;
-  margin-top: 15px;
-  margin-left: 20px;
-  vertical-align: top;
-  display: inline-block;
-  position: relative;
-  width: 350px;
-  height: 120px;
-  padding: 0px;
-  background: #FFFFE0;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  border: #afb8c1 solid 4px;
+.place {
+  @include bg-image("/img/place.png");
 
-  &:after {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 15px 15px 15px 0;
-    border-color: transparent #FFFFD4;
-    display: block;
-    width: 0;
-    z-index: 1;
-    left: -15px;
-    top: 45px;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 18px 18px 18px 0;
-    border-color: transparent #afb8c1;
-    display: block;
-    width: 0;
-    z-index: 0;
-    left: -22px;
-    top: 42px;
-  }
+  margin: 1rem 5rem;
+  width: 150px;
+  height: 150px;
 }
 
-.bubble-how {
-  vertical-align: top;
-  margin-top: 15px;
-  margin-left: 20px;
+.microphone {
+  @include bg-image("/img/microphone.png");
+
+  margin: 1rem 5rem;
+  width: 150px;
+  height: 150px;
+}
+
+.chat {
+  @include bg-image("/img/chat.png");
+
+  margin: 1rem 5rem;
+  width: 150px;
+  height: 150px;
+}
+
+.browser {
   display: inline-block;
-  position: relative;
-  width: 700px;
-  height: 500px;
-  padding: 0px;
-  background: #FFFFD4;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  border: #afb8c1 solid 5px;
+  width: 40rem;
+  box-shadow: 0 0 1.5rem $gray3;
+}
 
-  &:after {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 15px 15px 15px 0;
-    border-color: transparent #FFFFD4;
-    display: block;
-    width: 0;
-    z-index: 1;
-    left: -15px;
-    top: 54px;
-  }
+.browser-bar {
+  border-radius: 5px 5px 0 0;
+  padding: 0 0.5rem;
+  height: 2rem;
+  background-color: $gray2;
+}
 
-  &:before {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 19px 19px 19px 0;
-    border-color: transparent #afb8c1;
-    display: block;
-    width: 0;
-    z-index: 0;
-    left: -24px;
-    top: 50px;
-  }
+.browser-content {
+  height: 30rem;
+  background-image: url('/img/demo.gif');
+  background-color: $white1;
+}
+
+.circle {
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.red {
+  background-color: $red3;
+}
+
+.yellow {
+  background-color: $yellow2;
+}
+
+.green {
+  background-color: $green1;
 }

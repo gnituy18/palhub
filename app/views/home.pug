@@ -4,37 +4,33 @@ block styles
   link(rel='stylesheet' href='css/home.css')
 
 block content
-  div.cont.wide.cont-white.gray-line
-    header.section
-      div.cont.h-center
-        span.intro-title 太多的話想要找一個人聊聊嗎？
-        span.intro-title 有太多想抱怨的不知向誰傾吐嗎？
-        span.intro-title 有故事想要找人分享嗎？
-      div.cont
-        span.boy-icon
-        div.bubble-left
-          span.intro-title 歡迎使用PalHub
-      div.cont.h-right
-        div.bubble-right 
-          span.intro-title 一款以語音為主的交友app
-        span.girl-icon
-    section.section
-      div.cont.h-center
-        h1.intro-title 要怎麼玩 PalHub？ 
-      div.cont
-        span.boy-icon2
-        div.bubble-how
-          div.cont
-            span.intro-title 1.
-            span.intro-title 找一個合適的環境
-          div.cont 
-            span.intro-title 2.
-            span.intro-title 接上你的麥克風
-          div.cont 
-            span.intro-title 3.
-            span.intro-title 按下配對便可以開始聊天
-      div.cont.h-center
-        a.btn(href = 'chat') 開始玩
-  footer.cont-blue
-    div.cont.h-right(style='font-weight:300')
-      span.intro-annotation Developed by SourFeetHsu
+  div.bg-blue2.text-align-center
+    div.intro.font-white 太多的話想要找一個人聊聊嗎？
+  header.section.bg-blue1.text-align-center
+    div.cont
+      div.intro.font-white PalHub
+      div.intro.font-white 一款以語音為主的交友app
+    div.cont
+      div.browser
+        div.browser-bar.text-align-left
+          div.circle.red
+          div.circle.yellow
+          div.circle.green
+        div.browser-content
+  section.section.text-align-center
+    h1.intro.font-blue 要怎麼玩 PalHub？ 
+    div.cont.font-white
+      div.explanation-element
+        div.place
+        span.font-blue 1 找個舒適的地點
+      div.explanation-element
+        div.microphone
+        span.font-blue 2 接上你的麥克風
+      div.explanation-element
+        div.chat
+        span.font-blue 3 按下配對
+    div.cont
+      a.btn(href = 'chat') 開始玩
+  footer.bg-blue1
+    div.cont(style='font-weight:300')
+      span Developed by SourFeetHsu

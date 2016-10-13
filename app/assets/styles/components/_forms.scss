@@ -1,19 +1,10 @@
 .form-text {
   display: inline-block;
-  margin: 6px 15px;
+  margin: 0.5rem 1rem;
   border-style: solid;
-  border-color: $gray;
-  border-radius: 5px;
-  border-width: 5px;
+  border-color: $gray1;
+  border-radius: $border-radius-base;
+  border-width: $border-width-base;
   padding: 10px;
   min-width: 500px;
-}
-
-.form-submit {
-  margin: 6px;
-  border-style: solid;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: transparent;
-  
 }

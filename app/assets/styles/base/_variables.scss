@@ -2,17 +2,31 @@
 $font-family-base: "Noto Sans TC", "Open Sans", sans-serif;
 
 //Colors
-$blue1: #3C64BF;
-$blue2: #2B426D;
-$yellow: #FFFCE3;
-$white: #FFFFFF;
-$gray: #AFB8C1;
 $red1: #C94044;
 $red2: #EBB3AC;
+$red3: #FD6E66;
+$blue1: #3C64BF;
+$blue2: #2B426D;
+$yellow1: #FFFCE3;
+$yellow2: #F0F20B;
+$green1: #5EE34C;
+$white1: #FFFFFF;
+$gray1: #AFB8C1;
+$gray2: #D6DCE0;
+$gray3: #404243;
 
 //Theme color
 $theme-color-1: $blue1;
-$theme-color-2: $yellow;
-$theme-color-3: $white;
-$theme-color-4: $gray;
+$theme-color-2: $yellow1;
+$theme-color-3: $white1;
+$theme-color-4: $gray1;
 $theme-color-5: $blue2;
+
+//Font size
+$font-size-base: 1.5rem;
+$font-size-large: 2rem;
+$font-size-small: 1rem;
+
+//Box style
+$border-radius-base: 10px;
+$border-width-base: 3.5px;

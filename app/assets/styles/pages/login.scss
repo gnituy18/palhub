@@ -9,14 +9,14 @@
 }
 
 .avatar-boy {
-  @include bg-image("/img/boy3.png");
+  @include bg-image("/img/male.png");
 
   width: 150px;
   height: 150px;
 }
 
 .avatar-girl {
-  @include bg-image("/img/girl2.png");
+  @include bg-image("/img/female.png");
 
   width: 150px;
   height: 150px;

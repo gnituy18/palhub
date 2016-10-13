@@ -7,13 +7,12 @@ block content
     div#name= user.name
     div#intro= user.intro
     div#gender= user.gender
-  div#room.section
-    div.cont.h-center
+  div#room.section.text-align-center
+    div.cont
       h1 歡迎來到 PalHub 聊天室
-    div#pal.cont.bg-yellow
-      div#pal-avatar.pal-avatar
-      div#pal-info.pal-info
-  div.section
+    div#pal.cont.bg-yellow.font-blue
+      div.not-found 這裡現在沒有人
+  div.section.text-align-center
     div#control.h-center
     audio#audio-pal(autoplay)
     audio#audio-self(autoplay muted="muted")

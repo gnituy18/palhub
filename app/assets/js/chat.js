@@ -21,7 +21,7 @@
 
   function init() {
 
-    if(multiTabFlag)
+    if (multiTabFlag)
       return
 
     info = {
@@ -63,7 +63,9 @@
         rtc.on('get offer', answering)
         rtc.on('get answer', finishing)
         rtc.on('get candidate', setCandidate)
-        rtc.on('get user info', displayUserInfo)
+        rtc.on('get user info', function(info) {
+          displayUserInfo(info)
+        })
         rtc.on('break connection', function() {
           disablePeer()
           disableButton(buttonLeave)
@@ -200,12 +202,11 @@
   }
 
   function displayUserInfo(info) {
-    document.getElementById('pal-info').insertAdjacentHTML('beforeend', info.name )
-    document.getElementById('pal-info').insertAdjacentHTML('beforeend', '<p>' + info.intro + '</p>')
+    $('#pal').html('<div class=\'pal-avatar\' style=\'background-image:url(\/img\/' + info.gender + '.png);\'></div><div class=\'pal-info\'><div class=\'pal-name\'>' + info.name + '</div><div class=\'pal-intro\'>' + info.intro + '</div></div>')
   }
 
   function removeUserInfo() {
-    document.getElementById('pal-info').innerHTML = null
+    $('#pal').html('<div class=\'not-found\'>現在這裡沒有人</div>')
   }
 
   //kill connection
@@ -215,21 +216,21 @@
     })
   }
 
-  function alertMsg(msg){
-    $('#control').html('<div class=\'alert\'><p>'+ msg +'</p></div>')
+  function alertMsg(msg) {
+    $('#control').html('<div class=\'alert\'><p>' + msg + '</p></div>')
   }
 
-  function displayLoading(){
-    $('#control').html('<div id=\'loading\'><p>等待中</p></div>')
+  function displayLoading() {
+    $('#control').html('<div class=\'loading\' id=\'loading\'>等待中...</div>')
   }
 
-  function killLoading(){
+  function killLoading() {
     $('#loading').html('')
   }
 
   window.onload = function() {
     checkMultiTabs()
-    setTimeout(init,300)
+    setTimeout(init, 300)
   }
 
   window.onbeforeunload = function() {
@@ -247,7 +248,7 @@
         break
       case 'tab':
         console.log('tab event')
-        if (!multiTabFlag){
+        if (!multiTabFlag) {
           multiTabFlag = true;
           alertMsg('你有一個聊天室已經開啟')
         }
