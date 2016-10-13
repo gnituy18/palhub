@@ -44,7 +44,7 @@ footer {
 
 .browser {
   display: inline-block;
-  width: 40rem;
+  width: 640px;
   box-shadow: 0 0 1.5rem $gray3;
 }
 
@@ -56,7 +56,7 @@ footer {
 }
 
 .browser-content {
-  height: 30rem;
+  height: 480px;
   background-image: url('/img/demo.gif');
   background-color: $white1;
 }
