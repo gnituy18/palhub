@@ -1,22 +1,20 @@
-.cont {
-  margin-left: auto;
-  margin-right: auto;
+.section {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
 }
 
-.cont-center {
+.cont {
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 64rem;
+}
+
+.center {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   text-align: center;
   position: relative;
   top: 50%;
-}
-
-.cont-section {
-  padding: 100px 0;
-  text-align: center;
-}
-
-.cont-dark-gray {
-  background-color: #4C4C4C;
 }

@@ -1,37 +1,82 @@
 @import "../main";
 
-@include full-screen;
-
-.bg-image {
-  @include bg-image("/img/header-bg.jpg");
-}
-
-header {
-  height: 100%;
-}
-
-.intro-separator {
-  margin: 15px auto;
-  max-width: 100px;
-  border-top: 3px solid white;
-  border-bottom: 0;
-  border-left: 0;
-  border-right: 0;
-  height: 0;
-}
-
-.intro-annotation {
-  font-size: 1.7em;
-  color: $intro-font-color;
-}
-
-.intro-title {
-  font-size: 5em;
+.intro {
   margin: 0;
-  color: $intro-font-color;
+  padding: 1rem 0;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
-.intro-title-blue {
-  margin: 0;
-  color: $intro-font-color-blue;
+footer {
+  font-size: $font-size-small;
+  color: $theme-color-3;
+}
+
+.explanation-element {
+  vertical-align: top;
+  display: inline-block;
+  padding: 0.5rem;
+}
+
+.place {
+  @include bg-image("/img/place.png");
+
+  margin: 1rem 5rem;
+  width: 150px;
+  height: 150px;
+}
+
+.microphone {
+  @include bg-image("/img/microphone.png");
+
+  margin: 1rem 5rem;
+  width: 150px;
+  height: 150px;
+}
+
+.chat {
+  @include bg-image("/img/chat.png");
+
+  margin: 1rem 5rem;
+  width: 150px;
+  height: 150px;
+}
+
+.browser {
+  display: inline-block;
+  width: 640px;
+  box-shadow: 0 0 1.5rem $gray3;
+}
+
+.browser-bar {
+  border-radius: 5px 5px 0 0;
+  padding: 0 0.5rem;
+  height: 2rem;
+  background-color: $gray2;
+}
+
+.browser-content {
+  height: 480px;
+  background-image: url('/img/demo.gif');
+  background-color: $white1;
+}
+
+.circle {
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.red {
+  background-color: $red3;
+}
+
+.yellow {
+  background-color: $yellow2;
+}
+
+.green {
+  background-color: $green1;
 }

@@ -4,10 +4,8 @@
  * 2. Correct the line height in all browsers.
  * 3. Prevent adjustments of font size after orientation changes in IE and iOS.
  */
-@import "https://fonts.googleapis.com/css?family=Inconsolata";
-@import "https://fonts.googleapis.com/css?family=Lobster";
-@import "https://fonts.googleapis.com/css?family=Open+Sans";
-@import "https://fonts.googleapis.com/css?family=Oswald";
+@import "https://fonts.googleapis.com/earlyaccess/notosanstc.css";
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,400";
 html {
   font-family: sans-serif;
   /* 1 */
@@ -412,20 +410,14 @@ textarea {
   /* 2 */
 }
 
+body {
+  font-family: "Noto Sans TC", "Open Sans", sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Oswald", sans-serif;
-}
-
-p {
-  font-family: "Open Sans", sans-serif;
-}
-
-.font-l {
-  font-size: 5em;
-}
-
-.font-xl {
-  font-size: 10em;
+  font-size: 2rem;
 }
 
 .display-none {
@@ -436,37 +428,88 @@ p {
   text-align: center;
 }
 
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.bg-yellow1 {
+  background-color: #FFFCE3;
+}
+
+.bg-blue1 {
+  background-color: #3C64BF;
+}
+
+.bg-blue2 {
+  background-color: #2B426D;
+}
+
+.bg-gray1 {
+  background-color: #AFB8C1;
+}
+
+.bg-white1 {
+  background-color: #FFFFFF;
+}
+
+.font-blue {
+  color: #2B426D;
+}
+
+.font-white {
+  color: #FFFFFF;
+}
+
+.alert {
+  display: inline-block;
+  margin: 1rem;
+  border-width: 3.5px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #C94044;
+  padding: 10px  25px;
+  background-color: #EBB3AC;
+  font-size: 2rem;
+}
+
 .btn {
   display: inline-block;
   border-style: solid;
-  border-width: 2px;
-  border-color: #6C8BC8;
+  border-width: 3.5px;
+  border-color: #3C64BF;
   border-radius: 10px;
   padding: 5px  25px;
-  color: #6C8BC8;
-  background-color: transparent;
-  text-decoration: none;
-  font-family: "Open Sans", sans-serif;
-  font-size: 2em;
+  background-color: #3C64BF;
   cursor: pointer;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: "Noto Sans TC", "Open Sans", sans-serif;
+  font-size: 2rem;
   transition: all .3s;
 }
 
 .btn:hover {
-  color: #4163A4;
-  border-color: #4163A4;
+  background-color: #FFFFFF;
+  color: #3C64BF;
 }
 
-.btn-circle {
-  border-radius: 50%;
+.section {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
 }
 
 .cont {
+  padding: 1rem;
   margin-left: auto;
   margin-right: auto;
+  max-width: 64rem;
 }
 
-.cont-center {
+.center {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -475,31 +518,65 @@ p {
   top: 50%;
 }
 
-.cont-section {
-  padding: 100px 0;
-  text-align: center;
-}
-
-.cont-dark-gray {
-  background-color: #4C4C4C;
-}
-
 .form-text {
-  margin: 6px;
+  display: inline-block;
+  margin: 0.5rem 1rem;
   border-style: solid;
-  border-color: gray;
+  border-color: #AFB8C1;
+  border-radius: 10px;
+  border-width: 3.5px;
   padding: 10px;
-  border-radius: 5px;
+  min-width: 500px;
 }
 
-.form-submit {
-  margin: 6px;
-  border-style: solid;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: transparent;
+.nav {
+  width: 100%;
+  height: 4rem;
+  background-color: #2B426D;
+}
+
+.nav-element {
+  display: inline-block;
+  padding: 0.8rem 1rem;
+  font-size: 2rem;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.nav-element:hover {
+  color: #AFB8C1;
 }
 
 html, body {
   height: 100%;
+}
+
+.avatar-picker {
+  vertical-align: top;
+  display: inline-block;
+  padding: 10px 40px;
+}
+
+.avatar-boy {
+  background-image: url("/img/male.png");
+  background-size: cover;
+  background-position: center;
+  width: 150px;
+  height: 150px;
+}
+
+.avatar-girl {
+  background-image: url("/img/female.png");
+  background-size: cover;
+  background-position: center;
+  width: 150px;
+  height: 150px;
+}
+
+.avatar-alien {
+  background-image: url("/img/alien.png");
+  background-size: cover;
+  background-position: center;
+  width: 150px;
+  height: 150px;
 }

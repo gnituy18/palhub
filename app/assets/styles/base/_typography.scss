@@ -1,15 +1,9 @@
-h1, h2, h3, h4, h5, h6 {
-  font-family: $heading-font-family;
-}
-
-p {
+body {
   font-family: $font-family-base;
+  font-size: $font-size-base;
+  letter-spacing: 3px;
 }
 
-.font-l{
-  font-size: 5em;
-}
-
-.font-xl{
-  font-size: 10em;
+h1, h2, h3, h4, h5, h6 {
+  font-size: $font-size-large;
 }

@@ -2,13 +2,56 @@
 
 @include full-screen;
 
-.thin {
-  width: 1000px;
+.user-avatar {
+  background-color: $blue1;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
 }
 
-.avatar {
-  width: 300px;
-  height: 300px;
+.pal-avatar {
+  background-size: cover;
+  background-position: center;
+  vertical-align: top;
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  font-size: 5em;
+}
 
-  @include bg-image("/img/boy-avatar.png");
+.pal-info {
+  vertical-align: top;
+  display: inline-block;
+  margin: 0 3rem;
+  width: 500px;
+  height: 300px;
+}
+
+.pal-name {
+  padding-top: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.pal-intro {
+  padding: 0.5rem 0;
+  max-height: 240px;
+  overflow: scroll;
+}
+
+.not-found {
+  padding: 8rem 0;
+  font-size: 2rem;
+  color: $gray1;
+}
+
+.loading {
+  font-size: 2rem;
+  color: $gray1;
+}
+
+.bg-yellow {
+  background-color: $theme-color-2;
+  border-radius: 5px;
 }

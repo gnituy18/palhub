@@ -2,12 +2,13 @@
 (function() {
 
   var rtc = require('socket.io-client')('/webrtc')
+  var $ = require('jquery')
   var audioSelf = document.getElementById('audio-self')
   var audioPal = document.getElementById('audio-pal')
   var buttonPair = document.createElement('button')
   var buttonLeave = document.createElement('button')
   var control = document.getElementById('control')
-  var $ = require('jquery')
+
 
   var pc
   var constraints = {
@@ -17,13 +18,17 @@
   var localStream
   var pair
   var info
-  var token
+  var multiTabFlag
 
   function init() {
+
+    if (multiTabFlag)
+      return
+
     info = {
-      name: document.getElementById('name').innerHTML,
-      gender: document.getElementById('gender').innerHTML,
-      intro: document.getElementById('intro').innerHTML
+      name: $('#name').text(),
+      gender: $('#gender').text(),
+      intro: $('#intro').text()
     }
 
     console.log(info)
@@ -31,18 +36,23 @@
     //Local stream
     navigator.mediaDevices.getUserMedia(constraints)
       .then(setupLocalStream)
+      .catch(err => {
+        alertMsg('你的麥克風未開啟')
+        throw err
+      })
       .then(() => {
         buttonPair.id = 'button-pair'
         buttonPair.className = 'btn'
-        buttonPair.innerHTML = 'Chat'
+        buttonPair.innerHTML = '配對'
         buttonPair.onclick = function() {
           disableButton(buttonPair)
+          displayLoading()
           setupPc()
           connectPeer()
         }
         buttonLeave.id = 'button-leave'
         buttonLeave.className = 'btn'
-        buttonLeave.innerHTML = 'Leave'
+        buttonLeave.innerHTML = '離開'
         buttonLeave.onclick = function() {
           breakConnection()
           disablePeer()
@@ -54,7 +64,9 @@
         rtc.on('get offer', answering)
         rtc.on('get answer', finishing)
         rtc.on('get candidate', setCandidate)
-        rtc.on('get user info', getUserInfo)
+        rtc.on('get user info', function(info) {
+          displayUserInfo(info)
+        })
         rtc.on('break connection', function() {
           disablePeer()
           disableButton(buttonLeave)
@@ -67,7 +79,6 @@
         enableButton(buttonPair)
         console.log('Done init.')
       })
-      .then(checkMultiTabs)
       .catch(err => {
         console.log(err)
       })
@@ -75,9 +86,8 @@
 
   //Check multi-tabs
   function checkMultiTabs() {
-    console.log('token', token)
-    if (!token) {
-      console.log('send gettab')
+    if (!multiTabFlag) {
+      console.log('Send getTab event.')
       localStorage.setItem('getTab', Date.now())
     }
   }
@@ -91,10 +101,12 @@
     control.appendChild(btn)
   }
 
+  //Trigger RTC handshaking
   function connectPeer() {
     rtc.emit('pair')
   }
 
+  //kill peer
   function disablePeer() {
     pc.close()
     pair = null
@@ -107,7 +119,7 @@
     audioSelf.src = window.URL.createObjectURL(stream)
   }
 
-  // RTC
+  //RTC handshaking
   function offering(id) {
     pair = id
     pc.createOffer()
@@ -176,11 +188,13 @@
       case 'connected':
         enableButton(buttonLeave)
         transferUserInfo()
+        killLoading()
         break
     }
     console.log(pc.iceConnectionState)
   }
 
+  //User information
   function transferUserInfo() {
     rtc.emit('pass user info', {
       socket: pair,
@@ -188,22 +202,36 @@
     })
   }
 
-  function getUserInfo(info) {
-    document.getElementById('pal').innerHTML = info.name
+  function displayUserInfo(info) {
+    $('#pal').html('<div class=\'pal-avatar\' style=\'background-image:url(\/img\/' + info.gender + '.png);\'></div><div class=\'pal-info\'><div class=\'pal-name\'>' + info.name + '</div><div class=\'pal-intro\'>' + info.intro + '</div></div>')
   }
 
   function removeUserInfo() {
-    document.getElementById('pal').innerHTML = null
+    $('#pal').html('<div class=\'not-found\'>現在這裡沒有人</div>')
   }
 
+  //kill connection
   function breakConnection() {
     rtc.emit('break connection', {
       socket: pair
     })
   }
 
+  function alertMsg(msg) {
+    $('#control').html('<div class=\'alert\'><p>' + msg + '</p></div>')
+  }
+
+  function displayLoading() {
+    $('#control').html('<div class=\'loading\' id=\'loading\'>等待中...</div>')
+  }
+
+  function killLoading() {
+    $('#loading').html('')
+  }
+
   window.onload = function() {
-    init()
+    checkMultiTabs()
+    setTimeout(init, 300)
   }
 
   window.onbeforeunload = function() {
@@ -211,24 +239,21 @@
   }
 
   window.addEventListener('storage', function(event) {
-    console.log('storage event: ')
     switch (event.key) {
       case 'getTab':
-        if (token == null) {
+        if (!multiTabFlag) {
           console.log('getTab event')
-          localStorage.setItem('tab', 'first')
+          localStorage.setItem('tab', 'I\'m the first tab.')
           localStorage.removeItem('tab')
         }
         break
       case 'tab':
         console.log('tab event')
-        if (token == null) {
-          disableButton(buttonLeave)
-          disableButton(buttonPair)
-          removeUserInfo()
-          token = 'after'
+        if (!multiTabFlag) {
+          multiTabFlag = true;
+          alertMsg('你有一個聊天室已經開啟')
         }
-        console.log(token)
+        console.log('This is not the first tab.')
         break
     }
   })

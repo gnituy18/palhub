@@ -6,7 +6,7 @@ var chat = require('./chat')
 
 router.use('/', home.routes())
 //router.use('/widgets', widgets.routes())
-router.use('/login', login.routes())
+router.use('/profile', login.routes())
 router.use('/chat', chat.routes())
 
 module.exports = router

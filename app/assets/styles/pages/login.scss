@@ -2,3 +2,29 @@
 
 @include full-screen;
 
+.avatar-picker {
+  vertical-align: top;
+  display: inline-block;
+  padding: 10px 40px;
+}
+
+.avatar-boy {
+  @include bg-image("/img/male.png");
+
+  width: 150px;
+  height: 150px;
+}
+
+.avatar-girl {
+  @include bg-image("/img/female.png");
+
+  width: 150px;
+  height: 150px;
+}
+
+.avatar-alien {
+  @include bg-image("/img/alien.png");
+
+  width: 150px;
+  height: 150px;
+}

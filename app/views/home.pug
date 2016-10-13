@@ -4,10 +4,33 @@ block styles
   link(rel='stylesheet' href='css/home.css')
 
 block content
-  header.bg-image
-    div.cont-center
-      h1.intro-title Pal
-        span.intro-title-blue Hub
-      hr.intro-separator
-      p.intro-annotation Find a pal and make new friends.
-      a.btn(href = 'chat') Start now!
+  div.bg-blue2.text-align-center
+    div.intro.font-white 太多的話想要找一個人聊聊嗎？
+  header.section.bg-blue1.text-align-center
+    div.cont
+      div.intro.font-white PalHub
+      div.intro.font-white 一款以語音為主的交友app
+    div.cont
+      div.browser
+        div.browser-bar.text-align-left
+          div.circle.red
+          div.circle.yellow
+          div.circle.green
+        div.browser-content
+  section.section.text-align-center
+    h1.intro.font-blue 要怎麼玩 PalHub？ 
+    div.cont.font-white
+      div.explanation-element
+        div.place
+        span.font-blue 1 找個舒適的地點
+      div.explanation-element
+        div.microphone
+        span.font-blue 2 接上你的麥克風
+      div.explanation-element
+        div.chat
+        span.font-blue 3 按下配對
+    div.cont
+      a.btn(href = 'chat') 開始玩
+  footer.bg-blue1
+    div.cont(style='font-weight:300')
+      span Developed by SourFeetHsu
