@@ -4,8 +4,8 @@ var https = require('https')
 var http = require('http')
 var fs = require('fs')
 var options = {
-  key: fs.readFileSync('palhub-key.pem'),
-  cert: fs.readFileSync('palhub-cert.pem')
+  key: fs.readFileSync(process.env.PRIVKEY || 'key.pem'),
+  cert: fs.readFileSync(process.env.CERT || 'cert.pem')
 }
 
 var serverHttp = http.createServer(app.callback())
