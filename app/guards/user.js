@@ -12,3 +12,14 @@ module.exports.pair = function(socketId) {
     }
   })
 }
+
+module.exports.cancel = function(socketId) {
+  return redis.getAsync('hold').then(reply => {
+    if (reply == socketId) {
+      redis.del('hold')
+      return true
+    } else {
+      return false
+    }
+  })
+}

@@ -7,6 +7,7 @@
   var audioPal = document.getElementById('audio-pal')
   var buttonPair = document.createElement('button')
   var buttonLeave = document.createElement('button')
+  var buttonCancel = document.createElement('button')
   var control = document.getElementById('control')
 
 
@@ -62,6 +63,7 @@
           displayLoading()
           setupPc()
           connectPeer()
+          enableButton(buttonCancel)
         }
         buttonLeave.id = 'button-leave'
         buttonLeave.className = 'btn'
@@ -73,6 +75,16 @@
           enableButton(buttonPair)
           removeUserInfo()
         }
+        buttonCancel.id = 'button-cancel'
+        buttonCancel.className = 'btn'
+        buttonCancel.innerHTML = '取消'
+        buttonCancel.onclick = function() {
+          rtc.emit('cancel')
+          removeUserInfo()
+          disableButton(buttonCancel)
+          enableButton(buttonPair)
+        }
+
         rtc.on('pair', offering)
         rtc.on('get offer', answering)
         rtc.on('get answer', finishing)
@@ -86,6 +98,10 @@
           enableButton(buttonPair)
           removeUserInfo()
           console.log('break')
+        })
+        $('.nav-element').click(function(){
+          if(pair)
+            return confirm('現在離開會導致聊天中斷！\n你確定要離開嗎？')
         })
       })
       .then(() => {
@@ -199,9 +215,9 @@
         buttonLeave.click()
         break
       case 'connected':
+        disableButton(buttonCancel)
         enableButton(buttonLeave)
         transferUserInfo()
-        killLoading()
         break
     }
     console.log(pc.iceConnectionState)
@@ -216,11 +232,11 @@
   }
 
   function displayUserInfo(info) {
-    $('#pal').html('<div class=\'pal-avatar\' style=\'background-image:url(\/img\/' + info.gender + '.png);\'></div><div class=\'pal-info\'><div class=\'pal-name\'>' + info.name + '</div><div class=\'pal-intro\'>' + info.intro + '</div></div>')
+    $('#pal').html('<div class=\'pal-avatar\' style=\'background-image:url(\/img\/' + escapeHtml(info.gender) + '.png);\'></div><div class=\'pal-info\'><div class=\'pal-name\'>' + escapeHtml(info.name) + '</div><div class=\'pal-intro\'>' + escapeHtml(info.intro) + '</div></div>')
   }
 
   function removeUserInfo() {
-    $('#pal').html('<div class=\'not-found\'>現在這裡沒有人</div>')
+    $('#pal').html('<div class=\'not-found\'>按下配對開始聊天</div>')
   }
 
   //kill connection
@@ -235,11 +251,25 @@
   }
 
   function displayLoading() {
-    $('#control').html('<div class=\'loading\' id=\'loading\'>等待中...</div>')
+    $('#pal').html('<div class=\'not-found\' id=\'loading\'>等待中...</div>')
   }
 
-  function killLoading() {
-    $('#loading').html('')
+
+  var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+  };
+
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function fromEntityMap(s) {
+      return entityMap[s];
+    });
   }
 
   window.onload = function() {
@@ -248,6 +278,7 @@
   }
 
   window.onbeforeunload = function() {
+    breakConnection()
     localStorage.clear()
   }
 
