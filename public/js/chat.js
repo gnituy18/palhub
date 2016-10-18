@@ -99,6 +99,10 @@
           removeUserInfo()
           console.log('break')
         })
+        $('.nav-element').click(function(){
+          if(pair)
+            return confirm('現在離開會導致聊天中斷！\n你確定要離開嗎？')
+        })
       })
       .then(() => {
         enableButton(buttonPair)
