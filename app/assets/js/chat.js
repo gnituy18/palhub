@@ -215,7 +215,7 @@
   }
 
   function displayUserInfo(info) {
-    $('#pal').html('<div class=\'pal-avatar\' style=\'background-image:url(\/img\/' + info.gender + '.png);\'></div><div class=\'pal-info\'><div class=\'pal-name\'>' + info.name + '</div><div class=\'pal-intro\'>' + info.intro + '</div></div>')
+    $('#pal').html('<div class=\'pal-avatar\' style=\'background-image:url(\/img\/' + escapeHtml(info.gender) + '.png);\'></div><div class=\'pal-info\'><div class=\'pal-name\'>' + escapeHtml(info.name) + '</div><div class=\'pal-intro\'>' + escapeHtml(info.intro) + '</div></div>')
   }
 
   function removeUserInfo() {
@@ -241,12 +241,30 @@
     $('#loading').html('')
   }
 
+  var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+  };
+
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function fromEntityMap(s) {
+      return entityMap[s];
+    });
+  }
+
   window.onload = function() {
     checkMultiTabs()
     setTimeout(init, 300)
   }
 
   window.onbeforeunload = function() {
+    breakConnection()
     localStorage.clear()
   }
 
