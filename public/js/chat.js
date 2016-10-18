@@ -7,6 +7,7 @@
   var audioPal = document.getElementById('audio-pal')
   var buttonPair = document.createElement('button')
   var buttonLeave = document.createElement('button')
+  var buttonCancel = document.createElement('button')
   var control = document.getElementById('control')
 
 
@@ -62,6 +63,7 @@
           displayLoading()
           setupPc()
           connectPeer()
+          enableButton(buttonCancel)
         }
         buttonLeave.id = 'button-leave'
         buttonLeave.className = 'btn'
@@ -73,6 +75,16 @@
           enableButton(buttonPair)
           removeUserInfo()
         }
+        buttonCancel.id = 'button-cancel'
+        buttonCancel.className = 'btn'
+        buttonCancel.innerHTML = '取消'
+        buttonCancel.onclick = function() {
+          rtc.emit('cancel')
+          removeUserInfo()
+          disableButton(buttonCancel)
+          enableButton(buttonPair)
+        }
+
         rtc.on('pair', offering)
         rtc.on('get offer', answering)
         rtc.on('get answer', finishing)
@@ -199,9 +211,9 @@
         buttonLeave.click()
         break
       case 'connected':
+        disableButton(buttonCancel)
         enableButton(buttonLeave)
         transferUserInfo()
-        killLoading()
         break
     }
     console.log(pc.iceConnectionState)
@@ -220,7 +232,7 @@
   }
 
   function removeUserInfo() {
-    $('#pal').html('<div class=\'not-found\'>現在這裡沒有人</div>')
+    $('#pal').html('<div class=\'not-found\'>按下配對開始聊天</div>')
   }
 
   //kill connection
@@ -235,12 +247,9 @@
   }
 
   function displayLoading() {
-    $('#control').html('<div class=\'loading\' id=\'loading\'>等待中...</div>')
+    $('#pal').html('<div class=\'not-found\' id=\'loading\'>等待中...</div>')
   }
 
-  function killLoading() {
-    $('#loading').html('')
-  }
 
   var entityMap = {
     '&': '&amp;',

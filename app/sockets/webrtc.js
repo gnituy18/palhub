@@ -33,6 +33,16 @@ module.exports = function(io) {
       console.log(socket.id + 'pass answer')
     })
 
+    socket.on('cancel', function() {
+      guard.cancel(socket.id).then(reply => {
+        if (reply) {
+          console.log(socket.id + 'cancel success.')
+        } else {
+          console.log(socket.id + 'cancel failed.')
+        }
+      })
+    })
+
     socket.on('disconnect', function() {
       client.get('hold', function(err, reply) {
         if (reply == socket.id)
