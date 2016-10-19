@@ -16,8 +16,10 @@ require('koa-validate')(app)
 app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
+
 app.use(logger())
 onerror(app)
+
 app.use(serve(path.join(__dirname, '../public')))
 
 app.keys = ['haha']
