@@ -5,8 +5,8 @@ var http = require('http')
 var fs = require('fs')
 var path = require('path')
 var options = {
-  key: fs.readFileSync(path.join(process.env.SSL_ROOT || '', 'key.pem')),
-  cert: fs.readFileSync(path.join(process.env.SSL_ROOT || '', 'cert.pem'))
+  key: fs.readFileSync(path.join(process.env.SSL_KEY || '', 'key.pem')),
+  cert: fs.readFileSync(path.join(process.env.SSL_CERT || '', 'cert.pem'))
 }
 
 var serverHttp = http.createServer(app.callback())
