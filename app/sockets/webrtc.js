@@ -1,16 +1,18 @@
 var client = require('../redis')
 var guard = require('../guards/user')
+var logger = require('../logger')
 
 module.exports = function(io) {
 
   var rtc = io.of('/webrtc')
   rtc.on('connection', function(socket) {
 
+    logger.info('enter: ' + socket.id)
+
     socket.on('pair', function(info) {
       guard.pair(socket.id).then(function(hold) {
         if (hold) {
           rtc.to(hold).emit('pair', socket.id)
-          console.log(hold)
         }
       })
     })
@@ -34,13 +36,7 @@ module.exports = function(io) {
     })
 
     socket.on('cancel', function() {
-      guard.cancel(socket.id).then(reply => {
-        if (reply) {
-          console.log(socket.id + 'cancel success.')
-        } else {
-          console.log(socket.id + 'cancel failed.')
-        }
-      })
+      guard.cancel(socket.id)
     })
 
     socket.on('disconnect', function() {
@@ -50,13 +46,12 @@ module.exports = function(io) {
             console.log('hold is empty')
           })
       })
-      console.log(socket.id + ' disconnect')
-
+      logger.info('leave: ' + socket.id)
     })
 
     socket.on('break connection', function(info) {
-      console.log('break ' + info.socket)
       rtc.to(info.socket).emit('break connection')
+      logger.info('break: ' + socket.id)
     })
 
     socket.on('pass user info', function(data) {
