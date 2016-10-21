@@ -72,14 +72,14 @@
           disablePeer()
           disableButton(buttonLeave)
           enableButton(buttonPair)
-          removeUserInfo()
+          removeUserInfo('按下配對開始聊天')
         }
         buttonCancel.id = 'button-cancel'
         buttonCancel.className = 'btn'
         buttonCancel.innerHTML = '取消'
         buttonCancel.onclick = function() {
           rtc.emit('cancel')
-          removeUserInfo()
+          removeUserInfo('按下配對開始聊天')
           disableButton(buttonCancel)
           enableButton(buttonPair)
         }
@@ -95,11 +95,11 @@
           disablePeer()
           disableButton(buttonLeave)
           enableButton(buttonPair)
-          removeUserInfo()
+          removeUserInfo('按下配對開始聊天')
           console.log('break')
         })
-        $('.nav-element').click(function(){
-          if(pair)
+        $('.nav-element').click(function() {
+          if (pair)
             return confirm('現在離開會導致聊天中斷！\n你確定要離開嗎？')
         })
       })
@@ -218,6 +218,12 @@
         enableButton(buttonLeave)
         transferUserInfo()
         break
+      case 'failed':
+        disableButton('button-leave')
+        alertMsg('連線出現問題，請重新整理。')
+        removeUserInfo('出現錯誤')
+        pc.close()
+        break
     }
     console.log(pc.iceConnectionState)
   }
@@ -234,8 +240,8 @@
     $('#pal').html('<div class=\'pal-avatar\' style=\'background-image:url(\/img\/' + escapeHtml(info.gender) + '.png);\'></div><div class=\'pal-info\'><div class=\'pal-name\'>' + escapeHtml(info.name) + '</div><div class=\'pal-intro\'>' + escapeHtml(info.intro) + '</div></div>')
   }
 
-  function removeUserInfo() {
-    $('#pal').html('<div class=\'not-found\'>按下配對開始聊天</div>')
+  function removeUserInfo(msg) {
+    $('#pal').html('<div class=\'not-found\'>' + msg + '</div>')
   }
 
   //kill connection
