@@ -3,7 +3,6 @@ var logger = require('../logger')
 
 module.exports.pair = function(socketId) {
   return redis.getAsync('hold').then((reply) => {
-    console.log(reply)
     if (!reply) {
       redis.set('hold', socketId)
       logger.info('hold: ' + socketId)

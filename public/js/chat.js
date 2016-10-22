@@ -10,7 +10,6 @@
   var buttonCancel = document.createElement('button')
   var control = document.getElementById('control')
 
-
   var pc
   var peerConfig = {
     iceServers: [{
@@ -37,8 +36,8 @@
     video: false
   }
   var localStream
-  var pair
-  var info
+  var palSocketId
+  var userInfo
   var multiTabFlag
 
   function init() {
@@ -46,13 +45,11 @@
     if (multiTabFlag)
       return
 
-    info = {
+    userInfo = {
       name: $('#name').text(),
       gender: $('#gender').text(),
       intro: $('#intro').text()
     }
-
-    console.log(info)
 
     //Local stream
     navigator.mediaDevices.getUserMedia(constraints)
@@ -66,29 +63,29 @@
         buttonPair.className = 'btn'
         buttonPair.innerHTML = '配對'
         buttonPair.onclick = function() {
-          disableButton(buttonPair)
-          displayLoading()
+          clearControl()
+          boardMsg('等待中...')
           setupPc()
-          connectPeer()
+          makeConnection()
           enableButton(buttonCancel)
         }
         buttonLeave.id = 'button-leave'
         buttonLeave.className = 'btn'
         buttonLeave.innerHTML = '離開'
         buttonLeave.onclick = function() {
+          clearControl()
           breakConnection()
-          disablePeer()
-          disableButton(buttonLeave)
+          closePc()
+          boardMsg('按下配對開始聊天')
           enableButton(buttonPair)
-          removeUserInfo('按下配對開始聊天')
         }
         buttonCancel.id = 'button-cancel'
         buttonCancel.className = 'btn'
         buttonCancel.innerHTML = '取消'
         buttonCancel.onclick = function() {
+          clearControl()
           rtc.emit('cancel')
-          removeUserInfo('按下配對開始聊天')
-          disableButton(buttonCancel)
+          boardMsg('按下配對開始聊天')
           enableButton(buttonPair)
         }
 
@@ -97,17 +94,17 @@
         rtc.on('get answer', finishing)
         rtc.on('get candidate', setCandidate)
         rtc.on('get user info', function(info) {
-          displayUserInfo(info)
+          displayPalInfo(info)
         })
         rtc.on('break connection', function() {
-          disablePeer()
-          disableButton(buttonLeave)
+          closePc()
+          clearControl()
           enableButton(buttonPair)
-          removeUserInfo('按下配對開始聊天')
+          boardMsg('按下配對開始聊天')
           console.log('break')
         })
         $('.nav-element').click(function() {
-          if (pair)
+          if (palSocketId)
             return confirm('現在離開會導致聊天中斷！\n你確定要離開嗎？')
         })
       })
@@ -128,7 +125,7 @@
     }
   }
 
-  //Setup components
+  //Components
   function disableButton(btn) {
     btn.remove()
   }
@@ -137,16 +134,16 @@
     control.appendChild(btn)
   }
 
-  //Trigger RTC handshaking
-  function connectPeer() {
-    rtc.emit('pair')
+  function clearControl(){
+    $('#control').html('')
   }
 
-  //kill peer
-  function disablePeer() {
-    pc.close()
-    pair = null
-    console.log('leave')
+  function alertMsg(msg) {
+    $('#control').html('<div class=\'alert\'><p>' + msg + '</p></div>')
+  }
+
+  function boardMsg(msg) {
+    $('#pal').html('<div class=\'not-found\'>' + msg + '</div>')
   }
 
   //Local stream
@@ -156,8 +153,18 @@
   }
 
   //RTC handshaking
+  function makeConnection() {
+    rtc.emit('pair')
+  }
+
+  function breakConnection() {
+    rtc.emit('break connection', {
+      socket: palSocketId
+    })
+  }
+
   function offering(id) {
-    pair = id
+    palSocketId = id
     pc.createOffer()
       .then(offer => pc.setLocalDescription(offer))
       .then(() => {
@@ -169,7 +176,7 @@
   }
 
   function answering(info) {
-    pair = info.socket
+    palSocketId = info.socket
     console.log(info)
     pc.setRemoteDescription(info.offer)
       .then(() => pc.createAnswer())
@@ -192,7 +199,18 @@
     console.log(candidate)
   }
 
-  //New peer connection
+  function passCandidate(e) {
+    if (!e.candidate) {
+      return null
+    } else {
+      rtc.emit('pass candidate', {
+        socket: palSocketId,
+        candidate: e.candidate
+      })
+    }
+  }
+
+  //Peer connection
   function setupPc() {
     pc = new RTCPeerConnection(peerConfig)
     pc.onicecandidate = passCandidate
@@ -201,15 +219,9 @@
     pc.addStream(localStream)
   }
 
-  function passCandidate(e) {
-    if (!e.candidate) {
-      return null
-    } else {
-      rtc.emit('pass candidate', {
-        socket: pair,
-        candidate: e.candidate
-      })
-    }
+  function closePc() {
+    pc.close()
+    palSocketId = null
   }
 
   function addStream(e) {
@@ -229,7 +241,7 @@
       case 'failed':
         disableButton('button-leave')
         alertMsg('連線出現問題，請重新整理。')
-        removeUserInfo('出現錯誤')
+        boardMsg('出現錯誤')
         pc.close()
         break
     }
@@ -239,47 +251,27 @@
   //User information
   function transferUserInfo() {
     rtc.emit('pass user info', {
-      socket: pair,
-      info: info
+      socket: palSocketId,
+      info: userInfo
     })
   }
 
-  function displayUserInfo(info) {
+  function displayPalInfo(info) {
     $('#pal').html('<div class=\'pal-avatar\' style=\'background-image:url(\/img\/' + escapeHtml(info.gender) + '.png);\'></div><div class=\'pal-info\'><div class=\'pal-name\'>' + escapeHtml(info.name) + '</div><div class=\'pal-intro\'>' + escapeHtml(info.intro) + '</div></div>')
   }
 
-  function removeUserInfo(msg) {
-    $('#pal').html('<div class=\'not-found\'>' + msg + '</div>')
-  }
-
-  //kill connection
-  function breakConnection() {
-    rtc.emit('break connection', {
-      socket: pair
-    })
-  }
-
-  function alertMsg(msg) {
-    $('#control').html('<div class=\'alert\'><p>' + msg + '</p></div>')
-  }
-
-  function displayLoading() {
-    $('#pal').html('<div class=\'not-found\' id=\'loading\'>等待中...</div>')
-  }
-
-
-  var entityMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-    '/': '&#x2F;',
-    '`': '&#x60;',
-    '=': '&#x3D;'
-  };
-
+  //Helpers
   function escapeHtml(string) {
+    var entityMap = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+      '`': '&#x60;',
+      '=': '&#x3D;'
+    };
     return String(string).replace(/[&<>"'`=\/]/g, function fromEntityMap(s) {
       return entityMap[s];
     });
