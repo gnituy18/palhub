@@ -6,6 +6,7 @@
  */
 @import "https://fonts.googleapis.com/earlyaccess/notosanstc.css";
 @import "https://fonts.googleapis.com/css?family=Open+Sans:300,400";
+@import "https://fonts.googleapis.com/css?family=Courgette";
 html {
   font-family: sans-serif;
   /* 1 */
@@ -436,6 +437,10 @@ h1, h2, h3, h4, h5, h6 {
   text-align: right;
 }
 
+.float-right {
+  float: right;
+}
+
 .bg-yellow1 {
   background-color: #FFFCE3;
 }
@@ -535,7 +540,18 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #2B426D;
 }
 
+.nav-brand {
+  display: inline-block;
+  margin: 5.5px 5px;
+  padding: 1px 1rem;
+  font-size: 2rem;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: "Courgette", cursive;
+}
+
 .nav-element {
+  vertical-align: top;
   display: inline-block;
   margin: 5.5px 5px;
   padding: 5px 1rem;
@@ -545,12 +561,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-element:hover {
-  background-color: #3C64BF;
-  border-radius: 5px;
-}
-
-.float-right {
-  float: right;
+  color: #AFB8C1;
 }
 
 html, body {

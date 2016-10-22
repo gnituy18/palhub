@@ -1,7 +1,7 @@
 @mixin bg-image($url) {
-    background-image: url($url);
-    background-size: cover;
-    background-position: center;
+  background-image: url($url);
+  background-size: cover;
+  background-position: center;
 }
 
 @mixin full-screen {
