@@ -9,6 +9,12 @@ module.exports = function(io) {
 
     logger.info('enter: ' + socket.id)
 
+    socket.on('join', function() {
+      guard.add().then(reply => {
+        rtc.emit('user number', reply)
+      })
+    })
+
     socket.on('pair', function(info) {
       guard.pair(socket.id).then(function(hold) {
         if (hold) {
@@ -45,6 +51,10 @@ module.exports = function(io) {
           client.del('hold', function() {
             console.log('hold is empty')
           })
+      })
+
+      guard.sub().then(reply => {
+        rtc.emit('user number', reply)
       })
       logger.info('leave: ' + socket.id)
     })

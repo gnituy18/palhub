@@ -106,6 +106,10 @@
           boardMsg('按下配對開始聊天')
           console.log('break connection')
         })
+        rtc.on('user number', function(number) {
+          $('#num').text(number)
+          console.log('user: ' + number)
+        })
         $('.nav-element').click(function() {
           if (palSocketId)
             return confirm('現在離開會導致聊天中斷！\n你確定要離開嗎？')
@@ -113,6 +117,7 @@
       })
       .then(() => {
         enableButton(buttonPair)
+        rtc.emit('join')
         console.log('Done init.')
       })
       .catch(err => {

@@ -26,3 +26,11 @@ module.exports.cancel = function(socketId) {
     }
   })
 }
+
+module.exports.add = function() {
+  return redis.incrAsync('counter').then(reply => reply)
+}
+
+module.exports.sub = function() {
+  return redis.decrAsync('counter').then(reply => reply)
+}
