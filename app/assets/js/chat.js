@@ -42,87 +42,87 @@
 
   function init() {
 
-    if (multiTabFlag)
-      return
-
     userInfo = {
       name: $('#name').text(),
       gender: $('#gender').text(),
       intro: $('#intro').text()
     }
 
-    //Local stream
-    navigator.mediaDevices.getUserMedia(constraints)
-      .then(setupLocalStream)
-      .catch(err => {
-        alertMsg('你的麥克風未開啟')
-        throw err
-      })
-      .then(() => {
-        buttonPair.id = 'button-pair'
-        buttonPair.className = 'btn'
-        buttonPair.innerHTML = '配對'
-        buttonPair.onclick = function() {
-          clearControl()
-          boardMsg('等待中...')
-          setupPc()
-          makeConnection()
-          enableButton(buttonCancel)
-        }
-        buttonLeave.id = 'button-leave'
-        buttonLeave.className = 'btn'
-        buttonLeave.innerHTML = '離開'
-        buttonLeave.onclick = function() {
-          clearControl()
-          breakConnection()
-          closePc()
-          boardMsg('按下配對開始聊天')
-          enableButton(buttonPair)
-        }
-        buttonCancel.id = 'button-cancel'
-        buttonCancel.className = 'btn'
-        buttonCancel.innerHTML = '取消'
-        buttonCancel.onclick = function() {
-          clearControl()
-          rtc.emit('cancel')
-          boardMsg('按下配對開始聊天')
-          enableButton(buttonPair)
-        }
+    if (multiTabFlag)
+      return
+    else {
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then(setupLocalStream)
+        .catch(err => {
+          alertMsg('你的麥克風未開啟')
+          throw err
+        })
+        .then(() => {
+          buttonPair.id = 'button-pair'
+          buttonPair.className = 'btn'
+          buttonPair.innerHTML = '配對'
+          buttonPair.onclick = function() {
+            clearControl()
+            boardMsg('等待中...')
+            setupPc()
+            makeConnection()
+            enableButton(buttonCancel)
+          }
+          buttonLeave.id = 'button-leave'
+          buttonLeave.className = 'btn'
+          buttonLeave.innerHTML = '離開'
+          buttonLeave.onclick = function() {
+            clearControl()
+            breakConnection()
+            closePc()
+            boardMsg('按下配對開始聊天')
+            enableButton(buttonPair)
+          }
+          buttonCancel.id = 'button-cancel'
+          buttonCancel.className = 'btn'
+          buttonCancel.innerHTML = '取消'
+          buttonCancel.onclick = function() {
+            clearControl()
+            rtc.emit('cancel')
+            boardMsg('按下配對開始聊天')
+            enableButton(buttonPair)
+          }
 
-        rtc.on('pair', function(socketId) {
-          reconnectFlag = true
-          offering(socketId)
+          rtc.on('pair', function(socketId) {
+            reconnectFlag = true
+            offering(socketId)
+          })
+          rtc.on('get offer', answering)
+          rtc.on('get answer', finishing)
+          rtc.on('get candidate', setCandidate)
+          rtc.on('get user info', function(info) {
+            displayPalInfo(info)
+          })
+          rtc.on('break connection', function() {
+            closePc()
+            clearControl()
+            enableButton(buttonPair)
+            boardMsg('按下配對開始聊天')
+            console.log('break connection')
+          })
+          rtc.on('user number', function(number) {
+            $('#num').text(number)
+            console.log('user: ' + number)
+          })
+          $('.nav-element').click(function() {
+            if (palSocketId)
+              return confirm('現在離開會導致聊天中斷！\n你確定要離開嗎？')
+          })
         })
-        rtc.on('get offer', answering)
-        rtc.on('get answer', finishing)
-        rtc.on('get candidate', setCandidate)
-        rtc.on('get user info', function(info) {
-          displayPalInfo(info)
-        })
-        rtc.on('break connection', function() {
-          closePc()
-          clearControl()
+        .then(() => {
           enableButton(buttonPair)
-          boardMsg('按下配對開始聊天')
-          console.log('break connection')
+          rtc.emit('join')
+          console.log('Done init.')
         })
-        rtc.on('user number', function(number) {
-          $('#num').text(number)
-          console.log('user: ' + number)
+        .catch(err => {
+          console.log('Init failed: ' + err)
         })
-        $('.nav-element').click(function() {
-          if (palSocketId)
-            return confirm('現在離開會導致聊天中斷！\n你確定要離開嗎？')
-        })
-      })
-      .then(() => {
-        enableButton(buttonPair)
-        rtc.emit('join')
-        console.log('Done init.')
-      })
-      .catch(err => {
-        console.log('Init failed: ' + err)
-      })
+    }
   }
 
   //Check multi-tabs
