@@ -4,20 +4,26 @@
   background-color: $theme-color-5;
 }
 
+.nav-brand {
+  display: inline-block;
+  margin: 5.5px 5px;
+  padding: 1px 1rem;
+  font-size: 2rem;
+  color: $white1;
+  text-decoration: none;
+  font-family: $font-family-brand;
+}
+
 .nav-element {
+  vertical-align: top;
   display: inline-block;
   margin: 5.5px 5px;
   padding: 5px 1rem;
   font-size: 1.5rem;
-  color: $white1;
+  color: $theme-color-3;
   text-decoration: none;
 
   &:hover {
-    background-color: $blue1;
-    border-radius: 5px;
+    color: $theme-color-4;
   }
-}
-
-.float-right {
-  float: right;
 }

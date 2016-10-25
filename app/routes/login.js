@@ -17,6 +17,7 @@ router.post('/', function*(next) {
   this.checkBody('intro').optional().empty().len(1, 300, '你的介紹太長了')
 
   this.session.user = generateUser(this.request.body)
+  this.session.maxAge = 31536000000
 
   if (this.errors) {
     this.session.pass = null

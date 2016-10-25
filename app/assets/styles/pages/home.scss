@@ -7,6 +7,12 @@
   font-weight: bold;
 }
 
+.sep {
+  display: inline-block;
+  border-top: 3px solid $white1;
+  width: 100px;
+}
+
 footer {
   font-size: $font-size-small;
   color: $theme-color-3;
@@ -16,6 +22,14 @@ footer {
   vertical-align: top;
   display: inline-block;
   padding: 0.5rem;
+}
+
+.brand {
+  margin: 0;
+  font-family: $font-family-brand;
+  font-size: 5rem;
+  color: $white1;
+  text-decoration: none;
 }
 
 .place {
@@ -57,7 +71,7 @@ footer {
 
 .browser-content {
   height: 480px;
-  background-image: url('/img/demo.gif');
+  background-image: url("/img/demo.gif");
   background-color: $white1;
 }
 

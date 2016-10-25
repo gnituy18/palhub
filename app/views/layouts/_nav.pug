@@ -1,6 +1,8 @@
 div.nav
-  a.nav-element(href='/') PalHub
-  a.nav-element(href='/chat') 聊天室 
-  a(href='/profile').float-right.nav-element
-    i.fa.fa-user.fa-inverse
-    span(href='profile')  個人簡介
+  a.nav-brand(href='/') PalHub
+  a(href='/profile').nav-element.float-right
+    i.fa.fa-user
+    span  個人簡介
+  a.nav-element.float-right(href='/chat')
+    i.fa.fa-microphone
+    span  聊天室
