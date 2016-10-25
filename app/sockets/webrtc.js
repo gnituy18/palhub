@@ -10,8 +10,10 @@ module.exports = function(io) {
     logger.info('enter: ' + socket.id)
 
     socket.on('join', function() {
-      guard.add().then(reply => {
-        rtc.emit('user number', reply)
+      guard.addUser(socket.id).then(reply => {
+        guard.userNum().then(reply => {
+          rtc.emit('user number', reply)
+        })
       })
     })
 
@@ -53,8 +55,10 @@ module.exports = function(io) {
           })
       })
 
-      guard.sub().then(reply => {
-        rtc.emit('user number', reply)
+      guard.removeUser(socket.id).then(reply => {
+        guard.userNum().then(reply => {
+          rtc.emit('user number', reply)
+        })
       })
       logger.info('leave: ' + socket.id)
     })

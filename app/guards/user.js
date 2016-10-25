@@ -27,10 +27,14 @@ module.exports.cancel = function(socketId) {
   })
 }
 
-module.exports.add = function() {
-  return redis.incrAsync('counter').then(reply => reply)
+module.exports.userNum = function(socketId) {
+  return redis.scardAsync('users')
 }
 
-module.exports.sub = function() {
-  return redis.decrAsync('counter').then(reply => reply)
+module.exports.addUser = function(socketId) {
+  return redis.saddAsync('users', socketId)
+}
+
+module.exports.removeUser = function(socketId) {
+  return redis.sremAsync('users', socketId)
 }
