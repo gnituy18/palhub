@@ -594,6 +594,7 @@ footer {
   margin: 0;
   font-family: "Courgette", cursive;
   font-size: 5rem;
+  font-weight: normal;
   color: #FFFFFF;
   text-decoration: none;
 }
