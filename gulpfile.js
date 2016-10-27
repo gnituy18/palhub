@@ -2,6 +2,9 @@ var gulp = require('gulp')
 var sass = require('gulp-sass')
 var nodemon = require('gulp-nodemon')
 var browserify = require('gulp-browserify')
+var uglify = require('gulp-uglify')
+var pump = require('pump')
+var babel = require('gulp-babel')
 
 gulp.task('watch', ['build'], function() {
   gulp.watch('./app/assets/styles/**/*.scss', ['scss'])
@@ -22,9 +25,14 @@ gulp.task('scss', function() {
 })
 
 gulp.task('browserify', function() {
-  return gulp.src('./app/assets/js/*.js')
-    .pipe(browserify())
-    .pipe(gulp.dest('./public/js'))
+  pump([gulp.src('./app/assets/js/*.js'),
+    browserify(),
+    babel({
+      presets: ['es2015']
+    }),
+    uglify(),
+    gulp.dest('./public/js')
+  ])
 })
 
 gulp.task('copy', ['copy-adapter.js'])
