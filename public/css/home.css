@@ -411,6 +411,10 @@ textarea {
   /* 2 */
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
   font-family: "Noto Sans TC", "Open Sans", sans-serif;
   font-size: 1.5rem;
@@ -514,13 +518,21 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 64rem;
 }
 
-.center {
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+.wrapper {
   text-align: center;
-  position: relative;
-  top: 50%;
+  height: calc(100% - 48px);
+}
+
+.wrapper:before {
+  content: "";
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.center {
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .form-text {

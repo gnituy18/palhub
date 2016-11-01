@@ -16,7 +16,7 @@ $gray1: #AFB8C1;
 $gray2: #D6DCE0;
 $gray3: #404243;
 
-//Theme color
+//Theme colors
 $theme-color-1: $blue1;
 $theme-color-2: $yellow1;
 $theme-color-3: $white1;
@@ -24,10 +24,14 @@ $theme-color-4: $gray1;
 $theme-color-5: $blue2;
 
 //Font size
-$font-size-base: 1.5rem;
+$font-size-base: 16px;
+$font-size-normal: 1.5rem;
 $font-size-large: 2rem;
 $font-size-small: 1rem;
 
 //Box style
 $border-radius-base: 10px;
 $border-width-base: 3.5px;
+
+//Nav
+$nav-height: 48px;
