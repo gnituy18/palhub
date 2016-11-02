@@ -50,7 +50,10 @@
 
     if (multiTabFlag)
       return
-    else {
+    else if (navigator.userAgent.indexOf("Safari") != -1 && navigator.userAgent.indexOf("Chrome") < 0) {
+      alertMsg('Safari 目前並不支援，請改用其他瀏覽器。')
+      return
+    } else {
       navigator.mediaDevices.getUserMedia(constraints)
         .then(setupLocalStream)
         .catch(err => {
