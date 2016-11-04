@@ -1,7 +1,7 @@
 var router = require('koa-router')()
 
-router.get('login', '/', function*(next) {
-  yield this.render('login', {
+router.get('profile', '/', function*(next) {
+  yield this.render('profile', {
     user: this.session.user || {
       name: '',
       gender: 'male',
@@ -21,7 +21,7 @@ router.post('/', function*(next) {
 
   if (this.errors) {
     this.session.pass = null
-    yield this.render('login', {
+    yield this.render('profile', {
       user: this.session.user,
       errors: this.errors
     })
