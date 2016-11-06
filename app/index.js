@@ -9,6 +9,14 @@ var bodyParser = require('koa-bodyparser')
 var router = require('./routes')
 var enforceHttps = require('koa-sslify')
 
+app.use(function*(next) {
+  this.state.app = {
+    name: 'PalHub',
+    page: this.request.url.substring(1).split(path.sep, 1)[0] || null
+  }
+  yield next
+})
+
 app.use(enforceHttps())
 
 require('koa-validate')(app)
