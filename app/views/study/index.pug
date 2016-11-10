@@ -1,4 +1,8 @@
 extends ./../layouts/master.pug
 
 block content
-  p jaja
+  section.section.text-align-center.font-blue
+    h1 歡迎來到#{app.name}讀書室
+    a.btn(href='/'+app.page+'/create') 開設書桌
+    div#tables.cont
+    script(src='/js/'+app.page+'/lobby.js')
