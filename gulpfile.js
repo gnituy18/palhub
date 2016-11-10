@@ -10,7 +10,8 @@ gulp.task('watch', ['build'], function() {
   gulp.watch('./app/assets/styles/**/*.scss', ['scss'])
   gulp.watch('./app/assets/js/**/*.js', ['browserify'])
   nodemon({
-    script: 'server.js'
+    script: 'server.js',
+    ignore: ['app/assets/js/', 'public/']
   })
 })
 
@@ -25,7 +26,7 @@ gulp.task('scss', function() {
 })
 
 gulp.task('browserify', function() {
-  pump([gulp.src('./app/assets/js/*.js'),
+  pump([gulp.src('./app/assets/js/**/*.js'),
     browserify(),
     babel({
       presets: ['es2015']
