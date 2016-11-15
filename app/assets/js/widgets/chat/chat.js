@@ -199,12 +199,12 @@
       })
   }
 
-  function finishing(answer) {
-    pc.setRemoteDescription(answer)
+  function finishing(info) {
+    pc.setRemoteDescription(info.answer)
   }
 
-  function setCandidate(candidate) {
-    pc.addIceCandidate(candidate)
+  function setCandidate(info) {
+    pc.addIceCandidate(info.candidate)
   }
 
   function passCandidate(e) {
