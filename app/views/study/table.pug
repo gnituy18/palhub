@@ -2,4 +2,7 @@ extends ./../layouts/master.pug
 
 block content
   span#tableid #{tableId}
+  div#pal-audios
+  audio#audio-user(autoplay muted="muted")
+  script(src='/js/adapter.js')
   script(src='/js/'+app.page+'/table.js')

@@ -8,32 +8,36 @@ var babel = require('gulp-babel')
 
 gulp.task('watch', ['build'], function() {
   gulp.watch('./app/assets/styles/**/*.scss', ['scss'])
-  gulp.watch('./app/assets/js/**/*.js', ['browserify'])
+  gulp.watch('./app/assets/js/**/*.js', ['js'])
   nodemon({
     script: 'server.js',
-    ignore: ['app/assets/js/', 'public/']
+    ignore: ['./public/', ['./app/assets/js/']]
   })
 })
 
 gulp.task('scss', function() {
   return gulp.src('./app/assets/styles/pages/*.scss')
     .pipe(sass({
-      outputStyle: 'expanded',
-      includePaths: require('node-normalize-scss').includePaths
-    }).on('error', sass.logError))
+        outputStyle: 'expanded',
+        includePaths: require('node-normalize-scss').includePaths
+      })
+      .on('error', sass.logError))
     .pipe(gulp.dest('./public/css'))
   console.log(require('node-normalize-scss').includePaths)
 })
 
-gulp.task('browserify', function() {
-  pump([gulp.src('./app/assets/js/**/*.js'),
-    browserify(),
-    babel({
+gulp.task('js', function() {
+  return gulp.src('./app/assets/js/widgets/**/*.js')
+    .pipe(browserify({
+      debug: !gulp.env.production
+    }))
+    .pipe(babel({
       presets: ['es2015']
-    }),
-    uglify(),
-    gulp.dest('./public/js')
-  ])
+    }))
+    .pipe(uglify())
+    .pipe(gulp.dest('./public/js'))
+}).on('error', function(err) {
+  console.log(err)
 })
 
 gulp.task('copy', ['copy-adapter.js'])
@@ -43,6 +47,6 @@ gulp.task('copy-adapter.js', function() {
     .pipe(gulp.dest('./public/js'))
 })
 
-gulp.task('build', ['scss', 'browserify'])
+gulp.task('build', ['scss', 'js'])
 
 gulp.task('default', ['copy', 'build', 'watch'])

@@ -19,15 +19,15 @@ module.exports.getTable = function(tableId) {
 }
 
 module.exports.joinTable = function(tableId, userId) {
-  return redis.saddAsync('table:' + tableId, userId)
+  return redis.saddAsync('table:' + tableId + ':users', userId)
 }
 
 module.exports.leaveTable = function(tableId, userId) {
-  return redis.sremAsync('table:' + tableId, userId)
+  return redis.sremAsync('table:' + tableId + ':users', userId)
 }
 
 module.exports.tableEmpty = function(tableId) {
-  return redis.scardAsync('table:' + tableId).then(reply => {
+  return redis.scardAsync('table:' + tableId + ':users').then(reply => {
     console.log('te: ' + reply)
     return reply == 0 ? true : false
   })
