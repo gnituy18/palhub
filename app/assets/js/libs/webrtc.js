@@ -83,13 +83,6 @@ function newPc(socketId) {
       pcs[socketId] = new RTCPeerConnection(peerConfig)
       pcs[socketId].palId = socketId
       pcs[socketId].onicecandidate = passCandidate
-      pcs[socketId].oniceconnectionstatechange = function(event) {
-        console.log('state change: ' + this.iceConnectionState)
-        switch (this.iceConnectionState) {
-          case 'connected':
-            console.log('connected!!')
-        }
-      }
     })
 }
 
