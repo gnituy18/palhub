@@ -1,7 +1,35 @@
 .pal-list {
-  position: absolute;
-  right: 0;
-  width: 300px;
-  height: calc(100% - #{$nav-height});
-  background-color: $blue1;
+  display: inline-block;
+  width: 100%;
+}
+
+.pal-avatar {
+  background-size: cover;
+  background-position: center;
+  vertical-align: top;
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  font-size: 5em;
+}
+
+.pal-info {
+  vertical-align: top;
+  display: inline-block;
+  margin: 0 3rem;
+  width: 500px;
+  height: 300px;
+}
+
+.pal-name {
+  padding-top: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.pal-intro {
+  padding: 0.5rem 0;
+  max-height: 240px;
+  overflow: scroll;
 }

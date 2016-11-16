@@ -1,7 +1,10 @@
 extends ./../layouts/master.pug
 
 block content
-  span#tableid #{tableId}
+  div.section.text-align-center
+    div#table-msg.cont.font-blue
+      h1#tableid.font-blue 歡迎加入桌號#{tableId}。
+    div#pals.cont.bg-yellow1
   div#pal-audios
   audio#audio-user(autoplay muted="muted")
   script(src='/js/adapter.js')
