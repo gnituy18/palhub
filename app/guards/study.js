@@ -1,12 +1,12 @@
 var redis = require('../redis')
 var logger = require('../logger')
+var shortid = require('shortid')
 
 module.exports.newTable = function() {
-  var time = Date.now()
-  console.log('new table: ' + time)
-  return redis.saddAsync('tables', time)
+  var uniqueid = shortid.generate()
+  return redis.saddAsync('tables', uniqueid)
     .then(reply => {
-      return time
+      return uniqueid
     })
 }
 
