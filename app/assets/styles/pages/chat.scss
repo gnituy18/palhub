@@ -1,6 +1,4 @@
-@import "../main";
-
-@include full-screen;
+@import "../helpers/variables";
 
 .user-avatar {
   background-color: $blue1;

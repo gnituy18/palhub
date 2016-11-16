@@ -411,20 +411,6 @@ textarea {
   /* 2 */
 }
 
-html {
-  font-size: 16px;
-}
-
-body {
-  font-family: "Noto Sans TC", "Open Sans", sans-serif;
-  font-size: 1.5rem;
-  letter-spacing: 3px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-size: 2rem;
-}
-
 .display-none {
   display: none;
 }
@@ -473,6 +459,24 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
 }
 
+html, body {
+  height: 100%;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Noto Sans TC", "Open Sans", sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 2rem;
+}
+
 .alert {
   display: inline-block;
   margin: 1rem;
@@ -519,6 +523,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .wrapper {
+  clear: both;
   text-align: center;
   height: calc(100% - 48px);
 }
@@ -576,36 +581,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #AFB8C1;
 }
 
-html, body {
-  height: 100%;
-}
-
-.avatar-picker {
-  vertical-align: top;
-  display: inline-block;
-  padding: 10px 40px;
-}
-
-.avatar-boy {
-  background-image: url("/img/male.png");
-  background-size: cover;
-  background-position: center;
-  width: 150px;
-  height: 150px;
-}
-
-.avatar-girl {
-  background-image: url("/img/female.png");
-  background-size: cover;
-  background-position: center;
-  width: 150px;
-  height: 150px;
-}
-
-.avatar-alien {
-  background-image: url("/img/alien.png");
-  background-size: cover;
-  background-position: center;
-  width: 150px;
-  height: 150px;
+.pal-list {
+  position: absolute;
+  right: 0;
+  width: 300px;
+  height: calc(100% - 48px);
+  background-color: #3C64BF;
 }

@@ -1,6 +1,5 @@
-@import "../main";
-
-@include full-screen;
+@import "../helpers/variables";
+@import "../helpers/mixins";
 
 .avatar-picker {
   vertical-align: top;

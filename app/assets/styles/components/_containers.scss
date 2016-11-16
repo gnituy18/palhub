@@ -11,8 +11,9 @@
 }
 
 .wrapper {
+  clear: both;
   text-align: center;
-  height: calc(100% - 48px);
+  height: calc(100% - #{$nav-height});
 
   &:before {
     content: "";

@@ -16,7 +16,7 @@ gulp.task('watch', ['build'], function() {
 })
 
 gulp.task('scss', function() {
-  return gulp.src('./app/assets/styles/pages/*.scss')
+  return gulp.src(['./app/assets/styles/pages/*.scss', './app/assets/styles/main.scss'])
     .pipe(sass({
         outputStyle: 'expanded',
         includePaths: require('node-normalize-scss').includePaths

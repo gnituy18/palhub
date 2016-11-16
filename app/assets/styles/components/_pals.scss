@@ -1,0 +1,7 @@
+.pal-list {
+  position: absolute;
+  right: 0;
+  width: 300px;
+  height: calc(100% - #{$nav-height});
+  background-color: $blue1;
+}
