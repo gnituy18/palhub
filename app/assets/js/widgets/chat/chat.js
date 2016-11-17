@@ -1,7 +1,6 @@
 (function() {
 
   var rtc = require('socket.io-client')('/webrtc')
-  var $ = require('jquery')
   var audioSelf = document.getElementById('audio-self')
   var audioPal = document.getElementById('audio-pal')
   var buttonPair = document.createElement('button')

@@ -69,6 +69,16 @@ module.exports.pair = function(socketId) {
     .catch(showError)
 }
 
+module.exports.break = function(socketId) {
+  var webrtcId = toWebrtcId(socketId)
+  return Promise.resolve(webrtcId)
+    .then(socketId => {
+      pcs[socketId].close()
+      delete pcs[socketId]
+      console.log(pcs)
+    })
+}
+
 function showError(err) {
   console.log(err)
 }

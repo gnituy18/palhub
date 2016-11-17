@@ -1,6 +1,5 @@
 (function() {
   var study = require('socket.io-client')('/study')
-  var $ = require('jquery')
   var rtc = require('./../../libs/webrtc')
   var constraints = {
     audio: true,
@@ -26,6 +25,11 @@
         })
 
         study.on('pal leave', function(pal) {
+          rtc.break(pal)
+            .then(() => {
+              console.log(pal)
+              document.getElementById(pal).remove()
+            })
           console.log(pal + ' leave.')
         })
 
@@ -55,7 +59,7 @@
   function addStream(e) {
     var audio = document.createElement('audio')
     audio.setAttribute('autoplay', '')
-    audio.id = this.palId
+    audio.id = this.palId.replace(/\/[a-z0-9]*#/, '/study#')
     audio.src = window.URL.createObjectURL(e.stream)
     document.getElementById('pal-audios').appendChild(audio)
   }

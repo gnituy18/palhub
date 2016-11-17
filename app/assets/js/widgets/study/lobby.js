@@ -1,7 +1,6 @@
 (function() {
 
   var study = require('socket.io-client')('/study')
-  var $ = require('jquery')
 
   function init() {
 
