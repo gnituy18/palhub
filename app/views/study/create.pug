@@ -1,6 +1,11 @@
 extends ./../layouts/master.pug
 
 block content
-  section.section.text-align-center
-    form(method='post')
-      input#new.btn(type='submit' value='確認')
+  section.wrapper
+    div.center
+      h1 告訴大家你們這桌在讀什麼吧！
+      form(method='post')
+        div.cont
+          span 科目
+          input#subject.form-text(type='text' name='subject')
+        input#new.btn(type='submit' value='確認')

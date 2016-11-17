@@ -21,10 +21,7 @@ module.exports = function(io) {
     socket.on('disconnect', function() {
       if (tableInfo.id) {
         study.to(tableInfo.id).emit('pal leave', socket.id)
-        Promise.all([
-            studyGuard.leaveTable(tableInfo.id, socket.id),
-            userGuard.leaveTable(socket.id)
-          ])
+        studyGuard.leaveTable(tableInfo.id, socket.id)
           .then(replies => {
             return studyGuard.tableEmpty(tableInfo.id)
           })
@@ -49,10 +46,7 @@ module.exports = function(io) {
       socket.join(tableId)
       tableInfo.id = tableId
 
-      Promise.all([
-          studyGuard.joinTable(tableId, socket.id),
-          userGuard.joinTable(tableId, socket.id)
-        ])
+      studyGuard.joinTable(tableId, socket.id)
         .then(values => {
           console.log('join table: ' + values)
           return studyGuard.getTables()

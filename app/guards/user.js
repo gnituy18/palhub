@@ -39,14 +39,6 @@ module.exports.removeUser = function(socketId) {
   return redis.sremAsync('users', socketId)
 }
 
-module.exports.joinTable = function(tableId, socketId) {
-  return redis.setAsync('user:' + socketId + ':table', tableId)
-}
-
-module.exports.leaveTable = function(socketId) {
-  return redis.delAsync('user:' + socketId + ':table')
-}
-
 module.exports.getUserTable = function(socketId) {
   return redis.getAsync('user:' + socketId + ':table')
 }
