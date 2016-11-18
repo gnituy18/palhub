@@ -9,6 +9,8 @@ var bodyParser = require('koa-bodyparser')
 var router = require('./routes')
 var enforceHttps = require('koa-sslify')
 
+var widgets = ['chat', 'study']
+
 app.use(function*(next) {
   this.state.app = {
     name: 'PalHub',
@@ -34,6 +36,22 @@ app.keys = ['haha']
 app.use(session(app))
 
 app.use(bodyParser())
+
+app.use(function*(next) {
+  if (widgets.includes(this.state.app.page)) {
+    this.session.lastWidget = this.state.app.page
+    this.state.isWidget = true
+  }
+  yield next
+})
+
+app.use(function*(next) {
+  if (this.state.isWidget && !this.session.pass) {
+    this.redirect('/profile')
+  } else {
+    yield next
+  }
+})
 
 app.use(router.routes())
 app.use(router.allowedMethods())
