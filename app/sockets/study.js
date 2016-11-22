@@ -22,14 +22,30 @@ module.exports = function(io) {
       if (tableInfo.id) {
         study.to(tableInfo.id).emit('pal leave', socket.id)
         studyGuard.leaveTable(tableInfo.id, socket.id)
-          .then(replies => {
+          .then(reply => {
+            return studyGuard.removeUser(socket.id)
+          })
+          .then(reply => {
             return studyGuard.tableEmpty(tableInfo.id)
           })
           .then(empty => {
             if (empty)
               return studyGuard.removeTable(tableInfo.id)
+                .then(() => {
+                  throw 'Table empty'
+                })
+
           })
-          .then(reply => {
+          .then(() => {
+            return studyGuard.getTableUsers(tableInfo.id)
+          })
+          .then(users => {
+            study.to(tableInfo.id).emit('get users', users)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          .then(() => {
             return studyGuard.getTables()
           })
           .then(reply => {
@@ -41,14 +57,23 @@ module.exports = function(io) {
       }
     })
 
-    socket.on('join', function(tableId) {
-
+    socket.on('join', function(info) {
+      var tableId = info.tableId
+      var user = info.user
       socket.join(tableId)
       tableInfo.id = tableId
 
-      studyGuard.joinTable(tableId, socket.id)
-        .then(values => {
-          console.log('join table: ' + values)
+      studyGuard.addUser(socket.id, info.user)
+        .then(reply => {
+          return studyGuard.joinTable(tableId, socket.id)
+        })
+        .then(reply => {
+          return studyGuard.getTableUsers(tableId)
+        })
+        .then(users => {
+          study.to(tableId).emit('get users', users)
+        })
+        .then(() => {
           return studyGuard.getTables()
         })
         .then(reply => {

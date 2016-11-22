@@ -16,6 +16,44 @@ module.exports.newTable = function(request) {
     })
 }
 
+module.exports.removeUser = function(socketId) {
+  return redis.delAsync('user:' + socketId)
+}
+
+module.exports.addUser = function(socketId, user) {
+  var userInfo = [
+    'name',
+    user.name,
+    'intro',
+    user.intro,
+    'gender',
+    user.gender
+  ]
+  return redis.hmsetAsync('user:' + socketId, userInfo)
+}
+
+module.exports.getTableUsers = function(tableId) {
+  var userIds = []
+  return redis.smembersAsync('table:' + tableId + ':users')
+    .then(users => {
+      console.log(users)
+      userIds = users
+      var promises = []
+      for (var x in users) {
+        promises.push(redis.hgetallAsync('user:' + users[x]))
+      }
+      return Promise.all(promises)
+    })
+    .then(reply => {
+      console.log(reply)
+      var usersInfo = {}
+      for (var x in reply) {
+        usersInfo[userIds[x]] = reply[x]
+      }
+      return usersInfo
+    })
+}
+
 module.exports.getTables = function() {
   var tableIds = []
   return redis.smembersAsync('tables')

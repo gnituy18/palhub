@@ -8,11 +8,18 @@
 
   var audioUser = document.getElementById('audio-user')
   var localStream
+  var palIds = []
 
   function init() {
 
     var tableId = $('#tableid').html()
+    var user = {
+      name: $('#user-name').html(),
+      intro: $('#user-intro').html(),
+      gender: $('#user-gender').html()
+    }
 
+    console.log(user)
     navigator.mediaDevices.getUserMedia(constraints)
       .then(stream => {
         localStream = stream
@@ -22,6 +29,20 @@
 
         study.on('join', function() {
           console.log('join table ' + tableId)
+        })
+
+        study.on('get users', function(users) {
+          Promise.resolve(users)
+            .then(users => {
+              var ids = []
+              for (var x in users) {
+                ids.push(x)
+              }
+              return ids
+            })
+            .then(ids => {
+              console.log(ids)
+            })
         })
 
         study.on('pal leave', function(pal) {
@@ -52,7 +73,10 @@
 
       })
       .then(() => {
-        study.emit('join', tableId)
+        study.emit('join', {
+          tableId: tableId,
+          user: user
+        })
       })
   }
 
