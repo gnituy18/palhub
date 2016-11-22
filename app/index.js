@@ -1,4 +1,4 @@
-var app = require('koa')()
+var koa = require('koa')()
 var logger = require('koa-logger')
 var views = require('koa-views')
 var onerror = require('koa-onerror')
@@ -8,52 +8,33 @@ var session = require('koa-session')
 var bodyParser = require('koa-bodyparser')
 var router = require('./routes')
 var enforceHttps = require('koa-sslify')
+var app = require('./middlewares/app')
+var auth = require('./middlewares/auth')
+var user = require('./middlewares/user')
 
-var widgets = ['chat', 'study']
+koa.use(enforceHttps())
 
-app.use(function*(next) {
-  this.state.app = {
-    name: 'PalHub',
-    page: this.request.url.substring(1).split(path.sep, 1)[0] || null
-  }
-  yield next
-})
+require('koa-validate')(koa)
 
-app.use(enforceHttps())
-
-require('koa-validate')(app)
-
-app.use(views(__dirname + '/views', {
+koa.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
 
-app.use(logger())
-onerror(app)
+koa.use(logger())
+onerror(koa)
 
-app.use(serve(path.join(__dirname, '../public')))
+koa.use(serve(path.join(__dirname, '../public')))
 
-app.keys = ['haha']
-app.use(session(app))
+koa.keys = ['haha']
+koa.use(session(koa))
 
-app.use(bodyParser())
+koa.use(bodyParser())
 
-app.use(function*(next) {
-  if (widgets.includes(this.state.app.page)) {
-    this.session.lastWidget = this.state.app.page
-    this.state.isWidget = true
-  }
-  yield next
-})
+koa.use(app)
+koa.use(auth)
+koa.use(user)
 
-app.use(function*(next) {
-  if (this.state.isWidget && !this.session.pass) {
-    this.redirect('/profile')
-  } else {
-    yield next
-  }
-})
+koa.use(router.routes())
+koa.use(router.allowedMethods())
 
-app.use(router.routes())
-app.use(router.allowedMethods())
-
-module.exports = app
+module.exports = koa

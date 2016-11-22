@@ -1,10 +1,7 @@
 extends ./layouts/master.pug
 
 block content
-  div.display-none
-    div#name= user.name
-    div#intro= user.intro
-    div#gender= user.gender
+  include ./includes/_user.pug
   div#room.section.text-align-center
     div#room-msg.cont.font-blue
       h1 歡迎來到 PalHub 聊天室。目前有 

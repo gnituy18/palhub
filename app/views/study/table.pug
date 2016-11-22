@@ -1,6 +1,7 @@
 extends ./../layouts/master.pug
 
 block content
+  include ./../includes/_user.pug
   div.display-none
     span#tableid #{tableInfo.id}
     span#subject #{tableInfo.subject}

@@ -34,7 +34,8 @@ router.get('/:id', function*(next) {
         tableInfo: {
           id: this.params.id,
           subject: reply
-        }
+        },
+        user: this.state.user
       })
     })
     .catch(err => {
