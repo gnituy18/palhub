@@ -27,7 +27,7 @@ gulp.task('scss', function() {
 })
 
 gulp.task('js', function() {
-  return gulp.src('./app/assets/js/widgets/**/*.js')
+  return gulp.src(['./app/assets/js/widgets/**/*.js', './app/assets/js/*.js'])
     .pipe(browserify({
       debug: !gulp.env.production
     }))

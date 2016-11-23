@@ -8,7 +8,7 @@
 
   var audioUser = document.getElementById('audio-user')
   var localStream
-  var palIds = []
+  var palIds
 
   function init() {
 

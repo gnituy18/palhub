@@ -5,10 +5,15 @@ block content
   div.display-none
     span#tableid #{tableInfo.id}
     span#subject #{tableInfo.subject}
-  div.section.text-align-center
-    div#table-msg.cont.font-blue
-      h1.font-blue 大家正在讀#{tableInfo.subject}。討論時請保持禮貌。
-    div#pals.cont.bg-yellow1
+  div#pals.side-nav
+    div.side-nav-element
+  div.side-nav-neighbor
+    i.fa.fa-bars.fa-2x.side-nav-control
+    div#table.section.text-align-center
+      div.text-align-left
+      div#table-msg.cont.font-blue
+        h1.font-blue 大家正在讀#{tableInfo.subject}。討論時請保持禮貌。
+      div.cont.bg-yellow1
   div#pal-audios
   audio#audio-user(autoplay muted="muted")
   script(src='/js/adapter.js')
