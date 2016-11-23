@@ -34,7 +34,7 @@ module.exports.addUser = function(socketId, user) {
 
 module.exports.getTableUsers = function(tableId) {
   var userIds = []
-  return redis.smembersAsync('table:' + tableId + ':users')
+  return redis.zrangeAsync('table:' + tableId + ':users', 0, -1)
     .then(users => {
       console.log(users)
       userIds = users
@@ -88,14 +88,17 @@ module.exports.getTable = function(tableId) {
 }
 
 module.exports.joinTable = function(tableId, userId) {
-  return redis.saddAsync('table:' + tableId + ':users', userId)
+  return redis.zrevrangeAsync('table:' + tableId + ':users', 0, 0, 'withscores')
+    .then(reply => {
+      return redis.zincrbyAsync('table:' + tableId + ':users', parseInt(reply[1] || '0') + 1, userId)
+    })
     .then(() => {
       return redis.setAsync('user:' + userId + ':table', tableId)
     })
 }
 
 module.exports.leaveTable = function(tableId, userId) {
-  return redis.sremAsync('table:' + tableId + ':users', userId)
+  return redis.zremAsync('table:' + tableId + ':users', userId)
     .then(() => {
       return redis.delAsync('user:' + userId + ':table')
     })
