@@ -105,7 +105,7 @@ module.exports.leaveTable = function(tableId, userId) {
 }
 
 module.exports.tableEmpty = function(tableId) {
-  return redis.scardAsync('table:' + tableId + ':users').then(reply => {
+  return redis.zcardAsync('table:' + tableId + ':users').then(reply => {
     console.log('te: ' + reply)
     return reply == 0 ? true : false
   })

@@ -35,13 +35,15 @@
           Promise.resolve(users)
             .then(users => {
               var ids = []
+              var str = ''
               for (var x in users) {
-                ids.push(x)
+                str += '<div class="side-nav-user-card"><div style="background-image:url(\/img\/' + users[x].gender + '.png);" class="side-nav-user-avatar"></div><div class="side-nav-user-info"><div class="side-nav-user-name">' + users[x].name + '</div><div>' + users[x].intro + '</div></div></div>'
               }
-              return ids
+              return str
             })
-            .then(ids => {
-              console.log(ids)
+            .then(str => {
+              console.log(str)
+              $('#pals').html(str)
             })
         })
 

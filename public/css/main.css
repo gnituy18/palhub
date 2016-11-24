@@ -619,27 +619,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .side-nav {
   position: absolute;
+  border-right: #2B426D 3.5px solid;
   height: calc(100% - 48px);
-  width: 0;
-  background-color: #3C64BF;
+  width: 400px;
   transition: width 0.3s;
   overflow-x: hidden;
   overflow-y: auto;
-  text-align: right;
-}
-
-.side-nav-element {
-  display: inline-block;
-  width: 400px;
-  height: 30px;
-  background-color: #2B426D;
-}
-
-.side-nav-control {
-  margin: 15px;
-  font-size: 2rem;
-  display: inline-block;
-  color: #2B426D;
 }
 
 .side-nav-control:hover {
@@ -648,4 +633,44 @@ h1, h2, h3, h4, h5, h6 {
 
 .side-nav-neighbor {
   transition: margin-left 0.3s;
+}
+
+.icon {
+  margin: 15px;
+  font-size: 2rem;
+  display: inline-block;
+  color: #2B426D;
+}
+
+.side-nav-user-card {
+  display: inline-block;
+  padding: 15px;
+  width: 370px;
+  min-height: 90px;
+}
+
+.side-nav-user-avatar {
+  vertical-align: top;
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: #FFFFFF 3.5px solid;
+  background-color: white;
+  background-size: cover;
+  box-shadow: 4px 4px #2B426D;
+}
+
+.side-nav-user-info {
+  display: inline-block;
+  border-radius: 10px;
+  padding: 10px 15px;
+  width: 240px;
+  color: #FFFFFF;
+  text-shadow: 3px 3px #2B426D;
+}
+
+.side-nav-user-name {
+  color: #FFFCE3;
+  min-height: 30px;
 }

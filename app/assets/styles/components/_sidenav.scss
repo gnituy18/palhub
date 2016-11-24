@@ -1,27 +1,14 @@
 .side-nav {
   position: absolute;
+  border-right: $blue2 $border-width-base solid;
   height: calc(100% - #{$nav-height});
-  width: 0;
-  background-color: $blue1;
+  width: $side-nav-width;
   transition: width 0.3s;
   overflow-x: hidden;
   overflow-y: auto;
-  text-align: right;
-}
-
-.side-nav-element {
-  display: inline-block;
-  width: 400px;
-  height: 30px;
-  background-color: $blue2;
 }
 
 .side-nav-control {
-  margin: 15px;
-  font-size: 2rem;
-  display: inline-block;
-  color: $blue2;
-
   &:hover {
     cursor: pointer;
   }

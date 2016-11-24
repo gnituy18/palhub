@@ -1,0 +1,32 @@
+.side-nav-user-card {
+  display: inline-block;
+  padding: $side-nav-element-padding;
+  width: $side-nav-element-width;
+  min-height: 90px;
+}
+
+.side-nav-user-avatar {
+  vertical-align: top;
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: $white1 $border-width-base solid;
+  background-color: white;
+  background-size: cover;
+  box-shadow: 4px 4px $blue2;
+}
+
+.side-nav-user-info {
+  display: inline-block;
+  border-radius: $border-radius-base;
+  padding: 10px 15px;
+  width: 240px;
+  color: $white1;
+  text-shadow: 3px 3px $blue2;
+}
+
+.side-nav-user-name {
+  color: $yellow1;
+  min-height: 30px;
+}
