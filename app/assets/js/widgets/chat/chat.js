@@ -42,9 +42,9 @@
   function init() {
 
     userInfo = {
-      name: $('#name').text(),
-      gender: $('#gender').text(),
-      intro: $('#intro').text()
+      name: $('#user-name').text(),
+      gender: $('#user-gender').text(),
+      intro: $('#user-intro').text()
     }
 
     if (multiTabFlag)
