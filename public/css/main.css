@@ -427,6 +427,10 @@ textarea {
   text-align: right;
 }
 
+.text-decoration-none {
+  text-decoration: none;
+}
+
 .float-right {
   float: right;
 }
@@ -457,6 +461,14 @@ textarea {
 
 .font-white {
   color: #FFFFFF;
+}
+
+.shadow-blue {
+  text-shadow: 3px 3px #2B426D;
+}
+
+.shadow-gray {
+  text-shadow: 3px 3px #AFB8C1;
 }
 
 html, body {

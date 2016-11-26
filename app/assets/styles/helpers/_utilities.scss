@@ -14,6 +14,10 @@
   text-align: right;
 }
 
+.text-decoration-none {
+  text-decoration: none;
+}
+
 .float-right {
   float: right;
 }
@@ -44,4 +48,12 @@
 
 .font-white {
   color: $white1;
+}
+
+.shadow-blue {
+  text-shadow: 3px 3px $blue2;
+}
+
+.shadow-gray {
+  text-shadow: 3px 3px $gray1;
 }
