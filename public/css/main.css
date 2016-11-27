@@ -463,6 +463,10 @@ textarea {
   color: #FFFFFF;
 }
 
+.font-gray {
+  color: #AFB8C1;
+}
+
 .shadow-blue {
   text-shadow: 3px 3px #2B426D;
 }
@@ -685,4 +689,12 @@ h1, h2, h3, h4, h5, h6 {
 .side-nav-user-name {
   color: #FFFCE3;
   min-height: 30px;
+}
+
+.study-table {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3C64BF;
+  cursor: pointer;
+  text-decoration: none;
 }
