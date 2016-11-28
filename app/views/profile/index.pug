@@ -1,8 +1,5 @@
 extends ./../layouts/master.pug
 
-block styles
-  link(rel='stylesheet' href='css/login.css')
-
 block content
   section.wrapper
     div.center
@@ -11,7 +8,7 @@ block content
           each error in errors
             each value, key in error
               p= value
-      h1 聊天之前介紹一下你自己吧！
+      h1 來介紹一下你自己吧！
       form(method='post')
         div.avatar-picker
           div.avatar-boy

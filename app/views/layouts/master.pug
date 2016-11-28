@@ -5,10 +5,10 @@ html
     meta(property='og:title' content='PalHub')
     meta(property='og:description' content='一款以語音為主的聊天app')
     meta(property='og:image' content='https://scontent-tpe1-1.xx.fbcdn.net/t31.0-8/14608833_1021134441346431_5192624789822241661_o.png')
-    block title
-      title PalHub
+    title #{app.name}
     link(rel="shortcut icon" type="image/png"  href="/favicon.png") 
     script(src="https://use.fontawesome.com/f3716a3bb5.js")
+    script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
     script.
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -17,8 +17,12 @@ html
       ga('create', 'UA-86267812-1', 'auto');
       ga('send', 'pageview');
 
+    link(rel='stylesheet' href='/css/main.css')
+    if app.page
+      link(rel='stylesheet' href='/css/' + app.page + '.css')
     block styles
   body
     include _nav.pug
     block content
       p= 'no content'
+    script(src="/js/component.js")

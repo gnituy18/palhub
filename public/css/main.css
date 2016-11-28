@@ -411,20 +411,6 @@ textarea {
   /* 2 */
 }
 
-html {
-  font-size: 16px;
-}
-
-body {
-  font-family: "Noto Sans TC", "Open Sans", sans-serif;
-  font-size: 1.5rem;
-  letter-spacing: 3px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-size: 2rem;
-}
-
 .display-none {
   display: none;
 }
@@ -439,6 +425,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .text-align-right {
   text-align: right;
+}
+
+.text-decoration-none {
+  text-decoration: none;
 }
 
 .float-right {
@@ -471,6 +461,36 @@ h1, h2, h3, h4, h5, h6 {
 
 .font-white {
   color: #FFFFFF;
+}
+
+.font-gray {
+  color: #AFB8C1;
+}
+
+.shadow-blue {
+  text-shadow: 3px 3px #2B426D;
+}
+
+.shadow-gray {
+  text-shadow: 3px 3px #AFB8C1;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Noto Sans TC", "Open Sans", sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 2rem;
 }
 
 .alert {
@@ -519,6 +539,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .wrapper {
+  clear: both;
   text-align: center;
   height: calc(100% - 48px);
 }
@@ -576,36 +597,104 @@ h1, h2, h3, h4, h5, h6 {
   color: #AFB8C1;
 }
 
-html, body {
-  height: 100%;
+.pal-list {
+  display: inline-block;
+  width: 100%;
 }
 
-.avatar-picker {
+.pal-avatar {
+  background-size: cover;
+  background-position: center;
   vertical-align: top;
   display: inline-block;
-  padding: 10px 40px;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  font-size: 5em;
 }
 
-.avatar-boy {
-  background-image: url("/img/male.png");
-  background-size: cover;
-  background-position: center;
-  width: 150px;
-  height: 150px;
+.pal-info {
+  vertical-align: top;
+  display: inline-block;
+  margin: 0 3rem;
+  width: 500px;
+  height: 300px;
 }
 
-.avatar-girl {
-  background-image: url("/img/female.png");
-  background-size: cover;
-  background-position: center;
-  width: 150px;
-  height: 150px;
+.pal-name {
+  padding-top: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
-.avatar-alien {
-  background-image: url("/img/alien.png");
+.pal-intro {
+  padding: 0.5rem 0;
+  max-height: 240px;
+  overflow: scroll;
+}
+
+.side-nav {
+  position: absolute;
+  border-right: #2B426D 3.5px solid;
+  height: calc(100% - 48px);
+  width: 400px;
+  transition: width 0.3s;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.side-nav-control:hover {
+  cursor: pointer;
+}
+
+.side-nav-neighbor {
+  transition: margin-left 0.3s;
+}
+
+.icon {
+  margin: 15px;
+  font-size: 2rem;
+  display: inline-block;
+  color: #2B426D;
+}
+
+.side-nav-user-card {
+  display: inline-block;
+  padding: 15px;
+  width: 370px;
+  min-height: 90px;
+}
+
+.side-nav-user-avatar {
+  vertical-align: top;
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: #FFFFFF 3.5px solid;
+  background-color: white;
   background-size: cover;
-  background-position: center;
-  width: 150px;
-  height: 150px;
+  box-shadow: 4px 4px #2B426D;
+}
+
+.side-nav-user-info {
+  display: inline-block;
+  border-radius: 10px;
+  padding: 10px 15px;
+  width: 240px;
+  color: #FFFFFF;
+  text-shadow: 3px 3px #2B426D;
+}
+
+.side-nav-user-name {
+  color: #FFFCE3;
+  min-height: 30px;
+}
+
+.study-table {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3C64BF;
+  cursor: pointer;
+  text-decoration: none;
 }

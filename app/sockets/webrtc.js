@@ -26,7 +26,10 @@ module.exports = function(io) {
     })
 
     socket.on('pass candidate', function(info) {
-      rtc.to(info.socket).emit('get candidate', info.candidate)
+      rtc.to(info.socket).emit('get candidate', {
+        socket: socket.id,
+        candidate: info.candidate
+      })
       console.log(socket.id + 'pass candidate')
     })
 
@@ -39,7 +42,10 @@ module.exports = function(io) {
     })
 
     socket.on('pass answer', function(info) {
-      rtc.to(info.socket).emit('get answer', info.answer)
+      rtc.to(info.socket).emit('get answer', {
+        socket: socket.id,
+        answer: info.answer
+      })
       console.log(socket.id + 'pass answer')
     })
 

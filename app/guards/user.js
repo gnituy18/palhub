@@ -38,3 +38,7 @@ module.exports.addUser = function(socketId) {
 module.exports.removeUser = function(socketId) {
   return redis.sremAsync('users', socketId)
 }
+
+module.exports.getUserTable = function(socketId) {
+  return redis.getAsync('user:' + socketId + ':table')
+}

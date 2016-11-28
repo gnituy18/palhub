@@ -1,4 +1,5 @@
-@import "../main";
+@import "../helpers/variables";
+@import "../helpers/mixins";
 
 .intro {
   margin: 0;
@@ -9,8 +10,8 @@
 
 .sep {
   display: inline-block;
-  border-top: 3px solid $white1;
-  width: 100px;
+  border-top: 3px solid $blue2;
+  width: 500px;
 }
 
 footer {
@@ -21,9 +22,10 @@ footer {
 }
 
 .explanation-element {
+  min-width: 240px;
   vertical-align: top;
   display: inline-block;
-  padding: 0.5rem;
+  padding: 0 3rem;
 }
 
 .brand {
@@ -96,4 +98,33 @@ footer {
 
 .green {
   background-color: $green1;
+}
+
+.widgets {
+  margin: auto;
+  width: 700px;
+}
+
+.widget-icon {
+  display: inline-block;
+  text-align: center;
+  width: 100px;
+}
+
+.widget {
+  vertical-align: top;
+  display: inline-block;
+  min-height: 100px;
+  max-width: 460px;
+  line-height: 150%;
+}
+
+.widget-hover {
+  border: $white1 $border-width-base solid;
+  border-radius: $border-radius-base;
+
+  &:hover {
+    border: $blue2 $border-width-base solid;
+    background-color: $yellow1;
+  }
 }

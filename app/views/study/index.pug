@@ -1,0 +1,12 @@
+extends ./../layouts/master.pug
+
+block content
+  section.section.text-align-center.font-blue
+    h1 歡迎來到#{app.name}研究室
+    a.btn(href='/'+app.page+'/create')
+      i.fa.fa-book
+      span  開設書桌
+    span.study-exp  或加入下列你有興趣的書桌
+    div.section
+      div#tables
+    script(src='/js/'+app.page+'/lobby.js')

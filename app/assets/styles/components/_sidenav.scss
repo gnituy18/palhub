@@ -1,0 +1,19 @@
+.side-nav {
+  position: absolute;
+  border-right: $blue2 $border-width-base solid;
+  height: calc(100% - #{$nav-height});
+  width: $side-nav-width;
+  transition: width 0.3s;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.side-nav-control {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.side-nav-neighbor {
+  transition: margin-left 0.3s;
+}

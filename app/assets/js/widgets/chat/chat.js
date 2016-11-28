@@ -1,7 +1,6 @@
 (function() {
 
   var rtc = require('socket.io-client')('/webrtc')
-  var $ = require('jquery')
   var audioSelf = document.getElementById('audio-self')
   var audioPal = document.getElementById('audio-pal')
   var buttonPair = document.createElement('button')
@@ -43,14 +42,17 @@
   function init() {
 
     userInfo = {
-      name: $('#name').text(),
-      gender: $('#gender').text(),
-      intro: $('#intro').text()
+      name: $('#user-name').text(),
+      gender: $('#user-gender').text(),
+      intro: $('#user-intro').text()
     }
 
     if (multiTabFlag)
       return
-    else {
+    else if (navigator.userAgent.indexOf("Safari") != -1 && navigator.userAgent.indexOf("Chrome") < 0) {
+      alertMsg('Safari 目前並不支援，請改用其他瀏覽器。')
+      return
+    } else {
       navigator.mediaDevices.getUserMedia(constraints)
         .then(setupLocalStream)
         .catch(err => {
@@ -196,12 +198,12 @@
       })
   }
 
-  function finishing(answer) {
-    pc.setRemoteDescription(answer)
+  function finishing(info) {
+    pc.setRemoteDescription(info.answer)
   }
 
-  function setCandidate(candidate) {
-    pc.addIceCandidate(candidate)
+  function setCandidate(info) {
+    pc.addIceCandidate(info.candidate)
   }
 
   function passCandidate(e) {
@@ -307,7 +309,7 @@
         console.log('tab event')
         if (!multiTabFlag) {
           multiTabFlag = true;
-          alertMsg('你有一個聊天室已經開啟')
+          alertMsg('你有其他分頁已經與其他人建立連線，請關閉此分頁。')
         }
         console.log('This is not the first tab.')
         break

@@ -1,22 +1,18 @@
 extends ./layouts/master.pug
-block styles
-  link(rel='stylesheet' href='/css/chat.css')
 
 block content
-  div.display-none
-    div#name= user.name
-    div#intro= user.intro
-    div#gender= user.gender
-  div#room.section.text-align-center
-    div#room-msg.cont.font-blue
-      h1 歡迎來到 PalHub 聊天室。目前有 
-        span#num
-        |  人在線上
-    div#pal.cont.bg-yellow.font-blue
-      div.not-found 按下配對開始聊天 
-  div.section.text-align-center
-    div#control.h-center
-    audio#audio-pal(autoplay)
-    audio#audio-self(autoplay muted="muted")
-    script(src='js/adapter.js')
-    script(src='js/chat.js')
+  include ./includes/_user.pug
+  div.wrapper
+    div.center(style='min-width:1000px')
+      div#room-msg.cont.font-blue
+        h1 歡迎來到 PalHub 聊天室。目前有 
+          span#num
+          |  人在線上
+      div#pal.cont.bg-yellow.font-blue
+        div.not-found 按下配對開始聊天 
+      div.section.text-align-center
+        div#control.h-center
+  audio#audio-pal(autoplay)
+  audio#audio-self(autoplay muted="muted")
+  script(src='js/adapter.js')
+  script(src='js/chat/chat.js')

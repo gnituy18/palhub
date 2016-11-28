@@ -1,12 +1,13 @@
 var router = require('koa-router')()
 
-router.get('login', '/', function*(next) {
-  yield this.render('login', {
+router.get('profile', '/', function*(next) {
+  yield this.render('profile', {
     user: this.session.user || {
       name: '',
       gender: 'male',
       intro: ''
-    }
+    },
+    errors: this.session.errors
   })
 })
 
@@ -21,13 +22,15 @@ router.post('/', function*(next) {
 
   if (this.errors) {
     this.session.pass = null
-    yield this.render('login', {
+    this.session.errors = this.errors
+    yield this.render('profile', {
       user: this.session.user,
       errors: this.errors
     })
   } else {
     this.session.pass = true
-    this.redirect('/chat')
+    this.session.errors = null
+    this.redirect(this.session.lastWidget || 'chat')
   }
 })
 
