@@ -10,11 +10,13 @@ block content
     i.fa.fa-users.icon.side-nav-control
     i.fa.fa-microphone.icon
     i.fa.fa-info-circle.icon
-    div#table.section.text-align-center
-      div.text-align-left
-      div#table-msg.cont.font-blue
-        h1.font-blue 大家正在讀#{tableInfo.subject}。討論時請保持禮貌。
-      div.cont.bg-yellow1
+    div.wrapper(style='min-height:100%')
+      div.center
+        div#content.section.text-align-center
+          div#table-msg.cont.font-blue
+            h1.font-blue 此桌的主題是...#{tableInfo.subject}
+            h1.font-blue 討論時請保持友善的態度。
+          div(style='height:600px;width:800px;display:inline-block;background-image:url(/img/boarddev.jpg);background-size:cover;')
   div#pal-audios
   audio#audio-user(autoplay muted="muted")
   script(src='/js/adapter.js')

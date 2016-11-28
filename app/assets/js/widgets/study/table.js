@@ -1,6 +1,7 @@
 (function() {
   var study = require('socket.io-client')('/study')
   var rtc = require('./../../libs/webrtc')
+  var tab = require('./../../libs/tabs')
   var constraints = {
     audio: true,
     video: false
@@ -109,7 +110,14 @@
 
 
   window.onload = function() {
-    init()
+    tab.checkMultiTabs()
+
+    setTimeout(function() {
+      console.log(tab.isMultiTab())
+      if (tab.isMultiTab() == null) {
+        init()
+      }
+    }, 300)
   }
 
 })()

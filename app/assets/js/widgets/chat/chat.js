@@ -309,7 +309,7 @@
         console.log('tab event')
         if (!multiTabFlag) {
           multiTabFlag = true;
-          alertMsg('你有一個聊天室已經開啟')
+          alertMsg('你有其他分頁已經與其他人建立連線，請關閉此分頁。')
         }
         console.log('This is not the first tab.')
         break
