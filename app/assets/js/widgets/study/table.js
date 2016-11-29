@@ -28,6 +28,15 @@
       })
       .then(() => {
 
+        $('#mic').click(function() {
+          if (localStream.getTracks()[0].enabled) {
+            $('#mic').removeClass('fa-microphone').addClass('fa-microphone-slash')
+          } else {
+            $('#mic').removeClass('fa-microphone-slash').addClass('fa-microphone')
+          }
+          localStream.getTracks()[0].enabled = !(localStream.getTracks()[0].enabled)
+        })
+
         study.on('join', function() {
           console.log('join table ' + tableId)
         })

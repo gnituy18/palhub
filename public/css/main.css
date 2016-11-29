@@ -652,10 +652,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .icon {
-  margin: 15px;
-  font-size: 2rem;
   display: inline-block;
+  margin: 15px 12px;
+  width: 35px;
+  font-size: 2rem;
   color: #2B426D;
+  cursor: pointer;
+  text-align: center;
 }
 
 .side-nav-user-card {
