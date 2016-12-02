@@ -67,18 +67,12 @@ module.exports = function(io) {
         .then(reply => {
           return studyGuard.joinTable(tableId, socket.id)
         })
-        .then(reply => {
-          return studyGuard.getTableUsers(tableId)
-        })
-        .then(users => {
-          study.to(tableId).emit('get users', users)
-        })
         .then(() => {
           return studyGuard.getTables()
         })
         .then(reply => {
           study.emit('tables', reply)
-          study.to(socket.id).emit('join')
+          study.to(socket.id).emit('join', socket.id)
           socket.broadcast.to(tableInfo.id).emit('pal join', socket.id)
         })
         .catch(error => {
@@ -89,6 +83,13 @@ module.exports = function(io) {
 
     socket.on('set pc', function(socketId) {
       study.to(socketId).emit('set pc', socket.id)
+    })
+
+    socket.on('get users', function() {
+      studyGuard.getTableUsers(tableInfo.id)
+        .then(users => {
+          study.to(tableInfo.id).emit('get users', users)
+        })
     })
 
   })

@@ -652,10 +652,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .icon {
-  margin: 15px;
-  font-size: 2rem;
   display: inline-block;
+  margin: 15px 12px;
+  width: 35px;
+  font-size: 2rem;
   color: #2B426D;
+  cursor: pointer;
+  text-align: center;
 }
 
 .side-nav-user-card {
@@ -675,6 +678,18 @@ h1, h2, h3, h4, h5, h6 {
   background-color: white;
   background-size: cover;
   box-shadow: 4px 4px #2B426D;
+}
+
+.side-nav-user-mic {
+  margin: 10px;
+  width: 70px;
+  height: 70px;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.off {
+  background-image: url(/img/speaker-off.png);
 }
 
 .side-nav-user-info {

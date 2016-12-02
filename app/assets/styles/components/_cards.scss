@@ -17,6 +17,18 @@
   box-shadow: 4px 4px $blue2;
 }
 
+.side-nav-user-mic {
+  margin: 10px;
+  width: 70px;
+  height: 70px;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.off {
+  background-image: url(/img/speaker-off.png);
+}
+
 .side-nav-user-info {
   display: inline-block;
   border-radius: $border-radius-base;
