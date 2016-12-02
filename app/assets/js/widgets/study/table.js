@@ -17,8 +17,10 @@
     var user = {
       name: $('#user-name').html(),
       intro: $('#user-intro').html(),
-      gender: $('#user-gender').html()
+      gender: $('#user-gender').html(),
+      id: ''
     }
+
 
     console.log(user)
     navigator.mediaDevices.getUserMedia(constraints)
@@ -37,23 +39,36 @@
           localStream.getTracks()[0].enabled = !(localStream.getTracks()[0].enabled)
         })
 
-        study.on('join', function() {
+        study.on('join', function(id) {
+          user.id = id
           console.log('join table ' + tableId)
+          study.emit('get users')
         })
 
         study.on('get users', function(users) {
+          var id = user.id
           Promise.resolve(users)
             .then(users => {
+              console.log(users)
               var ids = []
-              var str = ''
+              var str = '<script>function micswitch(id){var muted = document.getElementById(id).muted;if(muted){document.getElementById("mic-"+id).className = "side-nav-user-mic";}else {document.getElementById("mic-"+id).className += " off";}document.getElementById(id).muted = !muted;}</script>'
+
               for (var x in users) {
-                str += '<div class="side-nav-user-card"><div style="background-image:url(\/img\/' + users[x].gender + '.png);" class="side-nav-user-avatar"></div><div class="side-nav-user-info"><div class="side-nav-user-name">' + users[x].name + '</div><div>' + users[x].intro + '</div></div></div>'
+                ids.push(x)
+                console.log('id: ' + id)
+                if (x != id)
+                  str += '<div class="side-nav-user-card"><div style="background-image:url(\/img\/' + users[x].gender + '.png);" class="side-nav-user-avatar"><div onclick=\'micswitch("' + x + '")\' class="side-nav-user-mic" id="mic-' + x + '"></div></div><div class="side-nav-user-info"><div class="side-nav-user-name">' + users[x].name + '</div><div>' + users[x].intro + '</div></div></div>'
+                else
+                  str += '<div class="side-nav-user-card"><div style="background-image:url(\/img\/' + users[x].gender + '.png);" class="side-nav-user-avatar"></div><div class="side-nav-user-info"><div class="side-nav-user-name">' + users[x].name + '</div><div>' + users[x].intro + '</div></div></div>'
               }
-              return str
+              return {
+                ids: ids,
+                str: str
+              }
             })
-            .then(str => {
-              console.log(str)
-              $('#pals').html(str)
+            .then(data => {
+              $('#pals').html(data.str)
+              return data.ids
             })
         })
 
@@ -114,6 +129,7 @@
     switch (this.iceConnectionState) {
       case 'connected':
         console.log('connected!!')
+        break
     }
   }
 
