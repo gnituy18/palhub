@@ -1,7 +1,7 @@
-extends ./layouts/master.pug
+extends ./../layouts/master.pug
 
 block content
-  include ./includes/_user.pug
+  include ./../includes/_user.pug
   div.wrapper
     div.center(style='min-width:1000px')
       div#room-msg.cont.font-blue
@@ -14,5 +14,5 @@ block content
         div#control.h-center
   audio#audio-pal(autoplay)
   audio#audio-self(autoplay muted="muted")
-  script(src='js/adapter.js')
-  script(src='js/chat/chat.js')
+  script(src='/js/adapter.js')
+  script(src='/js/chat/chat.js')
