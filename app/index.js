@@ -1,8 +1,8 @@
 const Router = require('koa-router')
 const router = new Router()
 
-router.get('/tour', async function (ctx) {
-  await ctx.render('tour')
+router.get('/', async function (ctx) {
+  await ctx.render('app')
 })
 
 module.exports = router
