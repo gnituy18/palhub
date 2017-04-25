@@ -5,15 +5,15 @@ var source = require('vinyl-source-stream')
 var nodemon = require('nodemon')
 
 gulp.task('build', function () {
-  return browserify('./app/app.js')
-  .transform(babelify, {'presets': ['es2015']})
+  return browserify('./app/app.jsx')
+  .transform(babelify, {'presets': [ 'es2015', 'react' ]})
   .bundle()
   .pipe(source('app.js'))
   .pipe(gulp.dest('./public/js'))
 })
 
 gulp.task('watch', ['build'], function () {
-  gulp.watch('./app/app.js', ['build'])
+  gulp.watch('./app/app.jsx', ['build'])
   nodemon({
     'script': 'server/index.js',
     'ignore': [ 'gulpfile.js', 'app/!(index.js)' ],

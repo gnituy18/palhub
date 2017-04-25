@@ -1,5 +1,9 @@
 {
   "extends": [
     "@sourfeethsu/eslint-config/index.js"
-  ]
+  ],
+  "globals": {
+    "ReactDOM": true,
+    "React": true
+  }
 }
