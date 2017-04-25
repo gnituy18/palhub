@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "@sourfeethsu/eslint-config/index.js"
+  ]
+}
