@@ -14,7 +14,8 @@
     "koa-router": "^7.1.1",
     "koa-validate": "^1.0.7",
     "koa-views": "^6.0.2",
-    "pug": "^2.0.0-beta11"
+    "pug": "^2.0.0-beta11",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {
     "@sourfeethsu/eslint-config": "^0.2.0",
