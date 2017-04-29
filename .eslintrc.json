@@ -3,7 +3,8 @@
     "react"
   ],
   "extends": [
-    "@sourfeethsu/eslint-config/index.js"
+    "@sourfeethsu/eslint-config/index.js",
+    "plugin:react/recommended"
   ],
   "globals": {
     "ReactDOM": true,
