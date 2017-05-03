@@ -1,61 +1,79 @@
 const socket = io()
+const name = window.document.getElementById('name').innerHTML
 
 class Room extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
-      msg: ['hi']
+      'msg': [],
+      'users': [] 
     }
     this.appendMsg = this.appendMsg.bind(this)
+    this.addUser = this.addUser.bind(this)
   }
 
   componentDidMount () {
     socket.on('msg', this.appendMsg)
+    socket.on('users', this.addUser)
+    socket.emit('join', {'name': name})
   }
 
   render () {
     return (
       <div>
+        <UserList users={this.state.users}/>
         <MessageBox msg={this.state.msg}/>
         <InputBox/>
       </div>
     )
   }
 
-  appendMsg(data){
-    this.setState((prevState, props) => {
-      return {
-        msg: prevState.msg.concat(data.value)
-      }
+  appendMsg (data) {
+    this.setState(prevState => {
+      return {'msg': prevState.msg.concat(data.value)}
     })
+  }
+
+  addUser (data) {
+    this.setState(prevState => {
+      return {'users': data.users}
+    })
+  }
+}
+
+class UserList extends React.Component {
+  constructor (props) {
+    super(props)
+  }
+
+  render () {
+    const list = this.props.users.map((user, index) => <p key={user.id}>{user.name}</p>)
+    return (
+      <div>
+        {list}
+      </div>
+    )
   }
 }
 
 class MessageBox extends React.Component {
   constructor (props) {
     super(props)
-    console.log(this.props.msg)
   }
-  
+
   render () {
     return (
       <div>
-        {this.props.msg.map((m, index) => {
-          return (
-            <p key={index}>{m}</p>
-          )
-        })}     
+        {this.props.msg.map((m, index) => <p key={index}>{m}</p>)}
       </div>
-    ) 
+    )
   }
 }
 
 class InputBox extends React.Component {
-  constructor(props){
+  constructor (props) {
     super(props)
-    this.state = {
-      inputValue: ''
-    }
+    this.state = {'inputValue': ''}
     this.handleChange = this.handleChange.bind(this)
     this.sendMsg = this.sendMsg.bind(this)
   }
@@ -70,18 +88,12 @@ class InputBox extends React.Component {
   }
 
   handleChange (evt) {
-    this.setState({
-      inputValue: evt.target.value
-    })
+    this.setState({'inputValue': evt.target.value})
   }
-  
+
   sendMsg () {
-    socket.emit('send msg', {
-      value: this.state.inputValue
-    })
-    this.setState({
-      inputValue: ''
-    })
+    socket.emit('send msg', {'value': this.state.inputValue})
+    this.setState({'inputValue': ''})
   }
 }
 
