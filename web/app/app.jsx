@@ -1,8 +1,6 @@
 const socket = io()
 const name = window.document.getElementById('name').innerHTML
 
-import PropTypes from 'prop-types'
-
 class Room extends React.Component {
   constructor (props) {
     super(props)
