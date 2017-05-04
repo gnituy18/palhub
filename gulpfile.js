@@ -3,6 +3,7 @@ var browserify = require('browserify')
 var babelify = require('babelify')
 var source = require('vinyl-source-stream')
 var nodemon = require('nodemon')
+var sass = require('gulp-sass')
 
 gulp.task('build', function () {
   return browserify('./app/app.jsx')
@@ -10,6 +11,12 @@ gulp.task('build', function () {
   .bundle()
   .pipe(source('app.js'))
   .pipe(gulp.dest('./public/js'))
+})
+
+gulp.task('sass', function () {
+  return gulp.src('./app/app.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('./public/css'))
 })
 
 gulp.task('watch', ['build'], function () {
