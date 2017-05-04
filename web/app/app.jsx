@@ -1,12 +1,14 @@
 const socket = io()
 const name = window.document.getElementById('name').innerHTML
 
+import PropTypes from 'prop-types'
+
 class Room extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       'msg': [],
-      'users': [] 
+      'users': []
     }
     this.appendMsg = this.appendMsg.bind(this)
     this.addUser = this.addUser.bind(this)
@@ -35,19 +37,13 @@ class Room extends React.Component {
   }
 
   addUser (data) {
-    this.setState(prevState => {
-      return {'users': data.users}
-    })
+    this.setState({'users': data.users})
   }
 }
 
 class UserList extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
-    const list = this.props.users.map((user, index) => <p key={user.id}>{user.name}</p>)
+    const list = this.props.users.map(user => <p key={user.id}>{user.name}</p>)
     return (
       <div>
         {list}
@@ -56,10 +52,9 @@ class UserList extends React.Component {
   }
 }
 
+UserList.propTypes = {'users': PropTypes.array}
+
 class MessageBox extends React.Component {
-  constructor (props) {
-    super(props)
-  }
 
   render () {
     return (
@@ -69,6 +64,8 @@ class MessageBox extends React.Component {
     )
   }
 }
+
+MessageBox.propTypes = {'msg': PropTypes.array}
 
 class InputBox extends React.Component {
   constructor (props) {
