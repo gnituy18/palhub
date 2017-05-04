@@ -20,7 +20,7 @@ gulp.task('sass', function () {
 })
 
 gulp.task('watch', ['build'], function () {
-  gulp.watch('./web/app/app.jsx', ['build'])
+  gulp.watch([ './web/app/app.jsx', './web/components/*.jsx' ], ['build'])
   nodemon({
     'script': 'server/index.js',
     'ignore': [ 'gulpfile.js', 'app/!(index.js)' ],
