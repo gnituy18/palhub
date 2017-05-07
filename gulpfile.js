@@ -14,13 +14,14 @@ gulp.task('build', function () {
 })
 
 gulp.task('sass', function () {
-  return gulp.src('./web/app/app.scss')
+  return gulp.src([ './web/app/app.scss', './web/scss/main.scss' ])
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('./public/css'))
 })
 
-gulp.task('watch', ['build'], function () {
-  gulp.watch([ './web/app/app.jsx', './web/components/*.jsx' ], ['build'])
+gulp.task('watch', [ 'sass', 'build' ], function () {
+  gulp.watch([ './web/app/app.jsx', './web/components/*.jsx', './web/lib/**/*.js' ], ['build'])
+  gulp.watch(['./web/scss/**/*.scss'], ['sass'])
   nodemon({
     'script': 'server/index.js',
     'ignore': [ 'gulpfile.js', 'app/!(index.js)' ],
@@ -28,5 +29,5 @@ gulp.task('watch', ['build'], function () {
   })
 })
 
-gulp.task('default', [ 'build', 'watch' ])
+gulp.task('default', [ 'sass', 'build', 'watch' ])
 
