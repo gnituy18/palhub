@@ -1,0 +1,41 @@
+.nav {
+  background-color: $blue1;
+  display: block;
+  padding: 7px 30px;
+  height: $nav-height;
+  width: 100%;
+  color: $white;
+}
+
+.nav-brand {
+  vertical-align: top;
+  display: inline-block;
+  font-size: $font-size-large;
+  font-family: $font-family-cursive;
+  height: $nav-element-height;
+  text-decoration: none;
+  line-height: $nav-element-height; 
+  color: $blue2;
+}
+
+.nav-content {
+  display:inline-block;
+  margin-left: 20px;
+  height: $nav-element-height;
+}
+
+.nav-element {
+  vertical-align: top;
+  display:inline-block;
+  height: $nav-element-height;
+  line-height: $nav-element-height; 
+  margin-left: $nav-gap;
+}
+
+.nav-button {
+  display: inline-block;
+  width: $nav-element-height;
+  height: $nav-element-height;
+  cursor: pointer;
+  margin-left: $nav-gap;
+}

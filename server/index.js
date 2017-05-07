@@ -13,18 +13,19 @@ serverHttp.listen(config.port)
 
 io.on('connection', function (socket) {
   socket.on('send msg', function (data) {
-    io.emit('msg', data)
+    io.emit('get msg', data)
   })
 
-  socket.on('join', async function (data) {
-    await guard.user.addUser(socket.id, data)
+  socket.on('join room', async function (data) {
+    await guard.user.addUser(socket.id, data.user)
     const users = await guard.user.getAllUsers()
-    io.emit('users', {'users': users})
+    io.to(socket.id).emit('get users', {'users': users})
+    socket.broadcast.emit('get new user', {'user': users[users.length - 1]})
   })
 
   socket.on('disconnect', async function () {
     await guard.user.removeUser(socket.id)
     const users = await guard.user.getAllUsers()
-    io.emit('users', {'users': users})
+    io.emit('get users', {'users': users})
   })
 })

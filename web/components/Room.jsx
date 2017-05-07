@@ -1,9 +1,10 @@
-const name = window.document.getElementById('name').innerHTML
 const socket = io()
 
 import UserList from './UserList.jsx'
 import InputBox from './InputBox.jsx'
+import NavBar from './NavBar.jsx'
 import MessageBox from './MessageBox.jsx'
+//import {pair} from '../lib/webrtc'
 
 export default class Room extends React.Component {
   constructor (props) {
@@ -13,18 +14,22 @@ export default class Room extends React.Component {
       'users': []
     }
     this.appendMsg = this.appendMsg.bind(this)
-    this.addUser = this.addUser.bind(this)
+    this.setupUsers = this.setupUsers.bind(this)
+    this.addNewUser = this.addNewUser.bind(this)
+    this.init = this.init.bind(this)
   }
 
-  componentDidMount () {
-    socket.on('msg', this.appendMsg)
-    socket.on('users', this.addUser)
-    socket.emit('join', {'name': name})
+  async componentDidMount () {
+    await this.init()
+    socket.emit('join room', {'user': this.props.user})
   }
 
   render () {
     return (
       <div className='siimple-grid'>
+        <div className='siimple-grid-row'>
+          <NavBar user={this.props.user}/>
+        </div>
         <div className='siimple-grid-row'>
           <div className='siimple-grid-col siimple-grid-col--2'>
             <UserList users={this.state.users}/>
@@ -38,14 +43,29 @@ export default class Room extends React.Component {
     )
   }
 
+  init () {
+    return Promise.resolve().then(() => {
+      socket.on('get msg', this.appendMsg)
+      socket.on('get users', this.setupUsers)
+      socket.on('get new user', this.addNewUser)
+    })
+  }
+
   appendMsg (data) {
     this.setState(prevState => {
       return {'msg': prevState.msg.concat(data.value)}
     })
   }
 
-  addUser (data) {
+  setupUsers (data) {
     this.setState({'users': data.users})
+  }
+
+  addNewUser (data) {
+    this.setState(prevState => {
+      return {'users': prevState.users.concat(data.user)}
+    })
   }
 }
 
+Room.propTypes = {'user': PropTypes.object}
