@@ -9,6 +9,11 @@ module.exports.addUser = async function (socketId, user) {
   return redis.rpushAsync('users', socketId)
 }
 
+module.exports.removeUser = async function (socketId) {
+  await redis.delAsync('user:' + socketId)
+  return redis.lremAsync('users', 0, socketId)
+}
+
 module.exports.getAllUsers = async function () {
   const userIds = await redis.lrangeAsync('users', 0, -1)
   const userInfos = await Promise.all(userIds.map(userId => redis.hgetallAsync('user:' + userId)))
@@ -17,9 +22,4 @@ module.exports.getAllUsers = async function () {
     return info
   })
   return users
-}
-
-module.exports.removeUser = async function (socketId) {
-  await redis.delAsync('user:' + socketId)
-  return redis.lremAsync('users', 0, socketId)
 }

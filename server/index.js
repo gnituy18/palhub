@@ -11,9 +11,37 @@ const io = socketio.listen(serverHttp)
 
 serverHttp.listen(config.port)
 
+console.log('server start')
+
 io.on('connection', function (socket) {
   socket.on('send msg', function (data) {
     io.emit('get msg', data)
+  })
+
+  socket.on('pass offer', function (data) {
+    io.to(data.id).emit('get offer', {
+      'id': socket.id,
+      'offer': data.offer
+    })
+  })
+
+  socket.on('pass answer', function (data) {
+    io.to(data.id).emit('get answer', {
+      'id': socket.id,
+      'answer': data.answer
+    })
+  })
+
+  socket.on('setup pc', function (data) {
+    io.to(data.id).emit('setup pc', {'id': socket.id})
+  })
+
+  socket.on('pass candidate', function (data) {
+    console.log(data)
+    io.to(data.id).emit('get candidate', {
+      'id': socket.id,
+      'candidate': data.candidate
+    })
   })
 
   socket.on('join room', async function (data) {

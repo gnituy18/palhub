@@ -1,4 +1,5 @@
-const webrtc = io('/webrtc')
+import {socket} from './../socketio'
+
 const peerConfig = {
   'iceServers': [{
     'urls': [
@@ -19,14 +20,64 @@ const peerConfig = {
     ]
   }]
 }
-
 const pcs = {}
 
+socket.on('get offer', async function (data) {
+  console.log('get offer')
+  const pc = pcs[data.id]
+  await pc.setRemoteDescription(data.offer)
+  const answer = await pc.createAnswer()
+  await pc.setLocalDescription(answer)
+  socket.emit('pass answer', {
+    'id': data.id,
+    'answer': pc.localDescription
+  })
+})
+
+socket.on('get answer', function (data) {
+  console.log('get asnwer')
+  pcs[data.id].setRemoteDescription(data.answer)
+})
+
+socket.on('get candidate', function (data) {
+  console.log('get candidate')
+  pcs[data.id].addIceCandidate(data.candidate)
+  .then(function () {
+    console.log('success')
+  }, function () {
+    console.log('fail')
+  })
+})
+
 async function pair (socketId) {
-  await console.log(socketId)
+  console.log('pair: ' + socketId)
+  const pc = pcs[socketId]
+  const offer = await pc.createOffer()
+  await pc.setLocalDescription(offer)
+  socket.emit('pass offer', {
+    'id': socketId,
+    'offer': pc.localDescription
+  })
 }
 
-export {pair}
+function createNewPcTo (socketId) {
+  console.log('new pc: ' + socketId)
+  return Promise.resolve(socketId).then(socketId => {
+    pcs[socketId] = new RTCPeerConnection(peerConfig)
+    pcs[socketId].id = socketId
+    pcs[socketId].onicecandidate = passCandidate
+    return pcs[socketId]
+  })
+}
 
+function passCandidate (e) {
+  if (!e.candidate) {
+    return null
+  }
+  socket.emit('pass candidate', {
+    'id': this.id,
+    'candidate': e.candidate
+  })
+}
 
-
+export {pair, createNewPcTo}

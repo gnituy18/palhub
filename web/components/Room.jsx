@@ -1,27 +1,30 @@
-const socket = io()
 
 import UserList from './UserList.jsx'
 import InputBox from './InputBox.jsx'
 import NavBar from './NavBar.jsx'
 import MessageBox from './MessageBox.jsx'
-//import {pair} from '../lib/webrtc'
+import Audios from './Audios.jsx'
+import {socket} from './../lib/socketio'
+import * as rtc from '../lib/webrtc'
 
 export default class Room extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       'msg': [],
-      'users': []
+      'users': [],
+      'streams': []
     }
+    this.localStream = {}
     this.appendMsg = this.appendMsg.bind(this)
     this.setupUsers = this.setupUsers.bind(this)
-    this.addNewUser = this.addNewUser.bind(this)
+    this.handelNewUser = this.handelNewUser.bind(this)
+    this.setupPc = this.setupPc.bind(this)
     this.init = this.init.bind(this)
   }
 
-  async componentDidMount () {
-    await this.init()
-    socket.emit('join room', {'user': this.props.user})
+  componentDidMount () {
+    this.init()
   }
 
   render () {
@@ -39,16 +42,28 @@ export default class Room extends React.Component {
             <InputBox/>
           </div>
         </div>
+        <Audios streams={this.state.streams}/>
       </div>
     )
   }
 
-  init () {
-    return Promise.resolve().then(() => {
+  async init () {
+    this.localStream = await navigator.mediaDevices.getUserMedia({
+      'audio': true,
+      'video': false
+    })
+    await Promise.resolve().then(() => {
       socket.on('get msg', this.appendMsg)
       socket.on('get users', this.setupUsers)
-      socket.on('get new user', this.addNewUser)
+      socket.on('get new user', this.handelNewUser)
+      socket.on('setup pc', data => {
+        this.setupPc(data.id)
+        .then(() => {
+          rtc.pair(data.id)
+        })
+      })
     })
+    socket.emit('join room', {'user': this.props.user})
   }
 
   appendMsg (data) {
@@ -61,9 +76,30 @@ export default class Room extends React.Component {
     this.setState({'users': data.users})
   }
 
-  addNewUser (data) {
+  setupPc (id) {
+    return rtc.createNewPcTo(id)
+    .then(pc => {
+      pc.onaddstream = e => {
+        this.setState(prevState => {
+          return {'streams': prevState.streams.concat(e.stream)}
+        })
+      }
+      pc.addStream(this.localStream)
+      pc.oniceconnectionstatechange = function () {
+        console.log('state change: ' + this.iceConnectionState)
+      }
+    })
+  }
+
+  handelNewUser (data) {
+    console.log('userjoin' + data.user.name)
     this.setState(prevState => {
       return {'users': prevState.users.concat(data.user)}
+    })
+    this.setupPc(data.user.id)
+    .then(() => {
+      socket.emit('setup pc', {'id': data.user.id})
+      console.log('aaaa')
     })
   }
 }
