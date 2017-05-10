@@ -1,6 +1,12 @@
 export default class UserList extends React.Component {
   render () {
-    const list = this.props.users.map(user => <p key={user.id}>{user.name}</p>)
+    let list = this.props.users.map(user => <div key={user.id}><p>{user.name}</p>
+          {user.stream && <audio ref={audio => {
+            if (audio !== null) {
+              audio.srcObject = user.stream
+            }
+          }} autoPlay></audio>}
+        </div>)
     return (
       <div>
         {list}

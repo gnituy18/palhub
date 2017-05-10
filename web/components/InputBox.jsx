@@ -1,4 +1,4 @@
-const socket = io()
+import {socket} from '../lib/webrtc'
 
 export default class InputBox extends React.Component {
   constructor (props) {

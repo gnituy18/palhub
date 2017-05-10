@@ -60,6 +60,12 @@ async function pair (socketId) {
   })
 }
 
+function close (socketId) {
+  pcs[socketId].close()
+  delete pcs[socketId]
+  console.log(pcs)
+}
+
 function createNewPcTo (socketId) {
   console.log('new pc: ' + socketId)
   return Promise.resolve(socketId).then(socketId => {
@@ -80,4 +86,4 @@ function passCandidate (e) {
   })
 }
 
-export {pair, createNewPcTo}
+export {pair, close, createNewPcTo}

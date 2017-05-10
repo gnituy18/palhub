@@ -14,6 +14,7 @@ serverHttp.listen(config.port)
 console.log('server start')
 
 io.on('connection', function (socket) {
+  console.log(socket.id)
   socket.on('send msg', function (data) {
     io.emit('get msg', data)
   })
@@ -53,7 +54,6 @@ io.on('connection', function (socket) {
 
   socket.on('disconnect', async function () {
     await guard.user.removeUser(socket.id)
-    const users = await guard.user.getAllUsers()
-    io.emit('get users', {'users': users})
+    io.emit('remove user', {'id': socket.id})
   })
 })

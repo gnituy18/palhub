@@ -3,7 +3,6 @@ import UserList from './UserList.jsx'
 import InputBox from './InputBox.jsx'
 import NavBar from './NavBar.jsx'
 import MessageBox from './MessageBox.jsx'
-import Audios from './Audios.jsx'
 import {socket} from './../lib/socketio'
 import * as rtc from '../lib/webrtc'
 
@@ -12,14 +11,14 @@ export default class Room extends React.Component {
     super(props)
     this.state = {
       'msg': [],
-      'users': [],
-      'streams': []
+      'users': []
     }
     this.localStream = {}
     this.appendMsg = this.appendMsg.bind(this)
     this.setupUsers = this.setupUsers.bind(this)
     this.handelNewUser = this.handelNewUser.bind(this)
     this.setupPc = this.setupPc.bind(this)
+    this.removeUser = this.removeUser.bind(this)
     this.init = this.init.bind(this)
   }
 
@@ -42,7 +41,6 @@ export default class Room extends React.Component {
             <InputBox/>
           </div>
         </div>
-        <Audios streams={this.state.streams}/>
       </div>
     )
   }
@@ -56,6 +54,7 @@ export default class Room extends React.Component {
       socket.on('get msg', this.appendMsg)
       socket.on('get users', this.setupUsers)
       socket.on('get new user', this.handelNewUser)
+      socket.on('remove user', this.removeUser)
       socket.on('setup pc', data => {
         this.setupPc(data.id)
         .then(() => {
@@ -73,6 +72,7 @@ export default class Room extends React.Component {
   }
 
   setupUsers (data) {
+    data.users.splice(-1, 1)
     this.setState({'users': data.users})
   }
 
@@ -80,8 +80,15 @@ export default class Room extends React.Component {
     return rtc.createNewPcTo(id)
     .then(pc => {
       pc.onaddstream = e => {
+        console.log('on add stream')
         this.setState(prevState => {
-          return {'streams': prevState.streams.concat(e.stream)}
+          const users = prevState.users.map(user => {
+            if (user.id === id) {
+              user.stream = e.stream
+            }
+            return user
+          })
+          return {'users': users}
         })
       }
       pc.addStream(this.localStream)
@@ -91,17 +98,32 @@ export default class Room extends React.Component {
     })
   }
 
+  removeUser (data) {
+    console.log('remove user')
+    for (let x = 0; x < this.state.users.length; x++) {
+      if (this.state.users[x].id === data.id) {
+        console.log('remove id: ' + data.id)
+        this.setState(prevState => {
+          prevState.users.splice(x, 1)
+          console.log(prevState.users)
+          return {'users': prevState.users}
+        })
+        break
+      }
+    }
+    rtc.close(data.id)
+  }
+
   handelNewUser (data) {
-    console.log('userjoin' + data.user.name)
     this.setState(prevState => {
       return {'users': prevState.users.concat(data.user)}
     })
     this.setupPc(data.user.id)
     .then(() => {
       socket.emit('setup pc', {'id': data.user.id})
-      console.log('aaaa')
     })
   }
+
 }
 
 Room.propTypes = {'user': PropTypes.object}
