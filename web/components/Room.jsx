@@ -11,7 +11,8 @@ export default class Room extends React.Component {
     super(props)
     this.state = {
       'msg': [],
-      'users': []
+      'users': [],
+      'micSwitch': false
     }
     this.localStream = {}
     this.appendMsg = this.appendMsg.bind(this)
@@ -19,6 +20,7 @@ export default class Room extends React.Component {
     this.handelNewUser = this.handelNewUser.bind(this)
     this.setupPc = this.setupPc.bind(this)
     this.removeUser = this.removeUser.bind(this)
+    this.switchStream = this.switchStream.bind(this)
     this.init = this.init.bind(this)
   }
 
@@ -30,7 +32,7 @@ export default class Room extends React.Component {
     return (
       <div className='siimple-grid'>
         <div className='siimple-grid-row'>
-          <NavBar user={this.props.user}/>
+          <NavBar micSwitch={this.state.micSwitch} onMicSwitchChange={this.switchStream} user={this.props.user}/>
         </div>
         <div className='siimple-grid-row'>
           <div className='siimple-grid-col siimple-grid-col--2'>
@@ -61,6 +63,7 @@ export default class Room extends React.Component {
           rtc.pair(data.id)
         })
       })
+      this.localStream.getAudioTracks()[0].enabled = this.state.micSwitch
     })
     socket.emit('join room', {'user': this.props.user})
   }
@@ -122,6 +125,13 @@ export default class Room extends React.Component {
     .then(() => {
       socket.emit('setup pc', {'id': data.user.id})
     })
+  }
+
+  switchStream () {
+    this.setState(prevState => {
+      return {'micSwitch': !prevState.micSwitch}
+    })
+    this.localStream.getAudioTracks()[0].enabled = !this.localStream.getAudioTracks()[0].enabled
   }
 
 }

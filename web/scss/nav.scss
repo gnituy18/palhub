@@ -39,3 +39,30 @@
   cursor: pointer;
   margin-left: $nav-gap;
 }
+
+.nav-button-disable {
+  width: $nav-element-height;
+  height: $nav-element-height;
+  position: relative;
+  transform:rotate(45deg);
+  
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: $red1;
+  }
+  &:before {
+    left: 50%;
+    width: 20%;
+    margin-left: -10%;
+    height: 100%;
+  }
+
+  &:after {
+    top: 50%;
+    height: 20%;
+    margin-top: -10%;
+    width: 100%;
+  }
+}
