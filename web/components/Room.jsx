@@ -30,18 +30,12 @@ export default class Room extends React.Component {
 
   render () {
     return (
-      <div className='siimple-grid'>
-        <div className='siimple-grid-row'>
-          <NavBar micSwitch={this.state.micSwitch} onMicSwitchChange={this.switchStream} user={this.props.user}/>
-        </div>
-        <div className='siimple-grid-row'>
-          <div className='siimple-grid-col siimple-grid-col--2'>
-            <UserList users={this.state.users}/>
-          </div>
-          <div className='siimple-grid-col siimple-grid-col--10'>
-            <MessageBox msg={this.state.msg}/>
-            <InputBox/>
-          </div>
+      <div>
+        <NavBar micSwitch={this.state.micSwitch} onMicSwitchChange={this.switchStream} user={this.props.user}/>
+          <UserList users={this.state.users}/>
+        <div className='side-nav-neighbor'>
+          <MessageBox msg={this.state.msg}/>
+          <InputBox/>
         </div>
       </div>
     )

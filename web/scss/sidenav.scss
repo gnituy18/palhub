@@ -1,0 +1,25 @@
+.side-nav-container {
+  position: absolute;
+  height: calc(100% - #{$nav-height});
+  width: $side-nav-width;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.side-nav-content {
+  padding: 10px 12px;
+  background-color: $white;
+}
+
+.side-nav-neighbor {
+  margin-left: $side-nav-width;
+}
+
+.side-nav-element {
+  padding: 10px 0;
+}
+
+.side-nav-title {
+  font-size: $font-size-big;
+  text-align: center;
+}
