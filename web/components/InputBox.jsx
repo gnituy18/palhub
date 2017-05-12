@@ -1,18 +1,26 @@
-import {socket} from '../lib/webrtc'
+import {socket} from '../lib/socketio'
 
 export default class InputBox extends React.Component {
   constructor (props) {
     super(props)
     this.state = {'inputValue': ''}
     this.handleChange = this.handleChange.bind(this)
+    this.handelKeyPress = this.handelKeyPress.bind(this)
     this.sendMsg = this.sendMsg.bind(this)
+  }
+
+  handelKeyPress (e) {
+    switch (e.key) {
+      case 'Enter':
+        this.sendMsg()
+        break
+    }
   }
 
   render () {
     return (
-      <div>
-        <input value={this.state.inputValue} onChange={this.handleChange} type='text'></input>
-        <button onClick={this.sendMsg}>submit</button>
+      <div className='input-box'>
+        <input value={this.state.inputValue} onKeyPress={this.handelKeyPress} onChange={this.handleChange} type='text'></input>
       </div>
     )
   }

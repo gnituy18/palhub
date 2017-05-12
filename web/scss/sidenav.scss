@@ -12,6 +12,7 @@
 }
 
 .side-nav-neighbor {
+  height: calc(100% - #{$nav-height});
   margin-left: $side-nav-width;
 }
 

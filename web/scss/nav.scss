@@ -1,10 +1,12 @@
-.nav {
+.nav-container {
   background-color: $blue1;
   display: block;
-  padding: 7px 30px;
-  height: $nav-height;
   width: 100%;
   color: $white;
+}
+
+.nav {
+  padding: $nav-padding-top 30px;
 }
 
 .nav-brand {
@@ -52,6 +54,7 @@
     z-index: -1;
     background: $red1;
   }
+
   &:before {
     left: 50%;
     width: 20%;
