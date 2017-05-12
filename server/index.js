@@ -15,8 +15,12 @@ console.log('server start')
 
 io.on('connection', function (socket) {
   console.log(socket.id)
+
   socket.on('send msg', function (data) {
-    io.emit('get msg', data)
+    io.emit('get msg', {
+      'id': socket.id,
+      'msg': data.msg
+    })
   })
 
   socket.on('pass offer', function (data) {

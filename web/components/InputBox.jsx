@@ -30,7 +30,7 @@ export default class InputBox extends React.Component {
   }
 
   sendMsg () {
-    socket.emit('send msg', {'value': this.state.inputValue})
+    socket.emit('send msg', {'msg': this.state.inputValue})
     this.setState({'inputValue': ''})
   }
 }

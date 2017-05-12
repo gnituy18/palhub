@@ -3,7 +3,7 @@ export default class MessageBox extends React.Component {
   render () {
     return (
       <div className='msg-box'>
-        {this.props.msg.map((m, index) => <div key={index}>{m}</div>)}
+        {this.props.msg.map((msg, index) => <div key={index}>{msg.user.name}:{msg.body}</div>)}
       </div>
     )
   }

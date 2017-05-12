@@ -21,6 +21,7 @@ export default class Room extends React.Component {
     this.setupPc = this.setupPc.bind(this)
     this.removeUser = this.removeUser.bind(this)
     this.switchStream = this.switchStream.bind(this)
+    this.getUser = this.getUser.bind(this)
     this.init = this.init.bind(this)
   }
 
@@ -62,9 +63,20 @@ export default class Room extends React.Component {
     socket.emit('join room', {'user': this.props.user})
   }
 
+  getUser (id) {
+    return this.state.users.find(user => user.id === id)
+  }
+
   appendMsg (data) {
     this.setState(prevState => {
-      return {'msg': prevState.msg.concat(data.value)}
+      const user = this.getUser(data.id) ? this.getUser(data.id) : this.props.user
+      console.log(user)
+      return {
+        'msg': prevState.msg.concat({
+          'body': data.msg,
+          'user': user
+        })
+      }
     })
   }
 
