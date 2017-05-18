@@ -10,6 +10,7 @@
     "ReactDOM": true,
     "React": true,
     "PropTypes": true,
-    "io": true
+    "io": true,
+    "FB": true
   }
 }

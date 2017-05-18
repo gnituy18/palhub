@@ -81,8 +81,18 @@ export default class Room extends React.Component {
   }
 
   setupUsers (data) {
+    console.log(data)
     data.users.splice(-1, 1)
-    this.setState({'users': data.users})
+    const promises = data.users.map(user => new Promise(resolve => {
+      FB.api('/' + user.fbID + '/picture?type=normal', function (response) {
+        user.picture = response.data.url
+        resolve(user)
+      })
+    }))
+    Promise.all(promises).then(users => {
+      console.log(users)
+      this.setState({'users': users})
+    })
   }
 
   setupPc (id) {
@@ -124,8 +134,11 @@ export default class Room extends React.Component {
   }
 
   handelNewUser (data) {
-    this.setState(prevState => {
-      return {'users': prevState.users.concat(data.user)}
+    FB.api('/' + data.user.fbID + '/picture?type=normal', response => {
+      data.user.picture = response.data.url
+      this.setState(prevState => {
+        return {'users': prevState.users.concat(data.user)}
+      })
     })
     this.setupPc(data.user.id)
     .then(() => {

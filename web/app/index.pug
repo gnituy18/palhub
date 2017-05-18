@@ -4,7 +4,8 @@ html
     link(rel="stylesheet" href="/css/main.css")
     link(rel="stylesheet" href="/css/app.css")
   body
-    div(id="name" style="display:none") #{name}
+    div(id="id" style="display:none") #{user.id}
+    div(id="name" style="display:none") #{user.name}
     div(id="root")
   script(src="https://unpkg.com/react@15/dist/react.js")
   script(src="https://unpkg.com/react-dom@15/dist/react-dom.js")
@@ -12,3 +13,11 @@ html
   script(src="http://webrtc.github.io/adapter/adapter-latest.js")
   script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js")
   script(src="/js/app.js")
+  script.
+    (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));

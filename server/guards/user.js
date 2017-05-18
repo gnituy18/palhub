@@ -3,7 +3,9 @@ const redis = require('../lib/redis')
 module.exports.addUser = async function (socketId, user) {
   var userInfo = [
     'name',
-    user.name
+    user.name,
+    'fbID',
+    user.id
   ]
   await redis.hmsetAsync('user:' + socketId, userInfo)
   return redis.rpushAsync('users', socketId)

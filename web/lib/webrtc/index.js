@@ -71,19 +71,18 @@ function createNewPcTo (socketId) {
   return Promise.resolve(socketId).then(socketId => {
     pcs[socketId] = new RTCPeerConnection(peerConfig)
     pcs[socketId].id = socketId
-    pcs[socketId].onicecandidate = passCandidate
+    pcs[socketId].onicecandidate = function (e) {
+      if (!e.candidate) {
+        return null
+      }
+      socket.emit('pass candidate', {
+        'id': socketId,
+        'candidate': e.candidate
+      })
+    }
     return pcs[socketId]
   })
 }
 
-function passCandidate (e) {
-  if (!e.candidate) {
-    return null
-  }
-  socket.emit('pass candidate', {
-    'id': this.id,
-    'candidate': e.candidate
-  })
-}
 
 export {pair, close, createNewPcTo}
