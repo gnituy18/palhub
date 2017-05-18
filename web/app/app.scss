@@ -4,6 +4,7 @@ $input-box-height: 40px;
 
 .msg-box {
   height: calc(100vh - #{$input-box-height + $nav-height});
+  overflow: auto;
 }
 
 .input-box {

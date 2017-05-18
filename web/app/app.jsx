@@ -13,11 +13,13 @@ window.fbAsyncInit = function () {
     'version': 'v2.9'
   })
   FB.AppEvents.logPageView()
-  FB.getLoginStatus(function (res) {
-    console.log(res)
-    ReactDOM.render(
-      <Room user={user}/>,
-      document.getElementById('root')
-    )
+  FB.getLoginStatus(function () {
+    FB.api('/me/picture?type=normal', function (response) {
+      user.picture = response.data.url
+      ReactDOM.render(
+        <Room user={user}/>,
+        document.getElementById('root')
+      )
+    })
   })
 }

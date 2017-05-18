@@ -17,6 +17,7 @@ export default class Room extends React.Component {
     this.localStream = {}
     this.appendMsg = this.appendMsg.bind(this)
     this.setupUsers = this.setupUsers.bind(this)
+    this.setupMessages = this.setupMessages.bind(this)
     this.handelNewUser = this.handelNewUser.bind(this)
     this.setupPc = this.setupPc.bind(this)
     this.removeUser = this.removeUser.bind(this)
@@ -50,6 +51,7 @@ export default class Room extends React.Component {
     await Promise.resolve().then(() => {
       socket.on('get msg', this.appendMsg)
       socket.on('get users', this.setupUsers)
+      socket.on('get messages', this.setupMessages)
       socket.on('get new user', this.handelNewUser)
       socket.on('remove user', this.removeUser)
       socket.on('setup pc', data => {
@@ -78,6 +80,10 @@ export default class Room extends React.Component {
         })
       }
     })
+  }
+
+  setupMessages (messages) {
+    messages.map(message => this.appendMsg(message))
   }
 
   setupUsers (data) {
