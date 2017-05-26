@@ -1,0 +1,18 @@
+html
+  head
+    link(rel="stylesheet" href="/css/main.css")
+  body
+    div(id='root')
+  script(src="https://unpkg.com/react@15/dist/react.js")
+  script(src="https://unpkg.com/react-dom@15/dist/react-dom.js")
+  script(src="https://unpkg.com/prop-types/prop-types.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js")
+  script(src="/js/lobby.js")
+  script.
+   (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));

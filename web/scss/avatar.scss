@@ -1,0 +1,8 @@
+.avatar-normal {
+  display: inline-block;
+  height:$avatar-len;
+  width: $avatar-len;
+  border-radius: $avatar-border-radius;
+  background-size: cover;
+  background-position: center;
+}

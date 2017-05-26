@@ -1,0 +1,71 @@
+.nav-container {
+  background-color: $blue1;
+  display: block;
+  width: 100%;
+  color: $white;
+}
+
+.nav {
+  padding: $nav-padding-top 30px;
+}
+
+.nav-brand {
+  vertical-align: top;
+  display: inline-block;
+  font-size: $font-size-large;
+  font-family: $font-family-cursive;
+  height: $nav-element-height;
+  text-decoration: none;
+  line-height: $nav-element-height; 
+  color: $blue2;
+}
+
+.nav-content {
+  display:inline-block;
+  margin-left: 20px;
+  height: $nav-element-height;
+}
+
+.nav-element {
+  vertical-align: top;
+  display:inline-block;
+  height: $nav-element-height;
+  line-height: $nav-element-height; 
+  margin-left: $nav-gap;
+}
+
+.nav-button {
+  display: inline-block;
+  width: $nav-element-height;
+  height: $nav-element-height;
+  cursor: pointer;
+  margin-left: $nav-gap;
+}
+
+.nav-button-disable {
+  width: $nav-element-height;
+  height: $nav-element-height;
+  position: relative;
+  transform:rotate(45deg);
+  
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: $red1;
+  }
+
+  &:before {
+    left: 50%;
+    width: 20%;
+    margin-left: -10%;
+    height: 100%;
+  }
+
+  &:after {
+    top: 50%;
+    height: 20%;
+    margin-top: -10%;
+    width: 100%;
+  }
+}

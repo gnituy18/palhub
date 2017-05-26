@@ -1,52 +1,40 @@
 var gulp = require('gulp')
+var browserify = require('browserify')
+var babelify = require('babelify')
+var source = require('vinyl-source-stream')
+var nodemon = require('nodemon')
 var sass = require('gulp-sass')
-var nodemon = require('gulp-nodemon')
-var browserify = require('gulp-browserify')
-var uglify = require('gulp-uglify')
-var pump = require('pump')
-var babel = require('gulp-babel')
 
-gulp.task('watch', ['build'], function() {
-  gulp.watch('./app/assets/styles/**/*.scss', ['scss'])
-  gulp.watch('./app/assets/js/**/*.js', ['js'])
+const features = [ 'app', 'lobby' ]
+
+for (let x = 0;x < features.length;x++) {
+  const feature = features[x]
+  gulp.task(feature, function () {
+    return browserify('./web/' + feature + '/' + feature + '.jsx')
+    .transform(babelify, {'presets': [ 'es2015', 'react' ]})
+    .bundle()
+    .pipe(source(feature + '.js'))
+    .pipe(gulp.dest('./public/js'))
+  })
+}
+
+gulp.task('build', features)
+
+gulp.task('sass', function () {
+  return gulp.src([ './web/app/app.scss', './web/scss/main.scss' ])
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('./public/css'))
+})
+
+gulp.task('watch', [ 'sass', 'build' ], function () {
+  gulp.watch([ './web/app/app.jsx', './web/components/*.jsx', './web/lib/**/*.js' ], ['build'])
+  gulp.watch([ './web/app/app.scss', './web/scss/**/*.scss' ], ['sass'])
   nodemon({
-    script: 'server.js',
-    ignore: ['./public/', ['./app/assets/js/']]
+    'script': 'server/index.js',
+    'ignore': [ 'gulpfile.js', 'app/!(index.js)' ],
+    'env': {'PORT': '3000'}
   })
 })
 
-gulp.task('scss', function() {
-  return gulp.src(['./app/assets/styles/pages/*.scss', './app/assets/styles/main.scss'])
-    .pipe(sass({
-        outputStyle: 'expanded',
-        includePaths: require('node-normalize-scss').includePaths
-      })
-      .on('error', sass.logError))
-    .pipe(gulp.dest('./public/css'))
-  console.log(require('node-normalize-scss').includePaths)
-})
+gulp.task('default', [ 'sass', 'build', 'watch' ])
 
-gulp.task('js', function() {
-  return gulp.src(['./app/assets/js/widgets/**/*.js', './app/assets/js/*.js'])
-    .pipe(browserify({
-      debug: !gulp.env.production
-    }))
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(uglify())
-    .pipe(gulp.dest('./public/js'))
-}).on('error', function(err) {
-  console.log(err)
-})
-
-gulp.task('copy', ['copy-adapter.js'])
-
-gulp.task('copy-adapter.js', function() {
-  return gulp.src('./node_modules/webrtc-adapter/out/adapter.js')
-    .pipe(gulp.dest('./public/js'))
-})
-
-gulp.task('build', ['scss', 'js'])
-
-gulp.task('default', ['copy', 'build', 'watch'])

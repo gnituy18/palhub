@@ -1,0 +1,27 @@
+$blue1: rgb(66, 134, 244);
+$blue2: rgb(15, 64, 142); 
+$red1: red;
+$white: rgb(255, 255, 255);
+
+// Nav
+$nav-height: 50px;
+$nav-element-height: 40px;
+$nav-padding-top: ($nav-height - $nav-element-height) / 2;
+$nav-gap: 15px;
+
+// Side Nav
+$side-nav-width: 15%;
+
+// Font
+$font-size-base: 16px;
+$font-size-normal: 1rem;
+$font-size-big: 1.5rem;
+$font-size-large: 2rem;
+
+// Avatar
+$avatar-len: 50px;
+$avatar-border-radius: 50%;
+
+// Font family
+$font-family-base: "Noto Sans TC", "Roboto", sans-serif;
+$font-family-cursive: "Courgette", cursive;

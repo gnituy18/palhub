@@ -1,0 +1,16 @@
+{
+  "plugins": [
+    "react"
+  ],
+  "extends": [
+    "@sourfeethsu/eslint-config/index.js",
+    "plugin:react/recommended"
+  ],
+  "globals": {
+    "ReactDOM": true,
+    "React": true,
+    "PropTypes": true,
+    "io": true,
+    "FB": true
+  }
+}
