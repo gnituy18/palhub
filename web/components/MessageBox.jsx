@@ -2,6 +2,7 @@ export default class MessageBox extends React.Component {
 
   render () {
     const msgList = this.props.msg.map((msg, index) => {
+      console.log(msg)
       const pictureStyle = {'backgroundImage': 'url(' + msg.user.picture + ')'}
       return (
         <div key={index}>
@@ -16,4 +17,3 @@ export default class MessageBox extends React.Component {
 }
 
 MessageBox.propTypes = {'msg': PropTypes.array}
-

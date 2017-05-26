@@ -1,4 +1,3 @@
-
 import UserList from './UserList.jsx'
 import InputBox from './InputBox.jsx'
 import NavBar from './NavBar.jsx'
@@ -62,33 +61,50 @@ export default class Room extends React.Component {
       })
       this.localStream.getAudioTracks()[0].enabled = this.state.micSwitch
     })
-    socket.emit('join room', {'user': this.props.user})
+    socket.emit('join room', {
+      'user': this.props.user,
+      'roomId': this.props.room.id
+    })
   }
 
-  getUser (id) {
-    return this.state.users.find(user => user.id === id)
+  async getUser (fbID) {
+    let user = this.state.users.find(user => user.fbID === fbID)
+    if (typeof user === 'undefined') {
+      const picture = await new Promise(resolve => {
+        FB.api('/' + fbID + '/picture?type=normal', function (response) {
+          resolve(response.data.url)
+        })
+      })
+      user = await new Promise(resolve => {
+        FB.api('/' + fbID, function (response) {
+          const user = {}
+          user.fbID = response.id
+          user.name = response.name
+          user.picture = picture
+          resolve(user)
+        })
+      })
+    }
+    return user
   }
 
-  appendMsg (data) {
+  async appendMsg (data) {
+    const user = await this.getUser(data.fbID)
     this.setState(prevState => {
-      const user = this.getUser(data.id) ? this.getUser(data.id) : this.props.user
-      console.log(user)
       return {
         'msg': prevState.msg.concat({
-          'body': data.msg,
+          'body': data.msgBody,
           'user': user
         })
       }
     })
   }
 
-  setupMessages (messages) {
-    messages.map(message => this.appendMsg(message))
+  setupMessages (data) {
+    data.map(msg => this.appendMsg(msg))
   }
 
   setupUsers (data) {
-    console.log(data)
-    data.users.splice(-1, 1)
     const promises = data.users.map(user => new Promise(resolve => {
       FB.api('/' + user.fbID + '/picture?type=normal', function (response) {
         user.picture = response.data.url
@@ -96,7 +112,6 @@ export default class Room extends React.Component {
       })
     }))
     Promise.all(promises).then(users => {
-      console.log(users)
       this.setState({'users': users})
     })
   }
@@ -161,4 +176,7 @@ export default class Room extends React.Component {
 
 }
 
-Room.propTypes = {'user': PropTypes.object}
+Room.propTypes = {
+  'user': PropTypes.object,
+  'room': PropTypes.object
+}

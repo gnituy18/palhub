@@ -5,13 +5,20 @@ var source = require('vinyl-source-stream')
 var nodemon = require('nodemon')
 var sass = require('gulp-sass')
 
-gulp.task('build', function () {
-  return browserify('./web/app/app.jsx')
-  .transform(babelify, {'presets': [ 'es2015', 'react' ]})
-  .bundle()
-  .pipe(source('app.js'))
-  .pipe(gulp.dest('./public/js'))
-})
+const features = [ 'app', 'lobby' ]
+
+for (let x = 0;x < features.length;x++) {
+  const feature = features[x]
+  gulp.task(feature, function () {
+    return browserify('./web/' + feature + '/' + feature + '.jsx')
+    .transform(babelify, {'presets': [ 'es2015', 'react' ]})
+    .bundle()
+    .pipe(source(feature + '.js'))
+    .pipe(gulp.dest('./public/js'))
+  })
+}
+
+gulp.task('build', features)
 
 gulp.task('sass', function () {
   return gulp.src([ './web/app/app.scss', './web/scss/main.scss' ])

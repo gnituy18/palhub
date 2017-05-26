@@ -1,5 +1,5 @@
 const user = require('./user')
-const msg = require('./msg')
+const room = require('./room')
 
 module.exports.user = user
-module.exports.msg = msg
+module.exports.room = room
