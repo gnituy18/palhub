@@ -5,7 +5,7 @@ var source = require('vinyl-source-stream')
 var nodemon = require('nodemon')
 var sass = require('gulp-sass')
 
-const features = [ 'app', 'lobby' ]
+const features = [ 'room', 'lobby' ]
 
 for (let x = 0;x < features.length;x++) {
   const feature = features[x]
@@ -21,7 +21,7 @@ for (let x = 0;x < features.length;x++) {
 gulp.task('build', features)
 
 gulp.task('sass', function () {
-  return gulp.src([ './web/app/app.scss', './web/scss/main.scss' ])
+  return gulp.src([ './web/room/room.scss', './web/scss/main.scss' ])
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('./public/css'))
 })

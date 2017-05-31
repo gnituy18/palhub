@@ -4,8 +4,8 @@ const serve = require('koa-static')
 const session = require('koa-session')
 const path = require('path')
 const koaBody = require('koa-body')
-const app = require('../web/app')
-const tour = require('../web/tour')
+const room = require('../web/room')
+const home = require('../web/home')
 const lobby = require('../web/lobby')
 const login = require('../web/login')
 const auth = require('./middlewares/auth')
@@ -31,9 +31,9 @@ koa.use(serve(path.join(__dirname, '../public')))
 
 koa.use(auth)
 
-koa.use(app.routes())
-koa.use(tour.routes())
+koa.use(home.routes())
 koa.use(login.routes())
 koa.use(lobby.routes())
+koa.use(room.routes())
 
 module.exports = koa
