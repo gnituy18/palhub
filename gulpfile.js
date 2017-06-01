@@ -18,7 +18,15 @@ for (let x = 0;x < features.length;x++) {
   })
 }
 
-gulp.task('build', features)
+gulp.task('login', function () {
+  return browserify('./web/login/login.js')
+  .transform(babelify, {'presets': ['es2015']})
+  .bundle()
+  .pipe(source('login.js'))
+  .pipe(gulp.dest('./public/js'))
+})
+
+gulp.task('build', [ 'login', 'room', 'lobby' ])
 
 gulp.task('sass', function () {
   return gulp.src([ './web/room/room.scss', './web/scss/main.scss' ])
@@ -27,7 +35,12 @@ gulp.task('sass', function () {
 })
 
 gulp.task('watch', [ 'sass', 'build' ], function () {
-  gulp.watch([ './web/app/app.jsx', './web/components/*.jsx', './web/lib/**/*.js' ], ['build'])
+  for (let x = 0;x < features.length; x++) {
+    console.log(x)
+    gulp.watch([ './web/' + features[x] + '/' + features[x] + '.jsx', './web/components/*.jsx', './web/lib/**/*.js' ], ['build'])
+  }
+
+  gulp.watch('./web/login/login.js', ['build'])
   gulp.watch([ './web/app/app.scss', './web/scss/**/*.scss' ], ['sass'])
   nodemon({
     'script': 'server/index.js',

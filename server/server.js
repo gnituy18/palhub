@@ -9,6 +9,7 @@ const home = require('../web/home')
 const lobby = require('../web/lobby')
 const login = require('../web/login')
 const auth = require('./middlewares/auth')
+const app = require('./middlewares/app')
 const koa = new Koa()
 
 koa.keys = ['hahaha']
@@ -29,6 +30,7 @@ koa.use(views(path.join(__dirname, '../web'), {'extension': 'pug'}))
 
 koa.use(serve(path.join(__dirname, '../public')))
 
+koa.use(app)
 koa.use(auth)
 
 koa.use(home.routes())

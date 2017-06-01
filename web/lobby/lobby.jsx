@@ -1,16 +1,17 @@
 import Lobby from '../components/Lobby.jsx'
+import {auth} from '../lib/facebook'
 
-window.fbAsyncInit = function () {
-  FB.init({
-    'appId': '435861663458019',
-    'xfbml': true,
-    'version': 'v2.9'
-  })
-  FB.AppEvents.logPageView()
-  FB.getLoginStatus(function () {
-    ReactDOM.render(
-      <Lobby />,
-      document.getElementById('root')
-    )
-  })
-}
+auth(function (response) {
+  switch (response.status) {
+    case 'connected':
+      ReactDOM.render(
+        <Lobby />,
+        document.getElementById('root')
+      )
+      break
+    case 'not_authorized':
+    case 'unknown':
+      window.location.replace('/login')
+      break
+  }
+})

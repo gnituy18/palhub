@@ -1,4 +1,5 @@
 import Room from '../components/Room.jsx'
+import {auth} from '../lib/facebook'
 
 const user = {
   'name': document.getElementById('name').innerHTML,
@@ -6,20 +7,23 @@ const user = {
 }
 const room = {'id': document.getElementById('room-id').innerHTML}
 
-window.fbAsyncInit = function () {
-  FB.init({
-    'appId': '435861663458019',
-    'xfbml': true,
-    'version': 'v2.9'
-  })
-  FB.AppEvents.logPageView()
-  FB.getLoginStatus(function () {
-    FB.api('/me/picture?type=normal', function (response) {
-      user.picture = response.data.url
-      ReactDOM.render(
-        <Room user={user} room={room}/>,
-        document.getElementById('root')
-      )
-    })
-  })
+auth(statusChangeCallback)
+
+function statusChangeCallback (response) {
+  const fbBtn = document.getElementsByClassName('fb-login-button')[0]
+  switch (response.status) {
+    case 'connected':
+      FB.api('/me/picture?type=normal', function (response) {
+        user.picture = response.data.url
+        ReactDOM.render(
+          <Room user={user} room={room}/>,
+          document.getElementById('root')
+        )
+      })
+      break
+    case 'not_authorized':
+    case 'unknown':
+      window.location.replace('/login')
+      break
+  }
 }

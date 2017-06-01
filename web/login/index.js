@@ -22,11 +22,17 @@ router.post('/login', async function (ctx) {
     })
   })
   const user = await getUser
-  if (!user.error) {
+  if (user.error) {
+    console.log(user)
+    ctx.throw(404, user.error.message)
+  } else {
     ctx.session.logged = true
     ctx.session.user = user
+    ctx.body = {
+      'user': user,
+      'intent': ctx.session.intent
+    }
   }
-  ctx.body = user
 })
 
 module.exports = router
