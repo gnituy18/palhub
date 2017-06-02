@@ -1,4 +1,6 @@
-import {socket} from '../lib/socketio'
+import socketio from '../lib/socketio'
+
+const socket = socketio('/room')
 
 export default class InputBox extends React.Component {
   constructor (props) {
@@ -30,7 +32,10 @@ export default class InputBox extends React.Component {
   }
 
   sendMsg () {
-    socket.emit('send msg', {'msgBody': this.state.inputValue})
+    const msg = this.state.inputValue.trim()
+    if (msg !== '') {
+      socket.emit('send msg', {'msgBody': msg})
+    }
     this.setState({'inputValue': ''})
   }
 }

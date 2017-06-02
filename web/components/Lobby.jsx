@@ -1,4 +1,5 @@
-import {socket} from './../lib/socketio'
+import socketio from './../lib/socketio'
+const socket = socketio('/lobby')
 
 export default class Lobby extends React.Component {
   constructor (props) {

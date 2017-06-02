@@ -10,7 +10,6 @@ const room = {'id': document.getElementById('room-id').innerHTML}
 auth(statusChangeCallback)
 
 function statusChangeCallback (response) {
-  const fbBtn = document.getElementsByClassName('fb-login-button')[0]
   switch (response.status) {
     case 'connected':
       FB.api('/me/picture?type=normal', function (response) {

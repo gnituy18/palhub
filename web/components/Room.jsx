@@ -2,8 +2,10 @@ import UserList from './UserList.jsx'
 import InputBox from './InputBox.jsx'
 import NavBar from './NavBar.jsx'
 import MessageBox from './MessageBox.jsx'
-import {socket} from './../lib/socketio'
+import socketio from './../lib/socketio'
 import * as rtc from '../lib/webrtc'
+
+const socket = socketio('/room')
 
 export default class Room extends React.Component {
   constructor (props) {

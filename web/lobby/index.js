@@ -7,7 +7,6 @@ router.get('/', async function (ctx) {
 })
 
 router.post('/create', async function (ctx) {
-  console.log(ctx.body)
   const roomId = await guard.room.create({'name': ctx.request.body.name})
   ctx.redirect(Router.url('room/:id', roomId))
 })

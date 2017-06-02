@@ -1,4 +1,6 @@
-import {socket} from './../socketio'
+import socketio from './../socketio'
+
+const socket = socketio('/webrtc')
 
 const peerConfig = {
   'iceServers': [{
@@ -49,7 +51,8 @@ socket.on('get candidate', function (data) {
   })
 })
 
-async function pair (socketId) {
+async function pair (roomSocketId) {
+  const socketId = toWebrtcId(roomSocketId)
   console.log('pair: ' + socketId)
   const pc = pcs[socketId]
   const offer = await pc.createOffer()
@@ -60,13 +63,19 @@ async function pair (socketId) {
   })
 }
 
-function close (socketId) {
+function close (roomSocketId) {
+  const socketId = toWebrtcId(roomSocketId)
   pcs[socketId].close()
   delete pcs[socketId]
   console.log(pcs)
 }
 
-function createNewPcTo (socketId) {
+function toWebrtcId(socketId) {
+  return socketId.replace(/\/[a-z0-9]*#/, '/webrtc#')
+}
+
+function createNewPcTo (roomSocketId) {
+  const socketId = toWebrtcId(roomSocketId)
   console.log('new pc: ' + socketId)
   return Promise.resolve(socketId).then(socketId => {
     pcs[socketId] = new RTCPeerConnection(peerConfig)
@@ -83,6 +92,7 @@ function createNewPcTo (socketId) {
     return pcs[socketId]
   })
 }
+
 
 
 export {pair, close, createNewPcTo}

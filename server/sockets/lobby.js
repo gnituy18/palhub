@@ -1,11 +1,11 @@
 const guard = require('../guards')
 
 module.exports = function (io) {
-  io.on('connection', function (socket) {
-    socket.join('lobby')
+  const lobby = io.of('/lobby')
+  lobby.on('connection', function (socket) {
     socket.on('get rooms', async function () {
       const rooms = await guard.room.getAll()
-      socket.emit('get rooms', {'rooms': rooms})
+      lobby.emit('get rooms', {'rooms': rooms})
     })
   })
 }

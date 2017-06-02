@@ -1,9 +1,11 @@
 const socketio = require('socket.io')
-const app = require('./app')
+const room = require('./room')
 const lobby = require('./lobby')
+const webrtc = require('./webrtc')
 
 module.exports.listen = function (server) {
   io = socketio.listen(server)
-  app(io)
+  room(io)
   lobby(io)
+  webrtc(io)
 }
