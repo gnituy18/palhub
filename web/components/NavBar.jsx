@@ -8,7 +8,7 @@ export default class NavBar extends React.Component {
     return (
       <div className='nav-container'>
         <div className='nav'>
-          <a className='nav-brand' href='/login'>PalHub</a>
+          <a className='nav-brand' href='/'>PalHub</a>
           <div className='nav-content'>
             <div className='nav-element'>{ 'Hello, ' + this.props.user.name + ', 歡迎來到Palhub'}</div>
             <div onClick={this.triggerMicSwitch} className='nav-button mic'>
