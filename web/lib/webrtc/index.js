@@ -24,11 +24,17 @@ const peerConfig = {
 }
 const pcs = {}
 
+let micAllowed = true
+
 socket.on('get offer', async function (data) {
   console.log('get offer')
   const pc = pcs[data.id]
   await pc.setRemoteDescription(data.offer)
-  const answer = await pc.createAnswer()
+  console.log('getoffer remote mic: ' + data.micAllowed)
+  const answer = await pc.createAnswer({
+    'offerToReceiveAudio': data.micAllowed,
+    'offerToReceiveVideo': false
+  })
   await pc.setLocalDescription(answer)
   socket.emit('pass answer', {
     'id': data.id,
@@ -43,6 +49,7 @@ socket.on('get answer', function (data) {
 
 socket.on('get candidate', function (data) {
   console.log('get candidate')
+  console.log(pcs)
   pcs[data.id].addIceCandidate(data.candidate)
   .then(function () {
     console.log('success')
@@ -51,15 +58,20 @@ socket.on('get candidate', function (data) {
   })
 })
 
-async function pair (roomSocketId) {
+async function pair (roomSocketId, remoteMicAllowed) {
+  console.log('pair remote mic : ' + remoteMicAllowed)
   const socketId = toWebrtcId(roomSocketId)
   console.log('pair: ' + socketId)
   const pc = pcs[socketId]
-  const offer = await pc.createOffer()
+  const offer = await pc.createOffer({
+    'offerToReceiveAudio': remoteMicAllowed,
+    'offerToReceiveVideo': false
+  })
   await pc.setLocalDescription(offer)
   socket.emit('pass offer', {
     'id': socketId,
-    'offer': pc.localDescription
+    'offer': pc.localDescription,
+    'micAllowed': micAllowed
   })
 }
 
@@ -70,7 +82,7 @@ function close (roomSocketId) {
   console.log(pcs)
 }
 
-function toWebrtcId(socketId) {
+function toWebrtcId (socketId) {
   return socketId.replace(/\/[a-z0-9]*#/, '/webrtc#')
 }
 
@@ -93,6 +105,9 @@ function createNewPcTo (roomSocketId) {
   })
 }
 
+function setMic (allowed) {
+  console.log('allowed: ' + allowed)
+  micAllowed = allowed
+}
 
-
-export {pair, close, createNewPcTo}
+export {pair, close, createNewPcTo, setMic}

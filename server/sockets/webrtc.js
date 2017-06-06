@@ -4,7 +4,8 @@ module.exports = function (io) {
     socket.on('pass offer', function (data) {
       webrtc.to(data.id).emit('get offer', {
         'id': socket.id,
-        'offer': data.offer
+        'offer': data.offer,
+        'micAllowed': data.micAllowed
       })
     })
 

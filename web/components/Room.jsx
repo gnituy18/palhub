@@ -13,6 +13,7 @@ export default class Room extends React.Component {
     this.state = {
       'msg': [],
       'users': [],
+      'micAllowed': true,
       'micSwitch': false
     }
     this.localStream = {}
@@ -35,7 +36,7 @@ export default class Room extends React.Component {
     return (
       <div>
         <NavBar micSwitch={this.state.micSwitch} onMicSwitchChange={this.switchStream} user={this.props.user}/>
-          <UserList users={this.state.users}/>
+        <UserList users={this.state.users}/>
         <div className='side-nav-neighbor'>
           <MessageBox msg={this.state.msg}/>
           <InputBox/>
@@ -45,10 +46,19 @@ export default class Room extends React.Component {
   }
 
   async init () {
-    this.localStream = await navigator.mediaDevices.getUserMedia({
-      'audio': true,
-      'video': false
-    })
+    try {
+      this.localStream = await navigator.mediaDevices.getUserMedia({
+        'audio': true,
+        'video': false
+      })
+      this.localStream.getAudioTracks()[0].enabled = this.state.micSwitch
+      console.log(this.localStream)
+    } catch (err) {
+      this.setState({'micAllowed': false})
+      this.localStream = new MediaStream()
+      rtc.setMic(false)
+      console.log(this.localStream)
+    }
     await Promise.resolve().then(() => {
       socket.on('get msg', this.appendMsg)
       socket.on('get users', this.setupUsers)
@@ -58,10 +68,9 @@ export default class Room extends React.Component {
       socket.on('setup pc', data => {
         this.setupPc(data.id)
         .then(() => {
-          rtc.pair(data.id)
+          rtc.pair(data.id, data.micAllowed)
         })
       })
-      this.localStream.getAudioTracks()[0].enabled = this.state.micSwitch
     })
     socket.emit('join room', {
       'user': this.props.user,
@@ -123,10 +132,13 @@ export default class Room extends React.Component {
     .then(pc => {
       pc.onaddstream = e => {
         console.log('on add stream')
+        console.log('setup pc: ' + id)
         this.setState(prevState => {
           const users = prevState.users.map(user => {
+            console.log(user)
             if (user.id === id) {
               user.stream = e.stream
+              console.log('on add stream user: ' + user.id)
             }
             return user
           })
@@ -157,15 +169,24 @@ export default class Room extends React.Component {
   }
 
   handelNewUser (data) {
+    console.log(data)
     FB.api('/' + data.user.fbID + '/picture?type=normal', response => {
       data.user.picture = response.data.url
-      this.setState(prevState => {
-        return {'users': prevState.users.concat(data.user)}
+      Promise.resolve().then(() => {
+        this.setState(prevState => {
+          const users = prevState.users.concat(data.user)
+          console.log('handelNewUser: ')
+          console.log(users)
+          return {'users': users}
+        })
       })
-    })
-    this.setupPc(data.user.id)
-    .then(() => {
-      socket.emit('setup pc', {'id': data.user.id})
+      .then(() => this.setupPc(data.user.id))
+      .then(() => {
+        socket.emit('setup pc', {
+          'id': data.user.id,
+          'micAllowed': this.state.micAllowed
+        })
+      })
     })
   }
 
@@ -173,7 +194,9 @@ export default class Room extends React.Component {
     this.setState(prevState => {
       return {'micSwitch': !prevState.micSwitch}
     })
-    this.localStream.getAudioTracks()[0].enabled = !this.localStream.getAudioTracks()[0].enabled
+    if (this.state.micAllowed) {
+      this.localStream.getAudioTracks()[0].enabled = !this.localStream.getAudioTracks()[0].enabled
+    }
   }
 
 }

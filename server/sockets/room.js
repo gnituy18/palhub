@@ -5,7 +5,10 @@ module.exports = function (io) {
   const lobby = io.of('/lobby')
   room.on('connection', function (socket) {
     socket.on('setup pc', function (data) {
-      room.to(data.id).emit('setup pc', {'id': socket.id})
+      room.to(data.id).emit('setup pc', {
+        'id': socket.id,
+        'micAllowed': data.micAllowed
+      })
     })
 
     socket.on('send msg', async function (data) {
