@@ -1,5 +1,6 @@
 import Room from '../components/Room.jsx'
 import {auth} from '../lib/facebook'
+import {checkMultiTabs} from '../lib/tab'
 
 const user = {
   'name': document.getElementById('name').innerHTML,
@@ -7,7 +8,13 @@ const user = {
 }
 const room = {'id': document.getElementById('room-id').innerHTML}
 
-auth(statusChangeCallback)
+checkMultiTabs()
+.then(() => {
+  auth(statusChangeCallback)
+})
+.catch(err => {
+  console.log(err)
+})
 
 function statusChangeCallback (response) {
   switch (response.status) {
