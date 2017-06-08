@@ -28,7 +28,6 @@ function sendLoginRequest (response) {
     if (this.readyState === XMLHttpRequest.DONE) {
       switch (this.status) {
         case 200:
-
           window.location.replace(JSON.parse(xhttp.response).intent || '/')
           break
         case 404:

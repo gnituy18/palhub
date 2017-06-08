@@ -7,10 +7,10 @@ router.get('login', '/login', async function (ctx) {
 })
 
 router.post('/login', async function (ctx) {
-  const userID = ctx.request.body.authResponse.userID
+  const FBID = ctx.request.body.authResponse.userID
   const accessToken = ctx.request.body.authResponse.accessToken
-  const getUser = new Promise(resolve => {
-    https.get('https://graph.facebook.com/' + userID + '?access_token=' + accessToken, res => {
+  const user = await new Promise(resolve => {
+    https.get('https://graph.facebook.com/' + FBID + '?access_token=' + accessToken, res => {
       let body = ''
       res.on('data', d => {
         body += d
@@ -21,17 +21,12 @@ router.post('/login', async function (ctx) {
       })
     })
   })
-  const user = await getUser
   if (user.error) {
-    console.log(user)
     ctx.throw(404, user.error.message)
   } else {
     ctx.session.logged = true
-    ctx.session.user = user
-    ctx.body = {
-      'user': user,
-      'intent': ctx.session.intent
-    }
+    ctx.session.user = {'FBID': user.id}
+    ctx.body = {'intent': ctx.session.intent}
   }
 })
 

@@ -4,7 +4,7 @@ import {checkMultiTabs} from '../lib/tab'
 
 const user = {
   'name': document.getElementById('name').innerHTML,
-  'id': document.getElementById('id').innerHTML
+  'id': document.getElementById('FBID').innerHTML
 }
 const room = {'id': document.getElementById('room-id').innerHTML}
 
