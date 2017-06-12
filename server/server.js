@@ -11,9 +11,10 @@ const login = require('../web/login')
 const create = require('../web/create')
 const profile = require('../web/profile')
 const err = require('../web/err')
-const auth = require('./middlewares/auth')
-const user = require('./middlewares/user')
-const app = require('./middlewares/app')
+const page = require('./middlewares/page')
+const authCheck = require('./middlewares/auth')
+const intent = require('./middlewares/intent')
+const profileCheck = require('./middlewares/profile')
 const koa = new Koa()
 
 koa.keys = ['hahaha']
@@ -34,9 +35,10 @@ koa.use(views(path.join(__dirname, '../web'), {'extension': 'pug'}))
 
 koa.use(serve(path.join(__dirname, '../public')))
 
-koa.use(app)
-koa.use(auth)
-koa.use(user)
+koa.use(page)
+koa.use(authCheck)
+koa.use(intent)
+koa.use(profileCheck)
 
 //koa.use(home.routes())
 koa.use(login.routes())
