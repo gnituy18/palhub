@@ -1,6 +1,9 @@
 html
   head
+    title PalHub
+    link(rel="shortcut icon" type="image/png" href="/storage/favicon.png")
     link(rel="stylesheet" href="/css/main.css")
+    link(rel="stylesheet" href="/css/lobby.css")
   body
     div(id='root')
   script(src="https://unpkg.com/react@15/dist/react.js")
@@ -8,11 +11,3 @@ html
   script(src="https://unpkg.com/prop-types/prop-types.js")
   script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js")
   script(src="/js/lobby.js")
-  script.
-   (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));

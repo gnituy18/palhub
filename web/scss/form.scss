@@ -1,6 +1,23 @@
 input[type=text] {
   width: 100%;
-  border-radius: 2px;
-  border: 2px solid $blue1;
+  height: 40px;
+  border-radius: 3px;
+  border: 3px solid $blue5;
+  background-color: $blue6;
   padding-left: 10px;
+
+  &:focus {
+    background-color: $white;
+  }
+}
+
+input[type=submit] {
+  margin: 10px;
+  padding: 5px 10px;
+  background-color: $blue6;
+  font-size: $font-size-normal;
+  border: 0;
+  border-radius: 5px;
+  color: $blue3;
+  cursor: pointer;
 }

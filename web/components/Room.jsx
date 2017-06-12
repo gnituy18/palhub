@@ -35,7 +35,7 @@ export default class Room extends React.Component {
   render () {
     return (
       <div>
-        <NavBar micSwitch={this.state.micSwitch} onMicSwitchChange={this.switchStream} user={this.props.user}/>
+        <NavBar micSwitch={this.state.micSwitch} onMicSwitchChange={this.switchStream} room={this.props.room} user={this.props.user}/>
         <UserList users={this.state.users}/>
         <div className='side-nav-neighbor'>
           <MessageBox msg={this.state.msg}/>

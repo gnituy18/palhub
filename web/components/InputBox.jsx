@@ -22,7 +22,7 @@ export default class InputBox extends React.Component {
   render () {
     return (
       <div className='input-box'>
-        <input value={this.state.inputValue} onKeyPress={this.handelKeyPress} onChange={this.handleChange} type='text'></input>
+        <input placeholder='在此輸入訊息...' value={this.state.inputValue} onKeyPress={this.handelKeyPress} onChange={this.handleChange} type='text'></input>
       </div>
     )
   }

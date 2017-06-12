@@ -1,10 +1,35 @@
 @import '../scss/variables';
 
 $input-box-height: 40px;
-
+$msg-box-padding: 10px;
 .msg-box {
-  height: calc(100vh - #{$input-box-height + $nav-height});
+  padding: $msg-box-padding;
+  height: calc(100vh - #{$input-box-height + $nav-height + 2 * $msg-box-padding});
+  width: calc(85vw - #{2 * $msg-box-padding});
   overflow: auto;
+}
+
+.msg-container{
+  display: inline-block;
+  width: calc(85vw - #{$avatar-len + 4 * $msg-box-padding});
+  vertical-align: top;
+  padding:0 $msg-box-padding;
+}
+
+.msg-user-name{
+  font-size: xx-small;
+  padding-left: $msg-box-padding;
+  color: $blue5;
+}
+
+.msg-body {
+  display: inline-block;
+  max-width: calc(100% - #{ 2 * $msg-box-padding});
+  padding: 0.5 * $msg-box-padding $msg-box-padding;
+  border-radius: $msg-box-padding;
+  background-color: $blue6;
+  color: $blue2;
+  word-wrap:break-word;
 }
 
 .input-box {

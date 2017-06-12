@@ -1,19 +1,23 @@
 import Room from '../components/Room.jsx'
+import ErrorPage from '../components/ErrorPage.jsx'
 import {auth} from '../lib/facebook'
 import {checkMultiTabs} from '../lib/tab'
 
 const user = {
-  'name': document.getElementById('name').innerHTML,
-  'id': document.getElementById('FBID').innerHTML
+  'id': document.getElementById('FBID').innerHTML,
+  'name': document.getElementById('name').innerHTML
 }
-const room = {'id': document.getElementById('room-id').innerHTML}
+const room = {
+  'id': document.getElementById('room-id').innerHTML,
+  'name': document.getElementById('room-name').innerHTML
+}
 
 checkMultiTabs()
 .then(() => {
   auth(statusChangeCallback)
 })
-.catch(err => {
-  console.log(err)
+.catch(() => {
+  ReactDOM.render(<ErrorPage />, document.getElementById('root'))
 })
 
 function statusChangeCallback (response) {

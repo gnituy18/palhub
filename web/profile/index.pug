@@ -1,7 +1,12 @@
 html
   head
+    title PalHub | Profile
+    link(rel="stylesheet" href="/css/main.css")
+    link(rel="shortcut icon" type="image/png" href="/storage/favicon.png")
   body
-    h1 profile
-    form(method='post')
-      input(type='text' name='name')
-      input(type='submit')
+    div(class='wrapper')
+      div(class='center')
+        h2 請輸入你的暱稱
+        form(method='post')
+          input(type='text' name='name' value=name)
+          input(type='submit')

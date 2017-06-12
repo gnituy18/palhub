@@ -1,14 +1,16 @@
 .side-nav-container {
   position: absolute;
-  height: calc(100% - #{$nav-height});
+  height: calc(100vh - #{$nav-height});
   width: $side-nav-width;
+  background-color: $blue6;
   overflow-x: hidden;
   overflow-y: auto;
+  color: $blue3;
+  border-right: $side-nav-border-width solid $blue5;
 }
 
 .side-nav-content {
   padding: 10px 12px;
-  background-color: $white;
 }
 
 .side-nav-neighbor {

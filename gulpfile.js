@@ -5,7 +5,7 @@ var source = require('vinyl-source-stream')
 var nodemon = require('nodemon')
 var sass = require('gulp-sass')
 
-const features = [ 'room', 'lobby' ]
+const features = [ 'room', 'lobby', 'create' ]
 
 for (let x = 0;x < features.length;x++) {
   const feature = features[x]
@@ -26,10 +26,10 @@ gulp.task('login', function () {
   .pipe(gulp.dest('./public/js'))
 })
 
-gulp.task('build', [ 'login', 'room', 'lobby' ])
+gulp.task('build', [ 'login', 'room', 'lobby', 'create' ])
 
 gulp.task('sass', function () {
-  return gulp.src([ './web/room/room.scss', './web/scss/main.scss' ])
+  return gulp.src([ './web/lobby/lobby.scss', './web/room/room.scss', './web/scss/main.scss' ])
   .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('./public/css'))
 })
@@ -41,10 +41,10 @@ gulp.task('watch', [ 'sass', 'build' ], function () {
   }
 
   gulp.watch('./web/login/login.js', ['build'])
-  gulp.watch([ './web/app/app.scss', './web/scss/**/*.scss' ], ['sass'])
+  gulp.watch([ './web/room/room.scss', './web/lobby/lobby.scss', './web/scss/**/*.scss' ], ['sass'])
   nodemon({
     'script': 'server/index.js',
-    'ignore': [ 'gulpfile.js', 'app/!(index.js)' ],
+    'ignore': [ 'gulpfile.js', 'room/!(index.js)' ],
     'env': {'PORT': '3000'}
   })
 })

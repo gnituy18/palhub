@@ -5,5 +5,9 @@ html {
 body {
   font-family: $font-family-base;
   font-size: $font-size-normal;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+}
+
+h1,h2, h3, h4, h5, h6 {
+  color: $blue3;
 }
