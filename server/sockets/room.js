@@ -3,6 +3,7 @@ const guard = require('../guards')
 module.exports = function (io) {
   const room = io.of('/room')
   const lobby = io.of('/lobby')
+
   room.on('connection', function (socket) {
     socket.on('setup pc', function (data) {
       room.to(data.id).emit('setup pc', {
@@ -20,7 +21,6 @@ module.exports = function (io) {
       })
     })
 
-
     socket.on('join room', async function (data) {
       await guard.room.addUser(socket.id, data.roomId, data.user)
       const users = await guard.room.getUsers(data.roomId)
@@ -35,11 +35,14 @@ module.exports = function (io) {
 
     socket.on('disconnect', async function () {
       const roomID = await guard.room.removeUser(socket.id)
-      if (await guard.room.getUserNum(roomID) === 0) {
-        await guard.room.destroy(roomID)
-        const rooms = await guard.room.getAll()
-        lobby.emit('get rooms', {'rooms': rooms})
-      }
+
+      setTimeout(async function () {
+        if (await guard.room.getUserNum(roomID) === 0) {
+          await guard.room.destroy(roomID)
+          const rooms = await guard.room.getAll()
+          lobby.emit('get rooms', {'rooms': rooms})
+        }
+      }, 2000)
       room.to(roomID).emit('remove user', {'id': socket.id})
     })
   })
