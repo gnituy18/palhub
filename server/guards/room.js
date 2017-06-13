@@ -2,20 +2,20 @@ const redis = require('../lib/redis')
 const shortid = require('shortid')
 
 module.exports.create = async function (room) {
-  const roomId = shortid.generate()
+  const roomID = shortid.generate()
   const roomInfo = [
     'name',
     room.name,
     'id',
-    roomId
+    roomID
   ]
-  await redis.hmsetAsync('room:' + roomId, roomInfo)
-  await redis.lpushAsync('rooms', roomId)
-  return roomId
+  await redis.hmsetAsync('room:' + roomID, roomInfo)
+  await redis.lpushAsync('rooms', roomID)
+  return roomID
 }
 
-module.exports.get = function (roomId) {
-  return redis.hgetallAsync('room:' + roomId)
+module.exports.get = function (roomID) {
+  return redis.hgetallAsync('room:' + roomID)
 }
 
 module.exports.getAll = async function () {
@@ -34,45 +34,44 @@ module.exports.destroy = async function (roomID) {
   return redis.delAsync('room:' + roomID)
 }
 
-module.exports.exist = async function (roomId) {
-  const exist = await redis.existsAsync('room:' + roomId)
-  return exist
+module.exports.exist = function (roomID) {
+  return redis.existsAsync('room:' + roomID)
 }
 
-module.exports.addUser = async function (socketId, roomId, user) {
+module.exports.addUser = async function (socketID, roomID, user) {
   const userInfo = [
     'name',
     user.name,
     'roomId',
-    roomId,
+    roomID,
     'fbID',
     user.id
   ]
-  await redis.hmsetAsync('user:' + socketId, userInfo)
-  return redis.rpushAsync('room:' + roomId + ':users', socketId)
+  await redis.hmsetAsync('user:' + socketID, userInfo)
+  return redis.rpushAsync('room:' + roomID + ':users', socketID)
 }
 
-module.exports.removeUser = async function (socketId) {
-  const roomId = await redis.hgetAsync('user:' + socketId, 'roomId')
-  await redis.delAsync('user:' + socketId)
-  await redis.lremAsync('room:' + roomId + ':users', 0, socketId)
-  return roomId
+module.exports.removeUser = async function (socketID) {
+  const roomID = await redis.hgetAsync('user:' + socketID, 'roomId')
+  await redis.delAsync('user:' + socketID)
+  await redis.lremAsync('room:' + roomID + ':users', 0, socketID)
+  return roomID
 }
 
-module.exports.getUsers = async function (roomId) {
-  const userIds = await redis.lrangeAsync('room:' + roomId + ':users', 0, -1)
-  const userInfos = await Promise.all(userIds.map(userId => redis.hgetallAsync('user:' + userId)))
+module.exports.getUsers = async function (roomID) {
+  const userIDs = await redis.lrangeAsync('room:' + roomID + ':users', 0, -1)
+  const userInfos = await Promise.all(userIDs.map(userID => redis.hgetallAsync('user:' + userID)))
   const users = userInfos.map((info, index) => {
-    info.id = userIds[index]
+    info.id = userIDs[index]
     return info
   })
   return users
 }
 
-module.exports.addMsg = async function (socketId, msgBody) {
-  const user = await redis.hgetallAsync('user:' + socketId)
-  await redis.rpushAsync('room:' + user.roomId + ':messages', msgBody)
-  return redis.rpushAsync('room:' + user.roomId + ':message-senders', user.fbID)
+module.exports.addMsg = async function (socketID, msgBody) {
+  const user = await redis.hgetallAsync('user:' + socketID)
+  await redis.rpushAsync('room:' + user.roomID + ':messages', msgBody)
+  return redis.rpushAsync('room:' + user.roomID + ':message-senders', user.fbID)
 }
 
 module.exports.getAllMsg = async function (roomID) {
