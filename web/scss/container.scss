@@ -13,7 +13,7 @@
 .wrapper {
   clear: both;
   text-align: center;
-  height: calc(100% - #{$nav-height});
+  height: 100%;
 
   &:before {
     content: "";
