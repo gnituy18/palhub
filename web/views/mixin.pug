@@ -1,0 +1,14 @@
+mixin css(url)
+  link(rel="stylesheet" href=url)
+
+mixin script(url)
+  script(src=url)
+
+mixin title(page)
+  if page
+    title PalHub | #{page}
+  else 
+    title PalHub
+
+mixin favicon
+  link(rel="shortcut icon" type="image/png" href="/storage/favicon.png")
