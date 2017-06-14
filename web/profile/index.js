@@ -5,8 +5,12 @@ router.get('/profile', async function (ctx) {
   await ctx.render('profile', {'name': ctx.session.user.name})
 })
 router.post('/profile', async function (ctx) {
-  ctx.session.user.name = ctx.request.body.name
-  await ctx.redirect(ctx.session.intent)
+  if (ctx.request.body.name === '') {
+    await ctx.redirect('/profile')
+  } else {
+    ctx.session.user.name = ctx.request.body.name
+    await ctx.redirect(ctx.session.intent)
+  }
 })
 
 module.exports = router
