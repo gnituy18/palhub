@@ -14,7 +14,7 @@ export default class NavBar extends React.Component {
             <abbr title='麥克風'><div onClick={this.triggerMicSwitch} className={this.props.micSwitch === false ? 'nav-button mic-off' : 'nav-button mic'}>
 
             </div></abbr>
-            <div className='nav-element'>{ this.props.room.name }</div>
+            <div className='nav-element'>{ decode(this.props.room.name) }</div>
           </div>
         </div>
       </div>
@@ -50,6 +50,12 @@ function copyUrl () {
     console.log('Oops, unable to copy')
   }
   document.body.removeChild(textArea)
+}
+
+function decode (str) {
+  const elem = document.createElement('textarea')
+  elem.innerHTML = str
+  return elem.value
 }
 
 NavBar.propTypes = {

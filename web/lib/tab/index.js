@@ -19,14 +19,12 @@ window.addEventListener('storage', function (event) {
 
 function checkMultiTabs () {
   localStorage.setItem('getTab', Date.now())
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     setTimeout(function () {
-      if (!multiTabFlag) {
-        console.log('resolve')
-        resolve()
+      if (multiTabFlag) {
+        resolve(true)
       } else {
-        console.log('reject')
-        reject(new Error('This page is already exist.'))
+        resolve(false)
       }
     }, 300)
   })

@@ -1,13 +1,14 @@
-function auth (statusChangeCallback) {
-  window.fbAsyncInit = function () {
-    FB.init({
-      'appId': '435861663458019',
-      'xfbml': true,
-      'version': 'v2.9'
-    })
-    FB.AppEvents.logPageView()
-    FB.getLoginStatus(statusChangeCallback)
-  }
+function init () {
+  return new Promise(resolve => {
+    window.fbAsyncInit = function () {
+      FB.init({
+        'appId': '435861663458019',
+        'xfbml': true,
+        'version': 'v2.9'
+      })
+      FB.AppEvents.logPageView()
+      resolve()
+    }
 
   ;(function (d, s, id) {
     let js
@@ -20,6 +21,15 @@ function auth (statusChangeCallback) {
     js.src = '//connect.facebook.net/zh_TW/sdk.js'
     fjs.parentNode.insertBefore(js, fjs)
   })(document, 'script', 'facebook-jssdk')
+  })
 }
 
-export {auth}
+function auth () {
+  return new Promise(resolve => {
+    FB.getLoginStatus(response => {
+      resolve(response)
+    })
+  })
+}
+
+export {init, auth}

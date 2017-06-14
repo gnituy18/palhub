@@ -1,11 +1,11 @@
 export default class ErrorPage extends React.Component {
-
-
   render () {
     return (
-      <div>
-        <h2>你已經進入一間房間了</h2>
-        <h2>請關閉此分頁</h2>
+      <div className='wrapper'>
+        <div className='center'>
+          <h2>{this.props.msg}</h2>
+          <h2>請關閉此分頁</h2>
+        </div>
       </div>
     )
   }

@@ -1,6 +1,12 @@
-import {auth} from '../lib/facebook'
+import * as fb from '../lib/facebook'
 
-auth(statusChangeCallback)
+const fbBtn = document.getElementsByClassName('fb-login-button')[0]
+
+fb.init()
+.then(fb.auth)
+.then(response => {
+  statusChangeCallback(response)
+})
 
 window.checkLoginState = function () {
   FB.getLoginStatus(function (response) {
@@ -9,10 +15,9 @@ window.checkLoginState = function () {
 }
 
 function statusChangeCallback (response) {
-  const fbBtn = document.getElementsByClassName('fb-login-button')[0]
   switch (response.status) {
     case 'connected':
-      fbBtn.setAttribute('style', 'display:none')
+      fbBtn.setAttribute('style', 'display:none;')
       sendLoginRequest(response)
       break
     case 'not_authorized':

@@ -1,6 +1,6 @@
 import Room from '../components/Room.jsx'
 import ErrorPage from '../components/ErrorPage.jsx'
-import {auth} from '../lib/facebook'
+import * as fb from '../lib/facebook'
 import {checkMultiTabs} from '../lib/tab'
 
 const user = {
@@ -13,21 +13,24 @@ const room = {
 }
 
 checkMultiTabs()
-.then(() => {
-  auth(statusChangeCallback)
+.then(isMultiTab => {
+  if (isMultiTab) {
+    ReactDOM.render(
+      <ErrorPage />,
+      document.getElementById('react-root'))
+    throw new Error('Tab exist.')
+  }
 })
-.catch(() => {
-  ReactDOM.render(<ErrorPage />, document.getElementById('root'))
-})
-
-function statusChangeCallback (response) {
+.then(fb.init)
+.then(fb.auth)
+.then(response => {
   switch (response.status) {
     case 'connected':
       FB.api('/me/picture?type=normal', function (response) {
         user.picture = response.data.url
         ReactDOM.render(
           <Room user={user} room={room}/>,
-          document.getElementById('root')
+          document.getElementById('react-root')
         )
       })
       break
@@ -36,4 +39,7 @@ function statusChangeCallback (response) {
       window.location.replace('/login')
       break
   }
-}
+})
+.catch(err => {
+  console.log(err)
+})
