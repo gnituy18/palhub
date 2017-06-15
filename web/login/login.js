@@ -17,10 +17,11 @@ window.checkLoginState = function () {
 function statusChangeCallback (response) {
   switch (response.status) {
     case 'connected':
-      fbBtn.setAttribute('style', 'display:none;')
       sendLoginRequest(response)
       break
     case 'not_authorized':
+      fbBtn.setAttribute('style', '')
+      break
     case 'unknown':
       fbBtn.setAttribute('style', '')
       break
