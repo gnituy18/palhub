@@ -1,7 +1,7 @@
 import * as fb from '../lib/facebook'
 import {checkMultiTabs} from '../lib/tab'
-import Room from './components/Room.jsx'
-import ErrorPage from '../components/ErrorPage.jsx'
+import Room from './component/Room.jsx'
+import ErrorPage from '../component/ErrorPage.jsx'
 
 const user = {
   'id': document.getElementById('FBID').innerHTML,
