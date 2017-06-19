@@ -1,11 +1,11 @@
-import socketio from './../lib/socketio'
-import * as fb from './../lib/facebook'
+import socketio from '../../lib/socketio'
+import * as fb from '../../lib/facebook'
 import NavBar from './NavBar.jsx'
 import RoomList from './RoomList.jsx'
 
 const socket = socketio('/lobby')
 
-class Lobby extends React.Component {
+export default class Lobby extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -66,9 +66,3 @@ class Lobby extends React.Component {
     this.setState({'rooms': data.rooms})
   }
 }
-
-ReactDOM.render(
-  <Lobby />,
-  document.getElementById('root')
-)
-
