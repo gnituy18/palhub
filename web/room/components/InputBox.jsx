@@ -1,4 +1,4 @@
-import socketio from '../lib/socketio'
+import socketio from '../../lib/socketio'
 
 const socket = socketio('/room')
 

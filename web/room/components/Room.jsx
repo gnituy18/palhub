@@ -2,8 +2,8 @@ import UserList from './UserList.jsx'
 import InputBox from './InputBox.jsx'
 import NavBar from './NavBar.jsx'
 import MessageBox from './MessageBox.jsx'
-import socketio from './../lib/socketio'
-import * as rtc from '../lib/webrtc'
+import socketio from '../../lib/socketio'
+import * as rtc from '../../lib/webrtc'
 
 const socket = socketio('/room')
 

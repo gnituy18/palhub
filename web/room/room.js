@@ -1,7 +1,7 @@
-import Room from '../components/Room.jsx'
-import ErrorPage from '../components/ErrorPage.jsx'
 import * as fb from '../lib/facebook'
 import {checkMultiTabs} from '../lib/tab'
+import Room from './components/Room.jsx'
+import ErrorPage from '../components/ErrorPage.jsx'
 
 const user = {
   'id': document.getElementById('FBID').innerHTML,
@@ -16,7 +16,7 @@ checkMultiTabs()
 .then(isMultiTab => {
   if (isMultiTab) {
     ReactDOM.render(
-      <ErrorPage />,
+      <ErrorPage msg='你已經有分頁已經開啟' />,
       document.getElementById('react-root'))
     throw new Error('Tab exist.')
   }
@@ -40,6 +40,6 @@ checkMultiTabs()
       break
   }
 })
-.catch(err => {
-  console.log(err)
+.catch(error => {
+  console.log(error)
 })
