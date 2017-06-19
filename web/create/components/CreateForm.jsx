@@ -1,35 +1,6 @@
-import {checkMultiTabs} from '../lib/tab'
-import * as fb from '../lib/facebook'
-import {post} from '../lib/ajax'
-import ErrorPage from '../components/ErrorPage.jsx'
+import {post} from '../../lib/ajax'
 
-fb.init()
-.then(fb.auth)
-.then(response => {
-  switch (response.status) {
-    case 'not_authorized':
-    case 'unknown':
-      window.location.replace('/login')
-      throw new Error('FB login failed.')
-  }
-})
-.then(checkMultiTabs)
-.then(isMultiTab => {
-  if (isMultiTab) {
-    ReactDOM.render(
-      <ErrorPage msg='你已經進入房間內或開啟同一頁分頁' />,
-      document.getElementById('react-root'))
-  } else {
-    ReactDOM.render(
-    <Create />,
-    document.getElementById('react-root'))
-  }
-})
-.catch(err => {
-  console.log(err)
-})
-
-class Create extends React.Component {
+export default class Create extends React.Component {
   constructor (props) {
     super(props)
     this.state = {'inputValue': ''}
