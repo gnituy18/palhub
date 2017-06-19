@@ -1,13 +1,13 @@
+extends ../views/layout
 include ../views/mixin
 
-html
-  head
-    +head
-    +title('Profile')
-  body
-    div(class='wrapper')
-      div(class='center')
-        h2 請輸入你的暱稱
-        form(method='post')
-          input(type='text' name='name' value=name)
-          input(type='submit')
+block head
+  +title('Profile')
+
+block content
+  div(class='wrapper')
+    div(class='center')
+      h2 請輸入你的暱稱
+      form(method='post')
+        input(type='text' name='name' value=name)
+        input(type='submit')

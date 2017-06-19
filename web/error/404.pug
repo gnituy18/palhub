@@ -1,14 +1,15 @@
+extends ../views/layout
 include ../views/mixin
 
-html
-  head
-    title 404
-    +head
-  body
-    div(class='wrapper')
-      div(class='center')
-        h2 此頁並不存在！ 
-        h2 正在轉跳到大廳！ 
-    script.
-      setTimeout(function(){ window.location.href = '/' }, 2000)
+block head
+  title 404
 
+block content
+  div(class='wrapper')
+    div(class='center')
+      h2 此頁並不存在！ 
+      h2 正在轉跳到大廳！ 
+
+block scripts
+  script.
+    setTimeout(function(){ window.location.href = '/' }, 2000)

@@ -1,0 +1,12 @@
+include ../views/mixin
+
+html
+  head
+    +favicon
+    +css('/css/main.css')
+    block head
+  body
+    block content
+    block scripts
+    +ga
+

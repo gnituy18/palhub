@@ -1,10 +1,12 @@
+extends ../views/layout
 include ../views/mixin
 
-html
-  head
-    +head
-    +title('Create')
-  body
-    div(id='react-root' style='height:100vh;')
-    +react
-    +script('/js/create.js')
+block head
+  +title('Create')
+
+block content
+  div(id='react-root' style='height:100vh;')
+
+block scripts
+  +react
+  +script('/js/create.js')

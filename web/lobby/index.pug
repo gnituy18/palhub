@@ -1,12 +1,14 @@
+extends ../views/layout
 include ../views/mixin
 
-html
-  head
-    +head
-    +title
-    +css('/css/lobby.css')
-  body
-    div(id='react-root')
-    +react
-    +socketio
-    +script('/js/lobby.js')
+block head
+  +title
+  +css('/css/lobby.css')
+
+block content
+  div(id='react-root')
+
+block scripts
+  +react
+  +socketio
+  +script('/js/lobby.js')
