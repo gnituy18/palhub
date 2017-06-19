@@ -1,8 +1,9 @@
+include ../views/mixin
+
 html
   head
-    title PalHub | Profile
-    link(rel="stylesheet" href="/css/main.css")
-    link(rel="shortcut icon" type="image/png" href="/storage/favicon.png")
+    +head
+    +title('Profile')
   body
     div(class='wrapper')
       div(class='center')

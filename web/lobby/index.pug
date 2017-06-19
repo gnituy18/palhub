@@ -1,13 +1,12 @@
+include ../views/mixin
+
 html
   head
-    title PalHub
-    link(rel="shortcut icon" type="image/png" href="/storage/favicon.png")
-    link(rel="stylesheet" href="/css/main.css")
-    link(rel="stylesheet" href="/css/lobby.css")
+    +head
+    +title
+    +css('/css/lobby.css')
   body
     div(id='react-root')
-  script(src="https://unpkg.com/react@15/dist/react.js")
-  script(src="https://unpkg.com/react-dom@15/dist/react-dom.js")
-  script(src="https://unpkg.com/prop-types/prop-types.js")
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js")
-  script(src="/js/lobby.js")
+    +react
+    +socketio
+    +script('/js/lobby.js')

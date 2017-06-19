@@ -1,18 +1,17 @@
+include ../views/mixin
+
 html
   head
-    title PalHub | #{room.name}
-    link(rel="shortcut icon" type="image/png" href="/storage/favicon.png")
-    link(rel="stylesheet" href="/css/main.css")
-    link(rel="stylesheet" href="/css/room.css")
+    +head
+    +title(room.name)
+    +css('/css/room.css')
   body
     div(id="FBID" style="display:none") #{user.FBID}
     div(id="name" style="display:none") #{user.name}
     div(id="room-id" style="display:none") #{room.id}
     div(id="room-name" style="display:none") #{room.name}
     div(id="react-root" style='height:100vh;')
-  script(src="https://unpkg.com/react@15/dist/react.js")
-  script(src="https://unpkg.com/react-dom@15/dist/react-dom.js")
-  script(src="https://unpkg.com/prop-types/prop-types.js")
-  script(src="https://webrtc.github.io/adapter/adapter-latest.js")
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js")
-  script(src="/js/room.js")
+    +react
+    +socketio
+    +adapter
+    +script('/js/room.js')
