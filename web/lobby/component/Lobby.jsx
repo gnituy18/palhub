@@ -10,6 +10,7 @@ export default class Lobby extends React.Component {
     super(props)
     this.state = {
       'rooms': [],
+      'user': {},
       'logged': null
     }
     this.getRooms = this.getRooms.bind(this)
@@ -23,7 +24,12 @@ export default class Lobby extends React.Component {
     .then(response => {
       switch (response.status) {
         case 'connected':
-          this.setState({'logged': true})
+          FB.api('/me/picture?type=normal', response => {
+            this.setState({
+              'user': {'picture': response.data.url},
+              'logged': true
+            })
+          })
           break
         case 'not_authorized':
         case 'unknown':
@@ -36,7 +42,7 @@ export default class Lobby extends React.Component {
   render () {
     return (
       <div>
-        <NavBar logged={this.state.logged} />
+        <NavBar user={this.state.user} logged={this.state.logged} />
         <div className='section text-align-center'>
           <div className='lobby-title'>PalHub</div>
           <div className='lobby-annotation'>完全免費的公開文字/語音通訊系統</div>
