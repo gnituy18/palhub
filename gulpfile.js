@@ -6,7 +6,6 @@ const tap = require('gulp-tap')
 const path = require('path')
 const nodemon = require('nodemon')
 const sass = require('gulp-sass')
-
 const features = require('./config').features
 const featureGlobStr = '(' + features.join('|') + ')'
 
@@ -28,7 +27,7 @@ gulp.task('sass', function () {
 })
 
 gulp.task('watch', ['build'], function () {
-  gulp.watch([ './web/*' + featureGlobStr + '/!(index).js*(x)', './web/!' + featureGlobStr + '**/*.js' ], ['javascript'])
+  gulp.watch([ './web/*' + featureGlobStr + '/**/!(index).js*(x)', './web/!' + featureGlobStr + '**/*.js' ], ['javascript'])
   gulp.watch([ '.web/**/*' + featureGlobStr + '.scss', './web/scss/*.scss' ], ['sass'])
   nodemon({
     'script': 'server/index.js',
