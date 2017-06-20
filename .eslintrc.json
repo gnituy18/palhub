@@ -11,6 +11,7 @@
     "React": true,
     "PropTypes": true,
     "io": true,
+    "ga": true,
     "FB": true
   }
 }

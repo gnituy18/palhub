@@ -26,6 +26,7 @@ export default class Create extends React.Component {
   }
 
   handleKeyPress (e) {
+    ga('send', 'event', 'Create', 'enter', 'testing')
     switch (e.key) {
       case 'Enter':
         this.submit()
