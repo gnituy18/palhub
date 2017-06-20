@@ -15,6 +15,7 @@ export default class InputBox extends React.Component {
     switch (e.key) {
       case 'Enter':
         this.sendMsg()
+        ga('send', 'event', 'room', 'send msg')
         break
     }
   }

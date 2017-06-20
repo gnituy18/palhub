@@ -10,7 +10,7 @@ export default class NavBar extends React.Component {
         <div className='nav'>
           <a className='nav-brand' href='/'>PalHub</a>
           <div className='nav-content'>
-            <abbr title='複製房間連結'><div onClick={copyUrl} className='nav-button link'></div></abbr>
+            <abbr title='複製房間連結'><div onClick={handleLinkClick} className='nav-button link'></div></abbr>
             <abbr title='麥克風'><div onClick={this.triggerMicSwitch} className={this.props.micSwitch === false ? 'nav-button mic-off' : 'nav-button mic'}>
 
             </div></abbr>
@@ -23,7 +23,13 @@ export default class NavBar extends React.Component {
 
   triggerMicSwitch () {
     this.props.onMicSwitchChange()
+    ga('send', 'event', 'room', 'mic')
   }
+}
+
+function handleLinkClick () {
+  copyUrl()
+  ga('send', 'event', 'room', 'link')
 }
 
 function copyUrl () {

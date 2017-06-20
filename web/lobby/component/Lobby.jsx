@@ -44,7 +44,7 @@ export default class Lobby extends React.Component {
         </div>
         <div className='section text-align-center'>
           <div className='cont'>
-            <a href='/create' className='lobby-annotation'>創建房間</a>
+            <a onClick={handleCreateClick} href='/create' className='lobby-annotation'>創建房間</a>
           </div>
           <div className='cont'>
             <div className='lobby-annotation'>
@@ -65,4 +65,8 @@ export default class Lobby extends React.Component {
   getRooms (data) {
     this.setState({'rooms': data.rooms})
   }
+}
+
+function handleCreateClick () {
+  ga('send', 'event', 'lobby', 'create')
 }
