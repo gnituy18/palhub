@@ -59,7 +59,7 @@ export default class Lobby extends React.Component {
           </div>
           <div className='cont'>
             <div className='lobby-annotation'>
-              找到屬於自己的房間
+              找到跟你一樣的人
             </div>
           </div>
         </div>

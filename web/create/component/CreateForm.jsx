@@ -13,7 +13,7 @@ export default class Create extends React.Component {
     return (
       <div className='wrapper'>
         <div className='center'>
-          <h2>你房間的主題是什麼？</h2>
+          <h2>你正在做/思考什麼？</h2>
           <input onKeyPress={this.handleKeyPress} onChange={this.handleChange} value={this.state.inputValue} type='text' />
           <button className='btn' onClick={this.submit}>確定</button>
         </div>
