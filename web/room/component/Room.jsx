@@ -13,6 +13,8 @@ export default class Room extends React.Component {
     this.state = {
       'msg': [],
       'users': [],
+      'focus': true,
+      'unreadMsgNum': 0,
       'micAllowed': true,
       'micSwitch': false
     }
@@ -26,6 +28,18 @@ export default class Room extends React.Component {
     this.switchStream = this.switchStream.bind(this)
     this.getUser = this.getUser.bind(this)
     this.init = this.init.bind(this)
+    this.title = window.document.title
+    this.beep = new Audio('/storage/beep.wav')
+    window.onfocus = () => {
+      document.title = this.title
+      this.setState({
+        'focus': true,
+        'unreadMsgNum': 0
+      })
+    }
+    window.onblur = () => {
+      this.setState({'focus': false})
+    }
   }
 
   componentDidMount () {
@@ -109,6 +123,13 @@ export default class Room extends React.Component {
         })
       }
     })
+    if (!this.state.focus) {
+      this.beep.play()
+      this.setState(prevState => {
+        return {'unreadMsgNum': prevState.unreadMsgNum + 1}
+      })
+      document.title = '(' + this.state.unreadMsgNum + ') ' + this.title
+    }
   }
 
   setupMessages (data) {

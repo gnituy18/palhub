@@ -9,7 +9,6 @@ export default class UserList extends React.Component {
         'width': 'calc(15vw - 94px)',
         'verticalAlign': 'top'
       }
-      console.log(user.name)
       return (
         <div key={index}>
           <div className='side-nav-element'>
