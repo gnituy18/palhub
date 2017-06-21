@@ -45,12 +45,13 @@ export default class Lobby extends React.Component {
         <NavBar user={this.state.user} logged={this.state.logged} />
         <div className='section text-align-center'>
           <div className='lobby-title'>PalHub</div>
-          <div className='lobby-annotation'>完全免費的公開文字/語音通訊系統</div>
-          <div className='lobby-annotation'>找到跟你<b>正在做同一件事情</b>或<b>有同樣想法</b>的人</div>
+          <div className='lobby-annotation'>完全免費的公開文字/語音App</div>
+          <div className='lobby-annotation'>陌生人即時性的回覆幫你解決任何疑難雜症</div>
+          <div className='lobby-annotation'>PalHub 幫你在這裡找到聊得來的夥伴</div>
         </div>
         <div className='section text-align-center'>
           <div className='cont'>
-            <a onClick={handleCreateClick} href='/create' className='lobby-annotation'>創建房間 - 讓陌生人加入你的活動</a>
+            <a onClick={handleCreateClick} href='/create' className='lobby-annotation'>發起討論- 讓陌生人加入你的話題</a>
           </div>
           <div className='cont'>
             <div className='lobby-annotation'>
@@ -59,7 +60,7 @@ export default class Lobby extends React.Component {
           </div>
           <div className='cont'>
             <div className='lobby-annotation'>
-              找到跟你一樣的人
+              加入你有興趣的討論
             </div>
           </div>
         </div>
