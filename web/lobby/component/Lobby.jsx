@@ -51,7 +51,7 @@ export default class Lobby extends React.Component {
         </div>
         <div className='section text-align-center'>
           <div className='cont'>
-            <a onClick={handleCreateClick} href='/create' className='lobby-annotation'>發起討論- 讓陌生人加入你的話題</a>
+            <a onClick={handleCreateClick} href='/create' className='lobby-annotation'>發起討論- 讓陌生人參與你的話題</a>
           </div>
           <div className='cont'>
             <div className='lobby-annotation'>
