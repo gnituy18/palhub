@@ -42,7 +42,7 @@ module.exports.addUser = async function (socketID, roomID, user) {
   const userInfo = [
     'name',
     user.name,
-    'roomId',
+    'roomID',
     roomID,
     'fbID',
     user.id
@@ -52,7 +52,7 @@ module.exports.addUser = async function (socketID, roomID, user) {
 }
 
 module.exports.removeUser = async function (socketID) {
-  const roomID = await redis.hgetAsync('user:' + socketID, 'roomId')
+  const roomID = await redis.hgetAsync('user:' + socketID, 'roomID')
   await redis.delAsync('user:' + socketID)
   await redis.lremAsync('room:' + roomID + ':users', 0, socketID)
   return roomID
@@ -70,6 +70,7 @@ module.exports.getUsers = async function (roomID) {
 
 module.exports.addMsg = async function (socketID, msgBody) {
   const user = await redis.hgetallAsync('user:' + socketID)
+  console.log(user)
   await redis.rpushAsync('room:' + user.roomID + ':messages', msgBody)
   return redis.rpushAsync('room:' + user.roomID + ':message-senders', user.fbID)
 }
