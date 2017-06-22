@@ -48,13 +48,13 @@ export default class Lobby extends React.Component {
           <div className='lobby-annotation'>想要找人討論某個話題嗎？</div>
           <div className='lobby-annotation'>有問題想要馬上詢問別人嗎？</div>
           <div className='lobby-annotation'>如哈利波特中的萬應室，有需求時出現。</div>
-          <div className='lobby-annotation'>陌生人即時性的回覆幫你解決任何疑難雜症。</div>
+          <div className='lobby-annotation'>群眾即時性的回覆幫你解決任何疑難雜症。</div>
           <div className='lobby-annotation'>當沒人時房間則自動消失，不留下任何紀錄。</div>
           <div className='lobby-annotation'>PalHub 幫你在這裡找到一群臨時的的夥伴。</div>
         </div>
         <div className='section text-align-center'>
           <div className='cont'>
-            <a onClick={handleCreateClick} href='/create' className='lobby-room'>發起討論- 讓陌生人參與你的話題</a>
+            <a onClick={handleCreateClick} href='/create' className='lobby-room'>發起討論- 讓大家參與你的話題</a>
           </div>
           <div className='cont'>
             <div className='lobby-annotation'>
