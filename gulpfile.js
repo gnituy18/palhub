@@ -21,14 +21,17 @@ gulp.task('javascript', function () {
 })
 
 gulp.task('sass', function () {
-  return gulp.src([ '.web/**/*' + featureGlobStr + '.scss', './web/scss/main.scss' ])
+  return gulp.src([ './web/**/*' + featureGlobStr + '.scss', './web/scss/main.scss' ])
   .pipe(sass().on('error', sass.logError))
+  .pipe(tap(function (file) {
+    file.base = path.dirname(file.path)
+  }))
   .pipe(gulp.dest('./public/css'))
 })
 
 gulp.task('watch', ['build'], function () {
   gulp.watch([ './web/*' + featureGlobStr + '/**/!(index).js*(x)', './web/!' + featureGlobStr + '**/*.js' ], ['javascript'])
-  gulp.watch([ '.web/**/*' + featureGlobStr + '.scss', './web/scss/*.scss' ], ['sass'])
+  gulp.watch([ './web/**/*' + featureGlobStr + '.scss', './web/scss/*.scss' ], ['sass'])
   nodemon({
     'script': 'server/index.js',
     'ignore': [ 'public/**/*', 'gulpfile.js', './web/*' + featureGlobStr + '/!(index).js*(x)', './web/!' + featureGlobStr + '**/*.js' ],
