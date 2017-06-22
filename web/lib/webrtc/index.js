@@ -49,7 +49,6 @@ socket.on('get answer', function (data) {
 
 socket.on('get candidate', function (data) {
   console.log('get candidate')
-  console.log(pcs)
   pcs[data.id].addIceCandidate(data.candidate)
   .then(function () {
     console.log('success')
@@ -79,7 +78,6 @@ function close (roomSocketId) {
   const socketId = toWebrtcId(roomSocketId)
   pcs[socketId].close()
   delete pcs[socketId]
-  console.log(pcs)
 }
 
 function toWebrtcId (socketId) {

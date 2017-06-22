@@ -1,6 +1,5 @@
 export default class NavBar extends React.Component {
   render () {
-    console.log(this.props.user.picture)
     const profileBtnBG = {
       'backgroundImage': 'url(' + this.props.user.picture + ')',
       'backgroundSize': 'cover',

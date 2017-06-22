@@ -66,12 +66,10 @@ export default class Room extends React.Component {
         'video': false
       })
       this.localStream.getAudioTracks()[0].enabled = this.state.micSwitch
-      console.log(this.localStream)
     } catch (err) {
       this.setState({'micAllowed': false})
       this.localStream = new MediaStream()
       rtc.setMic(false)
-      console.log(this.localStream)
     }
     await Promise.resolve().then(() => {
       socket.on('get msg', this.appendMsg)
@@ -152,14 +150,10 @@ export default class Room extends React.Component {
     return rtc.createNewPcTo(id)
     .then(pc => {
       pc.onaddstream = e => {
-        console.log('on add stream')
-        console.log('setup pc: ' + id)
         this.setState(prevState => {
           const users = prevState.users.map(user => {
-            console.log(user)
             if (user.id === id) {
               user.stream = e.stream
-              console.log('on add stream user: ' + user.id)
             }
             return user
           })
@@ -177,10 +171,8 @@ export default class Room extends React.Component {
     console.log('remove user')
     for (let x = 0; x < this.state.users.length; x++) {
       if (this.state.users[x].id === data.id) {
-        console.log('remove id: ' + data.id)
         this.setState(prevState => {
           prevState.users.splice(x, 1)
-          console.log(prevState.users)
           return {'users': prevState.users}
         })
         break
@@ -190,14 +182,11 @@ export default class Room extends React.Component {
   }
 
   handelNewUser (data) {
-    console.log(data)
     FB.api('/' + data.user.fbID + '/picture?type=normal', response => {
       data.user.picture = response.data.url
       Promise.resolve().then(() => {
         this.setState(prevState => {
           const users = prevState.users.concat(data.user)
-          console.log('handelNewUser: ')
-          console.log(users)
           return {'users': users}
         })
       })
