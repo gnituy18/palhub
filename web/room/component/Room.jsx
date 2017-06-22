@@ -86,7 +86,7 @@ export default class Room extends React.Component {
     })
     socket.emit('join room', {
       'user': this.props.user,
-      'roomId': this.props.room.id
+      'roomID': this.props.room.id
     })
   }
 
@@ -130,8 +130,16 @@ export default class Room extends React.Component {
     }
   }
 
-  setupMessages (data) {
-    data.map(msg => this.appendMsg(msg))
+  async setupMessages (data) {
+    const msgs = []
+    for (let x = 0; x < data.length; x++) {
+      const user = await this.getUser(data[x].fbID)
+      msgs.push({
+        'body': data[x].msgBody,
+        'user': user
+      })
+    }
+    this.setState({'msg': msgs})
   }
 
   setupUsers (data) {

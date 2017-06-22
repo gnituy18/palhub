@@ -15,22 +15,22 @@ module.exports = function (io) {
     socket.on('send msg', async function (data) {
       guard.room.addMsg(socket.id, data.msgBody)
       const user = await guard.user.get(socket.id)
-      room.to(user.roomId).emit('get msg', {
+      room.to(user.roomID).emit('get msg', {
         'fbID': user.fbID,
         'msgBody': data.msgBody
       })
     })
 
     socket.on('join room', async function (data) {
-      await guard.room.addUser(socket.id, data.roomId, data.user)
-      const users = await guard.room.getUsers(data.roomId)
-      const messages = await guard.room.getAllMsg(data.roomId)
+      await guard.room.addUser(socket.id, data.roomID, data.user)
+      const users = await guard.room.getUsers(data.roomID)
+      const messages = await guard.room.getAllMsg(data.roomID)
       const rooms = await guard.room.getAll()
-      socket.join(data.roomId)
+      socket.join(data.roomID)
       lobby.emit('get rooms', {'rooms': rooms})
       room.to(socket.id).emit('get messages', messages)
       room.to(socket.id).emit('get users', {'users': users})
-      socket.broadcast.to(data.roomId).emit('get new user', {'user': users[users.length - 1]})
+      socket.broadcast.to(data.roomID).emit('get new user', {'user': users[users.length - 1]})
     })
 
     socket.on('disconnect', async function () {
