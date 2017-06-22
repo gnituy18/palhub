@@ -10,8 +10,8 @@ $input-box-height: 40px;
 .lobby-title {
   font-size: 2*$font-size-large;
   font-family: $font-family-cursive;
-  color: $blue5;
-  text-shadow: 2px 2px 2px $blue3;
+  color: $blue6;
+  text-shadow: 3px 3px 2px $blue3;
   padding: 10px 0;
 }
 
@@ -19,7 +19,7 @@ $input-box-height: 40px;
   font-size: $font-size-big;
   font-weight: 300;
   color: $blue3;
-  text-shadow: 2px 2px 2px $blue5;
+  text-shadow: 2px 2px 1px $blue6;
 }
 
 .input-box {
@@ -39,6 +39,7 @@ $input-box-height: 40px;
   word-wrap: break-word;
   margin: 10px;
   display: inline-block;
+  box-shadow: 4px 4px $blue3;
   padding: 5px 10px;
   border-radius: 5px;
   background-color: $blue6;
