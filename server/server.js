@@ -35,8 +35,8 @@ koa.use(views(path.join(__dirname, '../web'), {'extension': 'pug'}))
 koa.use(serve(path.join(__dirname, '../public')))
 
 koa.use(page)
-koa.use(authCheck)
 koa.use(intent)
+koa.use(authCheck)
 koa.use(profileCheck)
 
 //koa.use(home.routes())
