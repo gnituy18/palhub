@@ -11,7 +11,8 @@ $input-box-height: 40px;
   font-size: 2*$font-size-large;
   font-family: $font-family-cursive;
   color: $blue5;
-  text-shadow: 2px 2px 3px $blue3;
+  text-shadow: 2px 2px 2px $blue3;
+  padding: 10px 0;
 }
 
 .lobby-annotation {

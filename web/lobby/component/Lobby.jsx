@@ -45,9 +45,12 @@ export default class Lobby extends React.Component {
         <NavBar user={this.state.user} logged={this.state.logged} />
         <div className='section text-align-center'>
           <div className='lobby-title'>PalHub</div>
-          <div className='lobby-annotation'>完全免費的公開文字/語音App</div>
+          <div className='lobby-annotation'>想要找人討論某個話題嗎？</div>
+          <div className='lobby-annotation'>有問題想要馬上詢問別人嗎？</div>
+          <div className='lobby-annotation'>如哈利波特中的萬應室 有需求時出現</div>
           <div className='lobby-annotation'>陌生人即時性的回覆幫你解決任何疑難雜症</div>
-          <div className='lobby-annotation'>PalHub 幫你在這裡找到聊得來的夥伴</div>
+          <div className='lobby-annotation'>當沒人時房間則自動消失 不留下任何紀錄</div>
+          <div className='lobby-annotation'>PalHub 幫你在這裡找到一群臨時的的夥伴</div>
         </div>
         <div className='section text-align-center'>
           <div className='cont'>
