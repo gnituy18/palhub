@@ -11,6 +11,7 @@ export default class Lobby extends React.Component {
     this.state = {
       'rooms': [],
       'user': {},
+      'userNum': null,
       'logged': null
     }
     this.getRooms = this.getRooms.bind(this)
@@ -18,6 +19,9 @@ export default class Lobby extends React.Component {
 
   componentDidMount () {
     socket.on('get rooms', this.getRooms)
+    socket.on('get user num', data => {
+      this.setState({'userNum': data.num})
+    })
     socket.emit('get rooms')
     fb.init()
     .then(fb.auth)
@@ -28,6 +32,12 @@ export default class Lobby extends React.Component {
             this.setState({
               'user': {'picture': response.data.url},
               'logged': true
+            })
+          })
+          FB.api('/me', response => {
+            console.log(response)
+            socket.emit('join lobby', {
+              'FBID': response.id
             })
           })
           break
@@ -54,16 +64,14 @@ export default class Lobby extends React.Component {
         </div>
         <div className='section text-align-center'>
           <div className='cont'>
+            <div className='lobby-annotation'>目前在大廳 <b>{this.state.userNum}</b> 位已經登入的使用者</div>
+          </div>
+          <div className='cont'>
             <a onClick={handleCreateClick} href='/create' className='lobby-room'>發起討論- 讓大家參與你的話題</a>
           </div>
           <div className='cont'>
             <div className='lobby-annotation'>
-              或
-            </div>
-          </div>
-          <div className='cont'>
-            <div className='lobby-annotation'>
-              加入你有興趣的討論
+              或加入你有興趣的討論
             </div>
           </div>
         </div>
