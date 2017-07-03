@@ -36,9 +36,7 @@ export default class Lobby extends React.Component {
           })
           FB.api('/me', response => {
             console.log(response)
-            socket.emit('join lobby', {
-              'FBID': response.id
-            })
+            socket.emit('join lobby', {'FBID': response.id})
           })
           break
         case 'not_authorized':

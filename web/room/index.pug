@@ -6,7 +6,7 @@ block head
   +css('/css/room.css')
 
 block content
-  div(id="FBID" style="display:none") #{user.FBID}
+  div(id="FBID" style="display:none") #{user.facebook.id}
   div(id="name" style="display:none") #{user.name}
   div(id="room-id" style="display:none") #{room.id}
   div(id="room-name" style="display:none") #{room.name}

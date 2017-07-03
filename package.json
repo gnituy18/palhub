@@ -21,7 +21,8 @@
     "pug": "^2.0.0-beta11",
     "redis": "^2.7.1",
     "shortid": "^2.2.8",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "@sourfeethsu/eslint-config": "^0.2.0",

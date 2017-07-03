@@ -13,7 +13,6 @@ const err = require('../web/error')
 const page = require('./middlewares/page')
 const authCheck = require('./middlewares/auth')
 const intent = require('./middlewares/intent')
-const profileCheck = require('./middlewares/profile')
 const koa = new Koa()
 
 koa.keys = ['hahaha']
@@ -37,7 +36,6 @@ koa.use(serve(path.join(__dirname, '../public')))
 koa.use(page)
 koa.use(intent)
 koa.use(authCheck)
-koa.use(profileCheck)
 
 //koa.use(home.routes())
 koa.use(login.routes())

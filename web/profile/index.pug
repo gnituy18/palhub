@@ -2,14 +2,14 @@ extends ../views/layout
 include ../views/mixin
 
 block head
-  +title('Profile')
+  +title(page)
 
 block content
   div(class='wrapper')
     div(class='center')
       h2 請輸入你的暱稱
       form(method='post')
-        input(type='text' name='name' value=name)
+        input(type='text' name='name' value=user.name)
         input(type='submit')
 block scripts
   script.

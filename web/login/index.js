@@ -1,5 +1,6 @@
 const Router = require('koa-router')
 const router = new Router()
+const User = require('../../server/models/user')
 const https = require('https')
 
 router.get('login', '/login', async function (ctx) {
@@ -9,7 +10,7 @@ router.get('login', '/login', async function (ctx) {
 router.post('/login', async function (ctx) {
   const FBID = ctx.request.body.authResponse.userID
   const accessToken = ctx.request.body.authResponse.accessToken
-  const user = await new Promise(resolve => {
+  const userFB = await new Promise(resolve => {
     https.get('https://graph.facebook.com/' + FBID + '?access_token=' + accessToken, res => {
       let body = ''
       res.on('data', d => {
@@ -21,11 +22,15 @@ router.post('/login', async function (ctx) {
       })
     })
   })
-  if (user.error) {
-    ctx.throw(404, user.error.message)
+
+  if (userFB.error) {
+    ctx.throw(404, userFB.error.message)
   } else {
-    ctx.session.logged = true
-    ctx.session.user = {'FBID': user.id}
+    if (await User.get(userFB.id, 'facebook') === null) {
+      await User.create({'name': userFB.name}, 'facebook', userFB)
+    }
+    const user = await User.get(userFB.id, 'facebook')
+    ctx.session.userID = user._id
     ctx.body = {'intent': ctx.session.intent}
   }
 })
