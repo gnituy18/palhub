@@ -11,6 +11,6 @@ export default function post (url, data) {
     }
     xhttp.open('POST', url, true)
     xhttp.setRequestHeader('Content-type', 'application/json')
-    xhttp.send(JSON.stringify(data))
+    xhttp.send(JSON.stringify(data || {}))
   })
 }

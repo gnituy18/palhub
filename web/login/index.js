@@ -35,5 +35,13 @@ router.post('/login', async function (ctx) {
   }
 })
 
-module.exports = router
+router.post('/logout', function (ctx) {
+  if (!ctx.session.userID) {
+    ctx.body = {'status': 'fail'}
+    return
+  }
+  ctx.session.userID = null
+  ctx.body = {'status': 'success'}
+})
 
+module.exports = router

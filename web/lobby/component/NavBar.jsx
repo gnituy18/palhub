@@ -1,3 +1,5 @@
+import {post} from '../../lib/ajax'
+
 export default class NavBar extends React.Component {
   render () {
     const profileBtnBG = {
@@ -30,7 +32,10 @@ function redirectToProfile () {
 
 function logout () {
   FB.logout(function () {
-    window.location.href = '/'
+    post('/logout')
+    .then(() => {
+      window.location.href = '/'
+    })
   })
 }
 
