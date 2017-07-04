@@ -7,8 +7,14 @@ module.exports.create = async function (room) {
     'name',
     room.name,
     'id',
-    roomID
+    roomID,
+    'type',
+    room.type
   ]
+  switch (room.type) {
+    case 'hourglass':
+      roomInfo.push('dueTime', room.typeInfo.dueTime, 'active', false)
+  }
   await redis.hmsetAsync('room:' + roomID, roomInfo)
   await redis.lpushAsync('rooms', roomID)
   return roomID
@@ -16,6 +22,22 @@ module.exports.create = async function (room) {
 
 module.exports.get = function (roomID) {
   return redis.hgetallAsync('room:' + roomID)
+}
+
+module.exports.update = function (roomID, room) {
+  const roomInfo = [
+    'name',
+    room.name,
+    'id',
+    roomID,
+    'type',
+    room.type
+  ]
+  switch (room.type) {
+    case 'hourglass':
+      roomInfo.push('time', room.dueTime, 'active', room.active)
+  }
+  return redis.hmsetAsync('room:' + roomID, roomInfo)
 }
 
 module.exports.getAll = async function () {
@@ -31,6 +53,7 @@ module.exports.destroy = async function (roomID) {
   await redis.lremAsync('rooms', 0, roomID)
   await redis.delAsync('room:' + roomID + ':messages')
   await redis.delAsync('room:' + roomID + ':message-senders')
+  await redis.delAsync('room:' + roomID + ':users')
   return redis.delAsync('room:' + roomID)
 }
 

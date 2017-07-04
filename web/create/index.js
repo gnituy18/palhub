@@ -7,7 +7,16 @@ router.get('/create', async function (ctx) {
 })
 
 router.post('/create', async function (ctx) {
-  const roomID = await guard.room.create({'name': ctx.request.body.name})
+  let typeInfo = {}
+  switch (ctx.request.body.type) {
+    case 'hourglass':
+      typeInfo = {'dueTime': Date.now() + ctx.request.body.min * 60000 + ctx.request.body.hour * 3600000}
+  }
+  const roomID = await guard.room.create({
+    'name': ctx.request.body.name,
+    'type': ctx.request.body.type,
+    'typeInfo': typeInfo
+  })
   ctx.body = {'id': roomID}
 })
 

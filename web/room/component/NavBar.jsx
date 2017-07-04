@@ -5,16 +5,19 @@ export default class NavBar extends React.Component {
   }
 
   render () {
+    const hour = Math.floor(this.props.time / 21600)
+    const min = Math.floor(this.props.time % 3600 / 60)
+    const sec = this.props.time % 60
+    const dueMsg = this.props.time && '⌛ 聊天室將在' + (hour === 0 ? '' : hour + '小時') + (hour === 0 && min === 0 ? '' : min + '分鐘') + sec + '秒後關閉'
     return (
       <div className='nav-container'>
         <div className='nav'>
           <a className='nav-brand' href='/'>PalHub</a>
           <div className='nav-content'>
             <abbr title='複製房間連結'><div onClick={handleLinkClick} className='nav-button link'></div></abbr>
-            <abbr title='麥克風'><div onClick={this.triggerMicSwitch} className={this.props.micSwitch === false ? 'nav-button mic-off' : 'nav-button mic'}>
-
-            </div></abbr>
+            <abbr title='麥克風'><div onClick={this.triggerMicSwitch} className={this.props.micSwitch === false ? 'nav-button mic-off' : 'nav-button mic'}></div></abbr>
             <div className='nav-element'>{ decode(this.props.room.name) }</div>
+            <div className='nav-element'>{dueMsg}</div>
           </div>
         </div>
       </div>
@@ -68,5 +71,6 @@ NavBar.propTypes = {
   'user': PropTypes.object,
   'room': PropTypes.object,
   'onMicSwitchChange': PropTypes.func,
-  'micSwitch': PropTypes.bool
+  'micSwitch': PropTypes.bool,
+  'time': PropTypes.number
 }

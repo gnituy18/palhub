@@ -32,6 +32,17 @@ $input-box-height: 40px;
   }
 }
 
+.lobby-room-icon{
+  font-size: $font-size-big;
+  max-width: 80vw;
+  word-wrap: break-word;
+  margin-right:  10px;
+  background-color: $blue5;
+  display: inline-block;
+  border-radius: 5px;
+  color: $blue3;
+}
+
 .lobby-room {
   font-size: $font-size-big;
   max-width: 80vw;

@@ -1,7 +1,12 @@
 export default class RoomList extends React.Component {
   render () {
-    const list = this.props.rooms.map((room, index) =>
-      <div key={index}><a onClick={handleJoinClick} className='lobby-room' href={'/room/' + room.id}>{room.name}</a></div>)
+    const hg = <span className='lobby-room-icon'>⌛</span>
+    const list = this.props.rooms.map((room, index) => <div key={index}>
+      <a onClick={handleJoinClick} className='lobby-room' href={'/room/' + room.id}>
+        {room.type === 'hourglass' ? hg : ''}
+        {room.name}
+      </a>
+    </div>)
     return (
       <div className='text-align-center'>
         {list}

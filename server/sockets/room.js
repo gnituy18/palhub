@@ -22,6 +22,22 @@ module.exports = function (io) {
     })
 
     socket.on('join room', async function (data) {
+      const roomObject = await guard.room.get(data.roomID)
+      switch (roomObject.type) {
+        case 'hourglass': {
+          const dueTime = parseInt(roomObject.dueTime)
+          const time = dueTime - Date.now()
+          if (roomObject.active === 'false') {
+            roomObject.active = true
+            await guard.room.update(data.roomID, roomObject)
+            setTimeout(function () {
+              guard.room.destroy(data.roomID)
+              room.to(data.roomID).emit('kick')
+            }, time)
+          }
+          room.to(socket.id).emit('get due time', dueTime)
+        }
+      }
       await guard.room.addUser(socket.id, data.roomID, data.user)
       const users = await guard.room.getUsers(data.roomID)
       const messages = await guard.room.getAllMsg(data.roomID)
@@ -37,7 +53,7 @@ module.exports = function (io) {
       const roomID = await guard.room.removeUser(socket.id)
 
       setTimeout(async function () {
-        if (await guard.room.getUserNum(roomID) === 0) {
+        if (await guard.room.getUserNum(roomID) === 0 && (await guard.room.get(roomID)).type === 'regular') {
           await guard.room.destroy(roomID)
           const rooms = await guard.room.getAll()
           lobby.emit('get rooms', {'rooms': rooms})

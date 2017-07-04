@@ -14,6 +14,7 @@ export default class Room extends React.Component {
       'msg': [],
       'users': [],
       'focus': true,
+      'due': null,
       'unreadMsgNum': 0,
       'micAllowed': true,
       'micSwitch': false
@@ -22,7 +23,8 @@ export default class Room extends React.Component {
     this.appendMsg = this.appendMsg.bind(this)
     this.setupUsers = this.setupUsers.bind(this)
     this.setupMessages = this.setupMessages.bind(this)
-    this.handelNewUser = this.handelNewUser.bind(this)
+    this.handleNewUser = this.handleNewUser.bind(this)
+    this.handleDueTime = this.handleDueTime.bind(this)
     this.setupPc = this.setupPc.bind(this)
     this.removeUser = this.removeUser.bind(this)
     this.switchStream = this.switchStream.bind(this)
@@ -49,7 +51,7 @@ export default class Room extends React.Component {
   render () {
     return (
       <div>
-        <NavBar micSwitch={this.state.micSwitch} onMicSwitchChange={this.switchStream} room={this.props.room} user={this.props.user}/>
+        <NavBar time={this.state.due} micSwitch={this.state.micSwitch} onMicSwitchChange={this.switchStream} room={this.props.room} user={this.props.user}/>
         <UserList users={this.state.users}/>
         <div className='side-nav-neighbor'>
           <MessageBox msg={this.state.msg}/>
@@ -75,8 +77,12 @@ export default class Room extends React.Component {
       socket.on('get msg', this.appendMsg)
       socket.on('get users', this.setupUsers)
       socket.on('get messages', this.setupMessages)
-      socket.on('get new user', this.handelNewUser)
+      socket.on('get new user', this.handleNewUser)
+      socket.on('get due time', this.handleDueTime)
       socket.on('remove user', this.removeUser)
+      socket.on('kick', () => {
+        window.location.replace('/')
+      })
       socket.on('setup pc', data => {
         this.setupPc(data.id)
         .then(() => {
@@ -189,7 +195,14 @@ export default class Room extends React.Component {
     rtc.close(data.id)
   }
 
-  handelNewUser (data) {
+  handleDueTime (dueTime) {
+    let time = Math.floor((dueTime - Date.now()) / 1000)
+    setInterval(() => {
+      this.setState({'due': time--})
+    }, 1000)
+  }
+
+  handleNewUser (data) {
     FB.api('/' + data.user.fbID + '/picture?type=normal', response => {
       data.user.picture = response.data.url
       Promise.resolve().then(() => {
