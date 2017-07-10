@@ -19,7 +19,7 @@ mixin ga
     ga('create', 'UA-100863283-1', 'auto');
   if user
     script.
-      ga('set', 'userId', '#{user._id}')
+      ga('set', 'userId', '#{user.id}')
 
 mixin favicon
   link(rel="shortcut icon" type="image/png" href="/storage/favicon.png")
@@ -31,6 +31,29 @@ mixin react
 
 mixin socketio
   +script('https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js')
+
+mixin userObj
+  script.
+    window.user = {
+      'id': '#{user.id}',
+      'name': '#{user.name}',
+      'facebook': {
+        'id': '#{user.facebook.id}'
+      }
+    }
+
+mixin roomObj
+  script.
+    window.room = {
+      'id': '#{room.id}',
+      'name': '#{room.name}',
+    }
+
+mixin scripts
+  if user
+    +userObj
+  if room
+    +roomObj
 
 mixin adapter
   +script('https://webrtc.github.io/adapter/adapter-latest.js')

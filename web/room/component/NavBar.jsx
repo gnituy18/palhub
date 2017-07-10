@@ -15,7 +15,8 @@ export default class NavBar extends React.Component {
           <a className='nav-brand' href='/'>PalHub</a>
           <div className='nav-content'>
             <abbr title='複製房間連結'><div onClick={handleLinkClick} className='nav-button link'></div></abbr>
-            <abbr title='麥克風'><div onClick={this.triggerMicSwitch} className={this.props.micSwitch === false ? 'nav-button mic-off' : 'nav-button mic'}></div></abbr>
+            <abbr title='麥克風'><div onClick={this.triggerMicSwitch} className={this.props.micState === false ? 'nav-button mic-off' : 'nav-button mic'}></div></abbr>
+            {this.props.creator && <abbr title='刪除'><div className='nav-button delete'></div></abbr>}
             <div className='nav-element'>{ decode(this.props.room.name) }</div>
             <div className='nav-element'>{dueMsg}</div>
           </div>
@@ -71,6 +72,7 @@ NavBar.propTypes = {
   'user': PropTypes.object,
   'room': PropTypes.object,
   'onMicSwitchChange': PropTypes.func,
-  'micSwitch': PropTypes.bool,
-  'time': PropTypes.number
+  'micState': PropTypes.bool,
+  'time': PropTypes.number,
+  'creator': PropTypes.bool
 }

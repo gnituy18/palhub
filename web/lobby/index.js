@@ -6,4 +6,3 @@ router.get('/', async function (ctx) {
 })
 
 module.exports = router
-

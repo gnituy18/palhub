@@ -1,4 +1,5 @@
 const guard = require('../guards')
+const User = require('../models/user')
 
 module.exports = function (io) {
   const room = io.of('/room')
@@ -6,17 +7,19 @@ module.exports = function (io) {
 
   room.on('connection', function (socket) {
     socket.on('setup pc', function (data) {
-      room.to(data.id).emit('setup pc', {
+      room.to(data.socketID).emit('setup pc', {
         'id': socket.id,
-        'micAllowed': data.micAllowed
+        'micPermission': data.micPermission
       })
     })
 
     socket.on('send msg', async function (data) {
-      guard.room.addMsg(socket.id, data.msgBody)
-      const user = await guard.user.get(socket.id)
-      room.to(user.roomID).emit('get msg', {
-        'fbID': user.fbID,
+      const userID = await guard.user.getIdBySocketId(socket.id)
+      await guard.room.addMsg(userID, data.msgBody)
+      const roomID = (await guard.user.get(userID)).roomID
+      const user = await User.get(userID)
+      room.to(roomID).emit('get msg', {
+        'user': user,
         'msgBody': data.msgBody
       })
     })
@@ -27,30 +30,35 @@ module.exports = function (io) {
         case 'hourglass': {
           const dueTime = parseInt(roomObject.dueTime)
           const time = dueTime - Date.now()
+
+          // Active timer if first user enter the room.
           if (roomObject.active === 'false') {
             roomObject.active = true
             await guard.room.update(data.roomID, roomObject)
-            setTimeout(function () {
+            const timer = setTimeout(function () {
               guard.room.destroy(data.roomID)
               room.to(data.roomID).emit('kick')
             }, time)
+            guard.room.setTimer(data.roomID, timer)
           }
           room.to(socket.id).emit('get due time', dueTime)
         }
       }
-      await guard.room.addUser(socket.id, data.roomID, data.user)
+      await guard.user.setSocketId(data.userID, socket.id)
+      await guard.room.addUser(socket.id, data.roomID, data.userID)
       const users = await guard.room.getUsers(data.roomID)
-      const messages = await guard.room.getAllMsg(data.roomID)
       const rooms = await guard.room.getAll()
+      const msgs = await guard.room.getAllMsgs(data.roomID)
       socket.join(data.roomID)
       lobby.emit('get rooms', {'rooms': rooms})
-      room.to(socket.id).emit('get messages', messages)
+      room.to(socket.id).emit('get msgs', {'msgs': msgs})
       room.to(socket.id).emit('get users', {'users': users})
       socket.broadcast.to(data.roomID).emit('get new user', {'user': users[users.length - 1]})
     })
 
     socket.on('disconnect', async function () {
-      const roomID = await guard.room.removeUser(socket.id)
+      const userID = await guard.user.getIdBySocketId(socket.id)
+      const roomID = await guard.room.removeUser(userID)
 
       setTimeout(async function () {
         if (await guard.room.getUserNum(roomID) === 0 && (await guard.room.get(roomID)).type === 'regular') {
@@ -59,7 +67,9 @@ module.exports = function (io) {
           lobby.emit('get rooms', {'rooms': rooms})
         }
       }, 2000)
-      room.to(roomID).emit('remove user', {'id': socket.id})
+      await guard.user.deleteSocketId(socket.id)
+      const FBID = (await User.get(userID)).facebook.id
+      room.to(roomID).emit('remove user', {'FBID': FBID})
     })
   })
 }

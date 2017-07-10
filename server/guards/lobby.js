@@ -12,7 +12,7 @@ module.exports.num = function () {
 module.exports.remove = function (data) {
   return redis.keysAsync('lobby:*')
   .then(result => {
-    const p = result.map(key => redis.sremAsync(key, data.socketID))
-    return Promise.all(p)
+    const promises = result.map(key => redis.sremAsync(key, data.socketID))
+    return Promise.all(promises)
   })
 }

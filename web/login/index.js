@@ -30,7 +30,7 @@ router.post('/login', async function (ctx) {
       await User.create({'name': userFB.name}, 'facebook', userFB)
     }
     const user = await User.get(userFB.id, 'facebook')
-    ctx.session.userID = user._id
+    ctx.session.userID = user.id
     ctx.body = {'intent': ctx.session.intent}
   }
 })

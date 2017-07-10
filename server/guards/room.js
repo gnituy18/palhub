@@ -1,5 +1,7 @@
 const redis = require('../lib/redis')
 const shortid = require('shortid')
+const User = require('../models/user')
+const timers = {}
 
 module.exports.create = async function (room) {
   const roomID = shortid.generate()
@@ -8,6 +10,8 @@ module.exports.create = async function (room) {
     room.name,
     'id',
     roomID,
+    'creator',
+    room.creator,
     'type',
     room.type
   ]
@@ -30,6 +34,8 @@ module.exports.update = function (roomID, room) {
     room.name,
     'id',
     roomID,
+    'creator',
+    room.creator,
     'type',
     room.type
   ]
@@ -38,6 +44,14 @@ module.exports.update = function (roomID, room) {
       roomInfo.push('time', room.dueTime, 'active', room.active)
   }
   return redis.hmsetAsync('room:' + roomID, roomInfo)
+}
+
+module.exports.setTimer = function (roomID, timer) {
+  timers[roomID] = timer
+}
+
+module.exports.getTimer = function (roomID) {
+  return timers[roomID]
 }
 
 module.exports.getAll = async function () {
@@ -61,50 +75,48 @@ module.exports.exist = function (roomID) {
   return redis.existsAsync('room:' + roomID)
 }
 
-module.exports.addUser = async function (socketID, roomID, user) {
+module.exports.addUser = async function (socketID, roomID, userID) {
   const userInfo = [
-    'name',
-    user.name,
     'roomID',
     roomID,
-    'fbID',
-    user.id
+    'socketID',
+    socketID
   ]
-  await redis.hmsetAsync('user:' + socketID, userInfo)
-  return redis.rpushAsync('room:' + roomID + ':users', socketID)
+  await redis.hmsetAsync('user:' + userID, userInfo)
+  return redis.rpushAsync('room:' + roomID + ':users', userID)
 }
 
-module.exports.removeUser = async function (socketID) {
-  const roomID = await redis.hgetAsync('user:' + socketID, 'roomID')
-  await redis.delAsync('user:' + socketID)
-  await redis.lremAsync('room:' + roomID + ':users', 0, socketID)
+module.exports.removeUser = async function (userID) {
+  const roomID = await redis.hgetAsync('user:' + userID, 'roomID')
+  await redis.delAsync('user:' + userID)
+  await redis.lremAsync('room:' + roomID + ':users', 0, userID)
   return roomID
 }
 
 module.exports.getUsers = async function (roomID) {
   const userIDs = await redis.lrangeAsync('room:' + roomID + ':users', 0, -1)
-  const userInfos = await Promise.all(userIDs.map(userID => redis.hgetallAsync('user:' + userID)))
-  const users = userInfos.map((info, index) => {
-    info.id = userIDs[index]
-    return info
-  })
-  return users
+  const users = await Promise.all(userIDs.map(userID => User.get(userID)))
+  const promises = userIDs.map((userID, index) => redis.hgetAsync('user:' + userID, 'socketID').then(socketID => {
+    users[index].socketID = socketID
+    return users[index]
+  }))
+
+  return Promise.all(promises)
+}
+module.exports.addMsg = async function (userID, msgBody) {
+  const roomID = (await redis.hgetallAsync('user:' + userID)).roomID
+  await redis.rpushAsync('room:' + roomID + ':msgs', msgBody)
+  return redis.rpushAsync('room:' + roomID + ':msg-senders', userID)
 }
 
-module.exports.addMsg = async function (socketID, msgBody) {
-  const user = await redis.hgetallAsync('user:' + socketID)
-  console.log(user)
-  await redis.rpushAsync('room:' + user.roomID + ':messages', msgBody)
-  return redis.rpushAsync('room:' + user.roomID + ':message-senders', user.fbID)
-}
-
-module.exports.getAllMsg = async function (roomID) {
-  const messages = await redis.lrangeAsync('room:' + roomID + ':messages', 0, -1)
-  const messageUsers = await redis.lrangeAsync('room:' + roomID + ':message-senders', 0, -1)
-  return messages.map((msgBody, index) => {
+module.exports.getAllMsgs = async function (roomID) {
+  const msgs = await redis.lrangeAsync('room:' + roomID + ':msgs', 0, -1)
+  const msgSenders = await redis.lrangeAsync('room:' + roomID + ':msg-senders', 0, -1)
+  const promises = msgs.map((msgBody, index) => User.get(msgSenders[index]).then(user => {
     return {
-      'msgBody': msgBody,
-      'fbID': messageUsers[index]
+      'user': user,
+      'msgBody': msgBody
     }
-  })
+  }))
+  return Promise.all(promises)
 }

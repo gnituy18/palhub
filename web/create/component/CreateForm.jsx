@@ -81,6 +81,7 @@ export default class Create extends React.Component {
   }
 
   handleKeyPress (e) {
+    console.log(window.userID)
     ga('send', 'event', 'Create', 'enter', 'testing')
     switch (e.key) {
       case 'Enter':
@@ -95,7 +96,8 @@ export default class Create extends React.Component {
     }
     const reqObj = {
       'name': this.state.inputValue,
-      'type': this.state.type
+      'type': this.state.type,
+      'creator': window.userID
     }
     switch (this.state.type) {
       case 'hourglass':

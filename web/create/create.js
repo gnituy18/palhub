@@ -13,7 +13,6 @@ async function init () {
       case 'not_authorized':
       case 'unknown':
         window.location.replace('/login')
-        throw new Error('FB login failed.')
     }
     const isMultiTab = await checkMultiTabs()
     ReactDOM.render(

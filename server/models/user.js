@@ -5,9 +5,9 @@ module.exports.get = async function (userID, source) {
   const col = (await mongo.db()).collection('user')
   switch (source) {
     case undefined:
-      return col.findOne({'_id': userID})
+      return col.findOne({'_id': userID}).then(toClient)
     case 'facebook':
-      return col.findOne({'facebook.id': userID})
+      return col.findOne({'facebook.id': userID}).then(toClient)
   }
 }
 
@@ -24,8 +24,23 @@ module.exports.create = async function (user, source, sourceObject) {
   }
 }
 
-module.exports.update = async function (userID, userObject) {
+module.exports.update = async function (user) {
   const col = (await mongo.db()).collection('user')
-  await col.findOneAndUpdate({'_id': userID}, {'$set': userObject})
-  return col.findOne({'_id': userID})
+  await col.findOneAndUpdate({'_id': user.id}, {'$set': toDB(user)})
+  return col.findOne({'_id': user.id})
+}
+
+function toClient (obj) {
+  if (obj === null) {
+    return null
+  }
+  obj.id = obj._id
+  delete obj._id
+  return obj
+}
+
+function toDB (obj) {
+  obj._id = obj.id
+  delete obj.id
+  return obj
 }

@@ -2,7 +2,7 @@ export default class MessageBox extends React.Component {
 
 
   render () {
-    const msgList = this.props.msg.map((msg, index) => {
+    const msgList = this.props.msgs.map((msg, index) => {
       const pictureStyle = {'backgroundImage': 'url(' + msg.user.picture + ')'}
       const msgStyle = {'padding': '5px 0'}
       return (
@@ -24,4 +24,4 @@ export default class MessageBox extends React.Component {
   }
 }
 
-MessageBox.propTypes = {'msg': PropTypes.array}
+MessageBox.propTypes = {'msgs': PropTypes.array}
