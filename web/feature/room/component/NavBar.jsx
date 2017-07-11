@@ -9,7 +9,8 @@ export default class NavBar extends React.Component {
   }
 
   render () {
-    const hour = Math.floor(this.props.time / 21600)
+    const hour = Math.floor(this.props.time / 3600)
+    console.log(hour)
     const min = Math.floor(this.props.time % 3600 / 60)
     const sec = this.props.time % 60
     const dueMsg = this.props.time && '⌛ 聊天室將在' + (hour === 0 ? '' : hour + '小時') + (hour === 0 && min === 0 ? '' : min + '分鐘') + sec + '秒後關閉'

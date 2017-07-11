@@ -1,5 +1,9 @@
 export default class MessageBox extends React.Component {
 
+  constructor (props) {
+    super(props)
+    this.state = {'msgNum': 0}
+  }
 
   render () {
     const msgList = this.props.msgs.map((msg, index) => {
@@ -17,7 +21,8 @@ export default class MessageBox extends React.Component {
     })
 
     return <div ref={div => {
-      if (div !== null) {
+      if (div !== null && this.props.msgs.length > this.state.msgNum) {
+        this.setState({'msgNum': this.props.msgs.length})
         div.scrollTop = div.scrollHeight
       }
     }} className='msg-box'>{msgList}</div>
