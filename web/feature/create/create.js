@@ -1,6 +1,6 @@
-import {checkMultiTabs} from '../lib/tab'
-import * as fb from '../lib/facebook'
-import ErrorPage from '../component/ErrorPage.jsx'
+import {checkMultiTabs} from '../../lib/tab'
+import * as fb from '../../lib/facebook'
+import ErrorPage from '../../component/ErrorPage.jsx'
 import CreateForm from './component/CreateForm.jsx'
 
 init()

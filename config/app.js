@@ -1,3 +1,4 @@
-const features = [ 'room', 'lobby', 'login', 'create', 'profile', 'error' ]
+const fs = require('fs')
+const path = require('path')
 
-module.exports = {'features': features}
+module.exports.features = fs.readdirSync(path.join(__dirname, '../web/feature'))

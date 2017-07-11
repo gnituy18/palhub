@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const guard = require('../../server/guards')
+const guard = require('../../../server/guards')
 const router = new Router()
 
 router.get('/create', async function (ctx) {

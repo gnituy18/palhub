@@ -1,3 +1,7 @@
+import socketio from '../../../lib/socketio'
+
+const socket = socketio('/room')
+
 export default class NavBar extends React.Component {
   constructor () {
     super()
@@ -15,8 +19,8 @@ export default class NavBar extends React.Component {
           <a className='nav-brand' href='/'>PalHub</a>
           <div className='nav-content'>
             <abbr title='複製房間連結'><div onClick={handleLinkClick} className='nav-button link'></div></abbr>
-            <abbr title='麥克風'><div onClick={this.triggerMicSwitch} className={this.props.micState === false ? 'nav-button mic-off' : 'nav-button mic'}></div></abbr>
-            {this.props.creator && <abbr title='刪除'><div className='nav-button delete'></div></abbr>}
+            {this.props.micPermission && <abbr title='麥克風'><div onClick={this.triggerMicSwitch} className={this.props.micState === false ? 'nav-button mic-off' : 'nav-button mic'}></div></abbr>}
+            {this.props.creator && <abbr title='刪除'><div onClick={deleteRoom} className='nav-button delete'></div></abbr>}
             <div className='nav-element'>{ decode(this.props.room.name) }</div>
             <div className='nav-element'>{dueMsg}</div>
           </div>
@@ -26,9 +30,15 @@ export default class NavBar extends React.Component {
   }
 
   triggerMicSwitch () {
-    this.props.onMicSwitchChange()
+    this.props.onMicStateChange()
     ga('send', 'event', 'room', 'mic')
   }
+
+}
+
+function deleteRoom () {
+  socket.emit('delete room')
+  ga('send', 'event', 'room', 'delete')
 }
 
 function handleLinkClick () {
@@ -71,8 +81,9 @@ function decode (str) {
 NavBar.propTypes = {
   'user': PropTypes.object,
   'room': PropTypes.object,
-  'onMicSwitchChange': PropTypes.func,
+  'onMicStateChange': PropTypes.func,
   'micState': PropTypes.bool,
   'time': PropTypes.number,
-  'creator': PropTypes.bool
+  'creator': PropTypes.bool,
+  'micPermission': PropTypes.bool
 }

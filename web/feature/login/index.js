@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 const router = new Router()
-const User = require('../../server/models/user')
+const User = require('../../../server/models/user')
 const https = require('https')
 
 router.get('login', '/login', async function (ctx) {

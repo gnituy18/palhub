@@ -1,7 +1,7 @@
-import * as fb from '../lib/facebook'
-import {checkMultiTabs} from '../lib/tab'
+import * as fb from '../../lib/facebook'
+import {checkMultiTabs} from '../../lib/tab'
 import Room from './component/Room.jsx'
-import ErrorPage from '../component/ErrorPage.jsx'
+import ErrorPage from '../../component/ErrorPage.jsx'
 
 (async function () {
   try {

@@ -65,8 +65,8 @@ module.exports.getUserNum = function (roomID) {
 
 module.exports.destroy = async function (roomID) {
   await redis.lremAsync('rooms', 0, roomID)
-  await redis.delAsync('room:' + roomID + ':messages')
-  await redis.delAsync('room:' + roomID + ':message-senders')
+  await redis.delAsync('room:' + roomID + ':msgs')
+  await redis.delAsync('room:' + roomID + ':msgs-senders')
   await redis.delAsync('room:' + roomID + ':users')
   return redis.delAsync('room:' + roomID)
 }

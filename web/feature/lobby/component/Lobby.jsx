@@ -1,5 +1,5 @@
-import socketio from '../../lib/socketio'
-import * as fb from '../../lib/facebook'
+import socketio from '../../../lib/socketio'
+import * as fb from '../../../lib/facebook'
 import NavBar from './NavBar.jsx'
 import RoomList from './RoomList.jsx'
 

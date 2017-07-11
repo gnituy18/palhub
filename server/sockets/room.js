@@ -49,11 +49,24 @@ module.exports = function (io) {
       const users = await guard.room.getUsers(data.roomID)
       const rooms = await guard.room.getAll()
       const msgs = await guard.room.getAllMsgs(data.roomID)
+      if (data.userID === roomObject.creator) {
+        room.to(socket.id).emit('is creator')
+      }
       socket.join(data.roomID)
       lobby.emit('get rooms', {'rooms': rooms})
       room.to(socket.id).emit('get msgs', {'msgs': msgs})
       room.to(socket.id).emit('get users', {'users': users})
       socket.broadcast.to(data.roomID).emit('get new user', {'user': users[users.length - 1]})
+    })
+
+    socket.on('delete room', async function () {
+      const userID = await guard.user.getIdBySocketId(socket.id)
+      const user = await guard.user.get(userID)
+      if (userID === (await guard.room.get(user.roomID)).creator) {
+        console.log(userID + 'DELETE')
+        guard.room.destroy(user.roomID)
+        room.to(user.roomID).emit('kick')
+      }
     })
 
     socket.on('disconnect', async function () {
@@ -68,8 +81,7 @@ module.exports = function (io) {
         }
       }, 2000)
       await guard.user.deleteSocketId(socket.id)
-      const FBID = (await User.get(userID)).facebook.id
-      room.to(roomID).emit('remove user', {'FBID': FBID})
+      room.to(roomID).emit('remove user', {'socketID': socket.id})
     })
   })
 }

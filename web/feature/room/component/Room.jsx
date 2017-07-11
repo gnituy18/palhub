@@ -2,9 +2,9 @@ import UserList from './UserList.jsx'
 import InputBox from './InputBox.jsx'
 import NavBar from './NavBar.jsx'
 import MessageBox from './MessageBox.jsx'
-import socketio from '../../lib/socketio'
-import * as rtc from '../../lib/webrtc'
-import * as fb from '../../lib/facebook'
+import socketio from '../../../lib/socketio'
+import * as rtc from '../../../lib/webrtc'
+import * as fb from '../../../lib/facebook'
 
 const socket = socketio('/room')
 
@@ -41,7 +41,7 @@ export default class Room extends React.Component {
   render () {
     return (
       <div>
-        <NavBar creator={this.state.creator} time={this.state.due} micState={this.state.micState} onmicStateChange={this.switchStream} room={window.room} user={window.user}/>
+        <NavBar creator={this.state.creator} time={this.state.due} micPermission={this.state.micPermission} micState={this.state.micState} onMicStateChange={this.switchStream} room={window.room} user={window.user}/>
         <UserList users={this.state.users}/>
         <div className='side-nav-neighbor'>
           <MessageBox msgs={this.state.msgs}/>
@@ -73,6 +73,9 @@ export default class Room extends React.Component {
       socket.on('get new user', this.handleNewUser)
       socket.on('get due time', this.handleDueTime)
       socket.on('remove user', this.removeUser)
+      socket.on('is creator', () => {
+        this.setState({'creator': true})
+      })
       socket.on('kick', () => {
         window.location.replace('/')
       })
@@ -163,7 +166,8 @@ export default class Room extends React.Component {
 
   removeUser (data) {
     for (let x = 0; x < this.state.users.length; x++) {
-      if (this.state.users[x].facebook.id === data.FBID) {
+      if (this.state.users[x].socketID === data.socketID) {
+        rtc.close(this.state.users[x].socketID)
         this.setState(prevState => {
           prevState.users.splice(x, 1)
           return {'users': prevState.users}
@@ -171,7 +175,6 @@ export default class Room extends React.Component {
         break
       }
     }
-    rtc.close(data.FBID)
   }
 
   handleDueTime (dueTime) {

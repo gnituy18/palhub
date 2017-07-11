@@ -76,6 +76,8 @@ async function pair (roomSocketId, remoteMicPermission) {
 
 function close (roomSocketId) {
   const socketId = toWebrtcId(roomSocketId)
+  console.log(socketId)
+  console.log(pcs)
   pcs[socketId].close()
   delete pcs[socketId]
 }

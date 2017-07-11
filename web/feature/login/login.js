@@ -1,4 +1,4 @@
-import * as fb from '../lib/facebook'
+import * as fb from '../../lib/facebook'
 
 const fbBtn = document.getElementsByClassName('fb-login-button')[0]
 

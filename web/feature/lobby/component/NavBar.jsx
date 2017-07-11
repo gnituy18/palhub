@@ -1,4 +1,4 @@
-import {post} from '../../lib/ajax'
+import {post} from '../../../lib/ajax'
 
 export default class NavBar extends React.Component {
   render () {

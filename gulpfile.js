@@ -30,8 +30,8 @@ gulp.task('sass', function () {
 })
 
 gulp.task('watch', ['build'], function () {
-  gulp.watch([ './web/*' + featureGlobStr + '/**/!(index).js*(x)', './web/!' + featureGlobStr + '/**/*.js' ], ['javascript'])
-  gulp.watch([ './web/**/*' + featureGlobStr + '.scss', './web/scss/*.scss' ], ['sass'])
+  gulp.watch([ './web/feature/*' + featureGlobStr + '/**/!(index).js*(x)', './web/feature/!' + featureGlobStr + '/**/*.js' ], ['javascript'])
+  gulp.watch([ './web/feature/**/*' + featureGlobStr + '.scss', './web/scss/*.scss' ], ['sass'])
   nodemon({
     'script': 'server/index.js',
     'ignore': [ 'public/**/*', 'gulpfile.js', './web/*' + featureGlobStr + '/!(index).js*(x)', './web/!' + featureGlobStr + '**/*.js' ],

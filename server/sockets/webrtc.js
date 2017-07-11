@@ -6,7 +6,7 @@ module.exports = function (io) {
       webrtc.to(data.id).emit('get offer', {
         'id': socket.id,
         'offer': data.offer,
-        'micAllowed': data.micAllowed
+        'micPermission': data.micPermission
       })
     })
 
