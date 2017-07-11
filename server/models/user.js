@@ -24,10 +24,10 @@ module.exports.create = async function (user, source, sourceObject) {
   }
 }
 
-module.exports.update = async function (user) {
+module.exports.update = async function (userID, user) {
   const col = (await mongo.db()).collection('user')
-  await col.findOneAndUpdate({'_id': user.id}, {'$set': toDB(user)})
-  return col.findOne({'_id': user.id})
+  await col.findOneAndUpdate({'_id': userID}, {'$set': user})
+  return col.findOne({'_id': userID})
 }
 
 function toClient (obj) {
@@ -36,11 +36,5 @@ function toClient (obj) {
   }
   obj.id = obj._id
   delete obj._id
-  return obj
-}
-
-function toDB (obj) {
-  obj._id = obj.id
-  delete obj.id
   return obj
 }
