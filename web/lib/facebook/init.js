@@ -4,7 +4,7 @@ export default function init () {
       FB.init({
         'appId': '435861663458019',
         'xfbml': true,
-        'version': 'v2.9'
+        'version': 'v2.10'
       })
       FB.AppEvents.logPageView()
       resolve()
