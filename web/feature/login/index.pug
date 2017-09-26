@@ -17,9 +17,8 @@ block scripts
         div.innerHTML = token
         window.document.getElementsByClassName('center')[0].appendChild(div)
         getUserID(token)
-        .then(userID => {
-          console.log(userID)
-          return sendLoginRequest({FBID: userID, accessToken: token})
+        .then(user => {
+          return sendLoginRequest({FBID: user.id, accessToken: token})
         })
         sendLoginRequest({accessToken: token})
       } else {
@@ -41,6 +40,7 @@ block scripts
     }
 
     function sendLoginRequest (response) {
+      console.log(response)
       const xhttp = new XMLHttpRequest()
       xhttp.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE) {
