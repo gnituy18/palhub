@@ -11,6 +11,10 @@ fb.init()
   window.document.getElementsByClassName('center')[0].appendChild(div);
 })
 
+window.testFunc = function(){
+  alert('test')
+}
+
 window.checkLoginState = function () {
   FB.getLoginStatus(function (response) {
     statusChangeCallback(response)
