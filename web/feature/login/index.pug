@@ -16,11 +16,29 @@ block scripts
         const div = window.document.createElement('div');
         div.innerHTML = token
         window.document.getElementsByClassName('center')[0].appendChild(div)
+        getUserID(token)
+        .then(userID => {
+          console.log(userID)
+          return sendLoginRequest({FBID: userID, accessToken: token})
+        })
         sendLoginRequest({accessToken: token})
       } else {
         alert('no token')
       }
     })
+
+    function getUserID (token) {
+      return new Promise(resolve => {
+        const xhttp = new XMLHttpRequest()
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            resolve(xhttp.response)
+          }
+        };
+        xhttp.open("GET", "https://graph.facebook.com/me?access_token=" + token, true);
+        xhttp.send();
+      })
+    }
 
     function sendLoginRequest (response) {
       const xhttp = new XMLHttpRequest()
