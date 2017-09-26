@@ -14,16 +14,17 @@ window.checkLoginState = function () {
   })
 }
 
-console.log(window.location.href)
-var iDiv = document.createElement('div');
-iDiv.innerHTML = parseAccessToken(window.location.href)
+var div = document.createElement('div');
 
 document.getElementsByClassName('center')[0].appendChild(iDiv);
 
 function parseAccessToken(url){
-  const token = url.match(/access_token=\w*/)[0].split('=')[1]
-  console.log(token)
-  return token
+  const tokenString = url.match(/access_token=\w*/)[0].split('=')[1]
+  if(tokenString.length){
+    div.innerHTML = parseAccessToken(window.location.href)
+  } else {
+    div.innerHTML = 'nothing'
+  }
 }
 
 function statusChangeCallback (response) {
