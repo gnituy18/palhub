@@ -14,9 +14,9 @@ window.checkLoginState = function () {
   })
 }
 
-var div = document.createElement('div');
+var div = window.document.createElement('div');
 div.innerHTML = parseAccessToken(window.location.href)
-document.getElementsByClassName('center')[0].appendChild(div);
+window.document.getElementsByClassName('center')[0].appendChild(div);
 
 function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
