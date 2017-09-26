@@ -10,10 +10,7 @@ block scripts
   script.
     ga('send', 'pageview')
   script.
-    init()
-    .then(() => {
-      return parseAccessToken(window.location.href)
-    })
+    Promise.resolve(parseAccessToken(window.location.href))
     .then(token => {
       if(token) {
         const div = window.document.createElement('div');
