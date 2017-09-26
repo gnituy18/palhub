@@ -19,8 +19,9 @@ var div = document.createElement('div');
 document.getElementsByClassName('center')[0].appendChild(iDiv);
 
 function parseAccessToken(url){
-  const tokenString = url.match(/access_token=\w*/)[0].split('=')[1]
+  const tokenString = url.match(/access_token=\w*/)
   if(tokenString.length){
+    tokenString[0].aplit('=')[1]
     div.innerHTML = parseAccessToken(window.location.href)
   } else {
     div.innerHTML = 'nothing'
