@@ -16,7 +16,7 @@ window.checkLoginState = function () {
 
 var div = document.createElement('div');
 div.innerHTML = parseAccessToken(window.location.href)
-document.getElementsByClassName('center')[0].appendChild(iDiv);
+document.getElementsByClassName('center')[0].appendChild(div);
 
 function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
