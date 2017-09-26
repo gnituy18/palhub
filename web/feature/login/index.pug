@@ -10,6 +10,44 @@ block scripts
   script.
     ga('send', 'pageview')
   script.
+    Promise.resolve()
+    .then(() => {
+      return parseAccessToken(window.location.href)
+    })
+    .then(token => {
+      if(token) {
+        const div = window.document.createElement('div');
+        div.innerHTML = token
+        window.document.getElementsByClassName('center')[0].appendChild(div)
+        FB.getLoginStatus(function (response) {
+          statusChangeCallback(response)
+        })
+      }
+    })
+    
+    function statusChangeCallback (response) {
+      switch (response.status) {
+        case 'connected':
+          sendLoginRequest(response)
+          break
+        case 'not_authorized':
+          fbBtn.setAttribute('style', '')
+          break
+        case 'unknown':
+          fbBtn.setAttribute('style', '')
+          break
+      }
+    }
+
+    function parseAccessToken(url){
+      const tokenString = url.match(/access_token=\w*/)
+      if(tokenString !== null){
+        alert(tokenString)
+        return tokenString[0].split('=')[1]
+      } else {
+        return 0
+      }
+    }
  
 block content
   div(id='fb-root')
