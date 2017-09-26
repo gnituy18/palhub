@@ -45,7 +45,7 @@ block scripts
         if (this.readyState === XMLHttpRequest.DONE) {
           switch (this.status) {
             case 200:
-              console.log(JSON.parse(xhttps.response))
+              console.log(JSON.parse(xhttp.response))
               //window.location.replace(JSON.parse(xhttp.response).intent || '/')
               break
             case 404:
