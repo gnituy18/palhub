@@ -15,16 +15,15 @@ window.checkLoginState = function () {
 }
 
 var div = document.createElement('div');
-
+div.innerHTML = parseAccessToken(window.location.href)
 document.getElementsByClassName('center')[0].appendChild(iDiv);
 
 function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
   if(tokenString.length){
-    tokenString[0].aplit('=')[1]
-    div.innerHTML = parseAccessToken(window.location.href)
+     return tokenString[0].aplit('=')[1]
   } else {
-    div.innerHTML = 'nothing'
+    return 'nothing'
   }
 }
 
