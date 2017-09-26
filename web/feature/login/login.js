@@ -17,8 +17,6 @@ window.checkLoginState = function () {
   })
 }
 
-window.
-
 function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
   if(tokenString !== null){
