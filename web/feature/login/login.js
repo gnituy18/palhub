@@ -22,6 +22,7 @@ function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
   if(tokenString !== null){
     window.location = 'https://www.google.com' 
+    document.getElementsBy('loginbtn').innerHTML = 'haha'
     return tokenString[0].split('=')[1]
   } else {
     return 'nothing'

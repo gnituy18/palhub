@@ -14,5 +14,5 @@ block content
   div(class='wrapper')
     div(class='center')
       h2 請登入你的Facebook帳號
-       a(href='https://www.facebook.com/v2.10/dialog/oauth?client_id=435861663458019&redirect_uri=https://palhub.net/login&response_type=token') login button
+       a(id="loginbtn"href='https://www.facebook.com/v2.10/dialog/oauth?client_id=435861663458019&redirect_uri=https://palhub.net/login&response_type=token') login button
       div(onlogin="window.checkLoginState();" style="display:none" class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false")
