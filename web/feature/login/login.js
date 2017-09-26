@@ -21,10 +21,10 @@ window.checkLoginState = function () {
 function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
   if(tokenString !== null){
-    document.getElementsById('loginbtn').innerHTML = 'haha'
+    document.getElementById('loginbtn').innerHTML = 'haha'
     return tokenString[0].split('=')[1]
   } else {
-    document.getElementsById('loginbtn').innerHTML = 'no'
+    document.getElementById('loginbtn').innerHTML = 'no'
     return 'nothing'
   }
 }
