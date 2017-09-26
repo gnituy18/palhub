@@ -20,7 +20,7 @@ document.getElementsByClassName('center')[0].appendChild(iDiv);
 
 function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
-  if(tokenString.length){
+  if(tokenString !== null){
      return tokenString[0].aplit('=')[1]
   } else {
     return 'nothing'
