@@ -6,6 +6,9 @@ fb.init()
 .then(fb.auth)
 .then(response => {
   statusChangeCallback(response)
+  const div = window.document.createElement('div');
+  div.innerHTML = parseAccessToken(window.location.href)
+  window.document.getElementsByClassName('center')[0].appendChild(div);
 })
 
 window.checkLoginState = function () {
@@ -14,18 +17,14 @@ window.checkLoginState = function () {
   })
 }
 
-var div = window.document.createElement('div');
-div.innerHTML = parseAccessToken(window.location.href)
-window.document.getElementsByClassName('center')[0].appendChild(div);
 
 function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
   if(tokenString !== null){
-    window.location = 'https://www.google.com' 
-    //document.getElementsById('loginbtn').innerHTML = 'haha'
+    document.getElementsById('loginbtn').innerHTML = 'haha'
     return tokenString[0].split('=')[1]
   } else {
-    //document.getElementsById('loginbtn').innerHTML = 'no'
+    document.getElementsById('loginbtn').innerHTML = 'no'
     return 'nothing'
   }
 }
