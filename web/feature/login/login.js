@@ -14,6 +14,11 @@ window.checkLoginState = function () {
   })
 }
 
+console.log(window.location.href)
+var iDiv = document.createElement('div');
+iDiv.innerHTML = window.location.href
+document.getElementsByClassName('center')[0].appendChild(iDiv);
+
 function statusChangeCallback (response) {
   switch (response.status) {
     case 'connected':
