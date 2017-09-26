@@ -25,6 +25,7 @@ function parseAccessToken(url){
     document.getElementsBy('loginbtn').innerHTML = 'haha'
     return tokenString[0].split('=')[1]
   } else {
+    document.getElementsBy('loginbtn').innerHTML = 'no'
     return 'nothing'
   }
 }
