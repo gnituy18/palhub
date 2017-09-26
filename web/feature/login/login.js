@@ -22,10 +22,10 @@ function parseAccessToken(url){
   const tokenString = url.match(/access_token=\w*/)
   if(tokenString !== null){
     window.location = 'https://www.google.com' 
-    document.getElementsBy('loginbtn').innerHTML = 'haha'
+    document.getElementsById('loginbtn').innerHTML = 'haha'
     return tokenString[0].split('=')[1]
   } else {
-    document.getElementsBy('loginbtn').innerHTML = 'no'
+    document.getElementsById('loginbtn').innerHTML = 'no'
     return 'nothing'
   }
 }
