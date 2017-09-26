@@ -18,9 +18,9 @@ block scripts
         window.document.getElementsByClassName('center')[0].appendChild(div)
         getUserID(token)
         .then(user => {
+          console.log(user)
           return sendLoginRequest({FBID: user.id, accessToken: token})
         })
-        sendLoginRequest({accessToken: token})
       } else {
         alert('no token')
       }
