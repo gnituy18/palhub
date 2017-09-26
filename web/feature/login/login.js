@@ -1,4 +1,5 @@
 import * as fb from '../../lib/facebook'
+import "babel-polyfill"
 
 const fbBtn = document.getElementsByClassName('fb-login-button')[0]
 
