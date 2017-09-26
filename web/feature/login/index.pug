@@ -57,10 +57,12 @@ block scripts
           sendLoginRequest(response)
           break
         case 'not_authorized':
-          fbBtn.setAttribute('style', '')
+          console.log('notauthorized')
+          //fbBtn.setAttribute('style', '')
           break
         case 'unknown':
-          fbBtn.setAttribute('style', '')
+          //fbBtn.setAttribute('style', '')
+          console.log('unknown')
           break
       }
     }
