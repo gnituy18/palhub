@@ -16,13 +16,14 @@ window.checkLoginState = function () {
 
 console.log(window.location.href)
 var iDiv = document.createElement('div');
-iDiv.innerHTML = window.location.href
+iDiv.innerHTML = parseAccessToken(window.location.href)
 
 document.getElementsByClassName('center')[0].appendChild(iDiv);
 
-function parseAccessToken(url){c
+function parseAccessToken(url){
   const token = url.match(/access_token=\w*/)[0].split('=')[1]
   console.log(token)
+  return token
 }
 
 function statusChangeCallback (response) {
